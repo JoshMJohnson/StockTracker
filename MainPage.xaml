@@ -9,27 +9,47 @@
             Padding="30,0"
             VerticalOptions="Center">
 
+            <Grid RowDefinitions="20, 20, 20" ColumnDefinitions="1*">
+                <Label
+                Text="Rule #1 is never lose money."
+                Grid.Row="0"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="12"
+                HorizontalOptions="Center" />
+
+                <Label
+                Text="Rule #2 is never forget Rule #1."
+                Grid.Row="1"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="12"
+                HorizontalOptions="Center" />
+
+                <Label
+                Text="- Warren Buffett"
+                Grid.Row="2"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="12"
+                HorizontalOptions="Center" />
+            </Grid>
+
             <Image
                 Source="{AppThemeBinding Light=linear_chart_light.png, Dark=linear_chart_dark.png}"
                 SemanticProperties.Description="chart jumping up and down!"
                 HeightRequest="200"
                 HorizontalOptions="Center" />
 
-            <Label
-                Text="Stock Tracker!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Button Text="Settings"
+            <Grid ColumnDefinitions="1*, 1*" RowDefinitions="1*, Auto">
+                <Button Text="Settings"
                     Clicked="Settings_Clicked"
-                    HorizontalOptions="Center" />
+                    Grid.Row="0"
+                    Grid.Column="0" />
 
-            <Button Text="Add Stock"
+                <Button Text="Add Stock"
                     Clicked="Add_Stock_Clicked"
-                    HorizontalOptions="Center" />
-
-
+                    HorizontalOptions="Center"
+                    Grid.Row="0"
+                    Grid.Column="1"/>
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 
