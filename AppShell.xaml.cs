@@ -6,6 +6,7 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 
-		Routing.RegisterRoute("Watchlist", typeof(Watchlist));
+		Routing.RegisterRoute(nameof(Watchlist), typeof(Watchlist));
+		Routing.RegisterRoute(nameof(Settings), typeof(Settings));
 	}
 }

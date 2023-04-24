@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StockTracker.Settings"
+             Title="Settings">
+
+    <Grid RowDefinitions="*, *, *, *"
+              ColumnDefinitions="*, *" 
+              Padding="30" >
+
+        <Label Text="Notifications:"
+                Grid.Row="0"
+                Grid.Column="0"
+                FontSize="16"
+                HorizontalTextAlignment="Center" />
+
+        <Button Text="Turn On"
+                Clicked="Notification_Toggle"
+                Grid.Row="0"
+                Grid.Column="1" />
+
+        <Label Text="Notify Percent Change:"
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="16"
+                HorizontalTextAlignment="Center" />
+
+        <Button Text="Change"
+                Clicked="Stock_Change_Notification_Setting"
+                Grid.Row="1"
+                Grid.Column="1" />
+
+        <Label Text="Notify Type"
+               Grid.Row="2"
+               Grid.Column="0"
+               FontSize="16"
+               HorizontalTextAlignment="Center" />
+
+        <Button Text="Notify Type"
+                Clicked="Notify_Type_Change"
+                Grid.Row="2"
+                Grid.Column="1" />
+
+        <Label Text="Notify Time of Day:"
+               Grid.Row="3"
+               Grid.Column="0"
+               FontSize="16"
+               HorizontalTextAlignment="Center"/>
+
+        <Button Text="Time of Day"
+                Clicked="Time_Of_Day_Change"
+                Grid.Row="3"
+                Grid.Column="1" />
+    </Grid>
+</ContentPage>

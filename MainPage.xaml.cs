@@ -7,9 +7,9 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-    private void Settings_Clicked(object sender, EventArgs e)
+    private async void Settings_Button_Clicked(object sender, EventArgs e)
     {
-		DisplayAlert("Settings", "settings clicked", "Save");
+		await Shell.Current.GoToAsync("Settings");
     }
 
 	private async void Watchlist_Button_Clicked(object sender, EventArgs e)
@@ -17,4 +17,3 @@ public partial class MainPage : ContentPage
 		await Shell.Current.GoToAsync("Watchlist");
 	}
 }
-

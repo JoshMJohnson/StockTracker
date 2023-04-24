@@ -9,7 +9,9 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Grid RowDefinitions="20, 20, 20" ColumnDefinitions="1*">
+            <Grid RowDefinitions="20, 20, 20" 
+                  ColumnDefinitions="*">
+                
                 <Label
                     Text="Rule #1 is never lose money"
                     Grid.Row="0"
@@ -38,15 +40,14 @@
                 HeightRequest="200"
                 HorizontalOptions="Center" />
 
-            <Grid ColumnDefinitions="100, 100" RowDefinitions="1*, Auto" HorizontalOptions="Center" ColumnSpacing="20">
+            <Grid ColumnDefinitions="100, 100" RowDefinitions="*, Auto" HorizontalOptions="Center" ColumnSpacing="20">
                 <Button Text="Watchlist"
                     Clicked="Watchlist_Button_Clicked"
-                    HorizontalOptions="Center"
                     Grid.Row="0"
                     Grid.Column="0"/>
 
                 <Button Text="Settings"
-                    Clicked="Settings_Clicked"
+                    Clicked="Settings_Button_Clicked"
                     Grid.Row="0"
                     Grid.Column="1" />
             </Grid>
