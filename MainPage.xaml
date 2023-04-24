@@ -38,7 +38,7 @@
                 HeightRequest="200"
                 HorizontalOptions="Center" />
 
-            <Grid ColumnDefinitions="100, 100" RowDefinitions="1*, Auto" HorizontalOptions="Center">
+            <Grid ColumnDefinitions="100, 100" RowDefinitions="1*, Auto" HorizontalOptions="Center" ColumnSpacing="20">
                 <Button Text="Watchlist"
                     Clicked="Watchlist_Button_Clicked"
                     HorizontalOptions="Center"
