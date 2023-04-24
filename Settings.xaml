@@ -12,44 +12,56 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 FontSize="16"
-                HorizontalTextAlignment="Center" />
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center" />
 
         <Button Text="Turn On"
                 Clicked="Notification_Toggle"
+                VerticalOptions="Center"
                 Grid.Row="0"
-                Grid.Column="1" />
+                Grid.Column="1"
+                Margin="10" />
 
         <Label Text="Notify Percent Change:"
                 Grid.Row="1"
                 Grid.Column="0"
                 FontSize="16"
-                HorizontalTextAlignment="Center" />
+                HorizontalTextAlignment="Center" 
+                VerticalTextAlignment="Center" />
 
         <Button Text="Change"
                 Clicked="Stock_Change_Notification_Setting"
+                VerticalOptions="Center"
                 Grid.Row="1"
-                Grid.Column="1" />
+                Grid.Column="1" 
+                Margin="10" />
 
         <Label Text="Notify Type"
                Grid.Row="2"
                Grid.Column="0"
                FontSize="16"
-               HorizontalTextAlignment="Center" />
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
 
         <Button Text="Notify Type"
                 Clicked="Notify_Type_Change"
+                VerticalOptions="Center"
                 Grid.Row="2"
-                Grid.Column="1" />
+                Grid.Column="1"
+                Margin="10" />
 
         <Label Text="Notify Time of Day:"
                Grid.Row="3"
                Grid.Column="0"
                FontSize="16"
-               HorizontalTextAlignment="Center"/>
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
 
         <Button Text="Time of Day"
                 Clicked="Time_Of_Day_Change"
+                VerticalOptions="Center"
                 Grid.Row="3"
-                Grid.Column="1" />
+                Grid.Column="1"
+                Margin="10" />
     </Grid>
 </ContentPage>
