@@ -3,24 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StockTracker.Watchlist"
              Title="Watchlist">
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+               
+    <Grid ColumnDefinitions="*, *" 
+          RowDefinitions="*, Auto" >
+        
+        <CollectionView Grid.ColumnSpan="2">
             
-            <Grid ColumnDefinitions="1*, 1*" RowDefinitions="1*, Auto">
-                <Button Text="Add"
-                        Clicked="Add_Stock"
-                        HorizontalOptions="Center"
-                        Grid.Row="0"
-                        Grid.Column="0"/>
+        </CollectionView>
 
-                <Button Text="Remove"
-                        Clicked="Remove_Stock"
-                        Grid.Row="0"
-                        Grid.Column="1" />
-            </Grid>
-        </VerticalStackLayout>
-    </ScrollView>
+        <Button Text="Add"
+                Clicked="Add_Stock"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="8"/>
+
+        <Button Text="Remove"
+                Clicked="Remove_Stock"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8"/>
+    </Grid>
 </ContentPage>
