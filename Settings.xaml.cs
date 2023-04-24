@@ -30,6 +30,6 @@ public partial class Settings : ContentPage
     /* if send notifications at a given time; then choose that time; else display 'N/A' */
     private async void Time_Of_Day_Change(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", "Time_Of_Day_Change", "OK");
+        await DisplayAlert("Pop up", "Time_Of_Day_Change1", "OK");
     }
 }

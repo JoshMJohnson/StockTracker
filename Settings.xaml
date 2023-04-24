@@ -4,9 +4,9 @@
              x:Class="StockTracker.Settings"
              Title="Settings">
 
-    <Grid RowDefinitions="*, *, *, *"
+    <Grid RowDefinitions="*, *, *, *, *"
               ColumnDefinitions="*, *" 
-              Padding="30" >
+              Padding="10" >
 
         <Label Text="Notifications:"
                 Grid.Row="0"
@@ -15,7 +15,7 @@
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center" />
 
-        <Button Text="Turn On"
+        <Button Text="On"
                 Clicked="Notification_Toggle"
                 VerticalOptions="Center"
                 Grid.Row="0"
@@ -29,38 +29,52 @@
                 HorizontalTextAlignment="Center" 
                 VerticalTextAlignment="Center" />
 
-        <Button Text="Change"
+        <Button Text="5%"
                 Clicked="Stock_Change_Notification_Setting"
                 VerticalOptions="Center"
                 Grid.Row="1"
                 Grid.Column="1" 
                 Margin="10" />
 
-        <Label Text="Notify Type"
+        <Label Text="Notify Type:"
                Grid.Row="2"
                Grid.Column="0"
                FontSize="16"
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Button Text="Notify Type"
+        <Button Text="T.O.D."
                 Clicked="Notify_Type_Change"
                 VerticalOptions="Center"
                 Grid.Row="2"
                 Grid.Column="1"
                 Margin="10" />
 
-        <Label Text="Notify Time of Day:"
+        <Label Text="Notify Time of Day 1:"
                Grid.Row="3"
                Grid.Column="0"
                FontSize="16"
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Button Text="Time of Day"
+        <Button Text="10 am CST"
                 Clicked="Time_Of_Day_Change"
                 VerticalOptions="Center"
                 Grid.Row="3"
+                Grid.Column="1"
+                Margin="10" />
+
+        <Label Text="Notify Time of Day 2:"
+               Grid.Row="4"
+               Grid.Column="0"
+               FontSize="16"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
+
+        <Button Text="2 pm CST"
+                Clicked="Time_Of_Day_Change"
+                VerticalOptions="Center"
+                Grid.Row="4"
                 Grid.Column="1"
                 Margin="10" />
     </Grid>
