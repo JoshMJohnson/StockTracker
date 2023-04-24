@@ -12,9 +12,9 @@ public partial class MainPage : ContentPage
 		DisplayAlert("Settings", "settings clicked", "Save");
     }
 
-	private async void Add_Stock_Clicked(object sender, EventArgs e)
+	private async void Watchlist_Button_Clicked(object sender, EventArgs e)
 	{
-		string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text);
+		await Shell.Current.GoToAsync("Watchlist");
 	}
 }
 

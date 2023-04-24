@@ -6,11 +6,9 @@
     xmlns:local="clr-namespace:StockTracker"
     Shell.FlyoutBehavior="Disabled">
 
-    <TabBar>
-        <ShellContent
-            Title="Stock Tracker"
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
-    </TabBar>
+    <ShellContent
+        Title="Stock Tracker"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
 
 </Shell>
