@@ -22,7 +22,7 @@
                 Grid.Column="1"
                 Margin="10" />
 
-        <Label Text="Notify Percent Change:"
+        <Label Text="Percent Change For Notification:"
                 Grid.Row="1"
                 Grid.Column="0"
                 FontSize="16"
@@ -50,7 +50,7 @@
                 Grid.Column="1"
                 Margin="10" />
 
-        <Label Text="Notify Time of Day 1:"
+        <Label Text="Time of Day 1:"
                Grid.Row="3"
                Grid.Column="0"
                FontSize="16"
@@ -64,7 +64,7 @@
                 Grid.Column="1"
                 Margin="10" />
 
-        <Label Text="Notify Time of Day 2:"
+        <Label Text="Time of Day 2:"
                Grid.Row="4"
                Grid.Column="0"
                FontSize="16"
