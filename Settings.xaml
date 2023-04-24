@@ -22,7 +22,7 @@
                 Grid.Column="1"
                 Margin="10" />
 
-        <Label Text="Percent Change For Notification:"
+        <Label Text="Percent Change:"
                 Grid.Row="1"
                 Grid.Column="0"
                 FontSize="16"
