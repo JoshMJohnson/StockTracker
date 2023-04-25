@@ -3,55 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StockTracker.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid RowDefinitions="*, *, *">
+        <Grid Grid.Row="0"
+              RowDefinitions="*, *, *" 
+              ColumnDefinitions="*"
+              HeightRequest="100"
+              VerticalOptions="Center">
 
-            <Grid RowDefinitions="20, 20, 20" 
-                  ColumnDefinitions="*">
-                
-                <Label
-                    Text="Rule #1 is never lose money"
-                    Grid.Row="0"
-                    SemanticProperties.HeadingLevel="Level1"
-                    FontSize="12"
-                    HorizontalOptions="Center" />
-
-                <Label
-                    Text="Rule #2 is never forget Rule #1"
-                    Grid.Row="1"
-                    SemanticProperties.HeadingLevel="Level1"
-                    FontSize="12"
-                    HorizontalOptions="Center" />
-
-                <Label
-                    Text="- Warren Buffett"
-                    Grid.Row="2"
-                    SemanticProperties.HeadingLevel="Level1"
-                    FontSize="12"
-                    HorizontalOptions="Center" />
-            </Grid>
-
-            <Image
-                Source="{AppThemeBinding Light=linear_chart_light.png, Dark=linear_chart_dark.png}"
-                SemanticProperties.Description="chart jumping up and down!"
-                HeightRequest="200"
+            <Label
+                Text="Rule #1 is never lose money"
+                Grid.Row="0"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="12"
                 HorizontalOptions="Center" />
 
-            <Grid ColumnDefinitions="100, 100" RowDefinitions="*, Auto" HorizontalOptions="Center" ColumnSpacing="20">
-                <Button Text="Watchlist"
+            <Label
+                Text="Rule #2 is never forget Rule #1"
+                Grid.Row="1"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="12"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="- Warren Buffett"
+                Grid.Row="2"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="12"
+                HorizontalOptions="Center" />
+        </Grid>
+
+        <Image Grid.Row="1"
+               Source="{AppThemeBinding Light=linear_chart_light.png, Dark=linear_chart_dark.png}"
+               SemanticProperties.Description="chart jumping up and down!"
+               HeightRequest="200"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+
+        <Grid Grid.Row="2" 
+              ColumnDefinitions="100, 100" 
+              RowDefinitions="*, Auto" 
+              HorizontalOptions="Center" 
+              ColumnSpacing="20"
+              VerticalOptions="Center">
+
+            <Button Text="Watchlist"
                     Clicked="Watchlist_Button_Clicked"
                     Grid.Row="0"
                     Grid.Column="0"/>
 
-                <Button Text="Settings"
+            <Button Text="Settings"
                     Clicked="Settings_Button_Clicked"
                     Grid.Row="0"
                     Grid.Column="1" />
-            </Grid>
-        </VerticalStackLayout>
-    </ScrollView>
-
+        </Grid>
+    </Grid>
 </ContentPage>

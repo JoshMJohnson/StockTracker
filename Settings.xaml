@@ -5,15 +5,15 @@
              Title="Settings">
 
     <Grid RowDefinitions="*, *, *, *, *"
-              ColumnDefinitions="*, *" 
-              Padding="10" >
+          ColumnDefinitions="*, *" 
+          Padding="10" >
 
         <Label Text="Notifications:"
-                Grid.Row="0"
-                Grid.Column="0"
-                FontSize="16"
-                HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center" />
+               Grid.Row="0"
+               Grid.Column="0"
+               FontSize="16"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
 
         <Button Text="On"
                 Clicked="Notification_Toggle"

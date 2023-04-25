@@ -7,8 +7,22 @@
     <Grid ColumnDefinitions="*, *" 
           RowDefinitions="*, Auto" >
         
-        <CollectionView Grid.ColumnSpan="2">
+        <CollectionView Grid.ColumnSpan="2"
+                        VerticalOptions="Center">
             
+            <CollectionView.EmptyView>
+                <VerticalStackLayout>
+                    <Label Text="No stocks in watchlist"
+                           FontSize="Subtitle"
+                           FontAttributes="Italic"
+                           HorizontalOptions="Center" />
+
+                    <Image Source="empty_watchlist.png"
+                           SemanticProperties.Description="Your watchlist is empty!"
+                           HeightRequest="200" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+                        
         </CollectionView>
 
         <Button Text="Add"
