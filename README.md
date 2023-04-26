@@ -26,6 +26,7 @@
 
 <div>
 <img width="233px" height="350px" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
+
 <img width="233px" height="350px" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
 </div>
 
