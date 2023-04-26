@@ -20,12 +20,12 @@
 
 <!-- android light mode -->
 <div>
-<div>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</div><div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</div>
+<div>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</div>
+<div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</div>
 </div>
 
 <div>
 <img width="233px" height="350px" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
-
 <img width="233px" height="350px" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
 </div>
 
@@ -46,8 +46,8 @@
 <h3 align='center'>Windows OS</h3>
 
 <div>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</p>
-<p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</p>
+<div>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</div>
+<div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</div>
 </div>
 
 <div>
