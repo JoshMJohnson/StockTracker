@@ -19,11 +19,8 @@
 <h3 align='center'>Android OS</h3>
 
 <!-- android light mode -->
-| Light Mode | Dark Mode |
-| ====== | ====== |
-
-<p>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</p>
-<p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</p>
+<div>Light Mode</div>
+<div align='right'>Dark Mode</div>
 
 <div>
 <img width="233px" height="350px" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
