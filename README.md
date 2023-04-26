@@ -39,6 +39,8 @@
     <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
 </div>
 
+---
+
 <!-- windows -->
 <h3 align='center'>Windows</h3>
 
