@@ -18,14 +18,14 @@
 <!-- android -->
 <h3 align='center'>Android</h3>
 <h4>Light Mode</h4>
-<img width="320" height="480" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
-<img width="320" height="480" alt="Settings Screen Light" src="Project_Demo_Images/Android/settings_light.png">
-<img width="320" height="480" alt="Watchlist Screen Light" src="Project_Demo_Images/Android/watchlist_light.png">
+<img width="233" height="350" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
+<img width="233" height="350" alt="Settings Screen Light" src="Project_Demo_Images/Android/settings_light.png">
+<img width="233" height="350" alt="Watchlist Screen Light" src="Project_Demo_Images/Android/watchlist_light.png">
 
 <h4>Dark Mode</h4>
-<img width="320" height="480" alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
-<img width="320" height="480" alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
-<img width="320" height="480" alt="Watchlist Screen Dark" src="Project_Demo_Images/Android/watchlist_dark.png">
+<img width="233" height="350" alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
+<img width="233" height="350" alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
+<img width="233" height="350" alt="Watchlist Screen Dark" src="Project_Demo_Images/Android/watchlist_dark.png">
 
 <div align='center'>
     <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
