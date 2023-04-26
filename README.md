@@ -49,7 +49,7 @@
 
 <div>
 <img width="300" height="300" alt="Home Screen Light" src="Project_Demo_Images/Windows/home_light.png">
-<img width="300" height="300" align='righ' alt="Home Screen Dark" src="Project_Demo_Images/Windows/home_dark.png">
+<img width="300" height="300" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Windows/home_dark.png">
 </div>
 
 <div>
