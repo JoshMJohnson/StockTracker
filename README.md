@@ -19,6 +19,9 @@
 <h3 align='center'>Android OS</h3>
 
 <!-- android light mode -->
+| Light Mode | Dark Mode |
+| ==== | ==== |
+
 <p>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</p>
 <p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</p>
 
