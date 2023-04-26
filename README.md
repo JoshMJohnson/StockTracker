@@ -1,4 +1,4 @@
-<h1 align='center'>Stock Tracker!</h1>
+<h1 align='center'>:chart_with_upwards_trend: Stock Tracker! :chart_with_upwards_trend:</h1>
 <p align='center'>
     Connects to the stock market and sends push notifications to the device when a stock
     within the watchlist changes value to the specifications of the user.
@@ -47,7 +47,7 @@
 <br>
 
 <div align='center'>
-    <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
+    <p>:arrow_up: <a href="#chart_with_upwards_trend-stock-tracker-chart_with_upwards_trend">Back to top</a> :arrow_up:</p>
 </div>
 
 ---
@@ -80,5 +80,5 @@
 <br>
 
 <div align='center'>
-    <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
+    <p>:arrow_up: <a href="#chart_with_upwards_trend-stock-tracker-chart_with_upwards_trend">Back to top</a> :arrow_up:</p>
 </div>
