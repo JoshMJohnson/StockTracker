@@ -16,7 +16,7 @@
 </div>
 
 <!-- android -->
-<h3 align='center'>Android</h3>
+<h3 align='center'>Android OS</h3>
 
 <!-- android light mode -->
 <p>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</p>
@@ -42,7 +42,7 @@
 ---
 
 <!-- windows -->
-<h3 align='center'>Windows</h3>
+<h3 align='center'>Windows OS</h3>
 
 <div>
 <h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</h4>
