@@ -38,12 +38,6 @@ public partial class Settings : ContentPage
         await DisplayAlert("Pop up", "Percent_Notify_Change", "OK");
     }
 
-    /* changes value of the percent change a stock has to make for a push notification */
-    private async void Stock_Change_Notification_Setting(object sender, EventArgs e)
-    {
-        await DisplayAlert("Pop up", "Stock_Change_Notification_Setting", "OK");
-    }
-
     /* toggle between sending push notifications
      *  - option 1: send notifications at a given time (ex: 10am CST) 
      *  - option 2: send notifications at the exact time the stock reaches the change percentage (if overnight then send on open) */
@@ -55,6 +49,6 @@ public partial class Settings : ContentPage
     /* if send notifications at a given time; then choose that time; else display 'N/A' */
     private async void Time_Of_Day_Change(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", "Time_Of_Day_Change1", "OK");
+        await DisplayAlert("Pop up", "Time_Of_Day_Change", "OK");
     }
 }
