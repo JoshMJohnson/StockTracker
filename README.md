@@ -22,6 +22,8 @@
 <div>
 <h4>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</h4>
 
+<br>
+
 <h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</h4>
 </div>
 
