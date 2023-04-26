@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StockTracker.Settings"
-             Title="Settings">
+             Title="Settings" >
 
     <Grid RowDefinitions="*, *, *, *, *"
           ColumnDefinitions="*, *" 
@@ -15,12 +15,27 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Button Text="On"
-                Clicked="Notification_Toggle"
-                VerticalOptions="Center"
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="10" />
+        <Grid ColumnDefinitions="*, *"
+              Grid.Row="0"
+              Grid.Column="1"
+              WidthRequest="200" >
+
+            <RadioButton Content="On"
+                         IsChecked="True"
+                         CheckedChanged="Notification_Toggle"
+                         GroupName="notification_toggle_group"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Grid.Column="0" />
+
+            <RadioButton Content="Off"
+                         IsChecked="False"
+                         GroupName="notification_toggle_group"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Grid.Column="1" />
+
+        </Grid>
 
         <Label Text="Percent Change:"
                 Grid.Row="1"
@@ -29,13 +44,26 @@
                 HorizontalTextAlignment="Center" 
                 VerticalTextAlignment="Center" />
 
-        <Button Text="5%"
-                Clicked="Stock_Change_Notification_Setting"
-                VerticalOptions="Center"
-                Grid.Row="1"
-                Grid.Column="1" 
-                Margin="10" />
+        <Grid RowDefinitions="*, *"
+              Grid.Row="1"
+              Grid.Column="1" >
+            
+            <Slider Minimum="2"
+                    Maximum="10"
+                    Value="5" 
+                    WidthRequest="200"
+                    Grid.Row="0"
+                    VerticalOptions="End"
+                    Margin="-17"/>
 
+            <Label Text="Set at: 5%"
+                   FontSize="10"
+                   Grid.Row="1"
+                   HorizontalOptions="Center"
+                   Margin="13"/>
+
+        </Grid>
+                
         <Label Text="Notify Type:"
                Grid.Row="2"
                Grid.Column="0"
@@ -43,12 +71,19 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Button Text="T.O.D."
-                Clicked="Notify_Type_Change"
-                VerticalOptions="Center"
-                Grid.Row="2"
+        <Picker Grid.Row="2"
                 Grid.Column="1"
-                Margin="10" />
+                HorizontalOptions="Center"
+                VerticalOptions="Center" >
+                     
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>On Threshold</x:String>
+                    <x:String>One T.O.D.</x:String>
+                    <x:String>Two T.O.D.</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
 
         <Label Text="Time of Day 1:"
                Grid.Row="3"
@@ -57,12 +92,11 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Button Text="10 am CST"
-                Clicked="Time_Of_Day_Change"
-                VerticalOptions="Center"
-                Grid.Row="3"
-                Grid.Column="1"
-                Margin="10" />
+        <TimePicker Time="10:00"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
 
         <Label Text="Time of Day 2:"
                Grid.Row="4"
@@ -71,11 +105,10 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Button Text="2 pm CST"
-                Clicked="Time_Of_Day_Change"
-                VerticalOptions="Center"
-                Grid.Row="4"
-                Grid.Column="1"
-                Margin="10" />
+        <TimePicker Time="14:00"                    
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
     </Grid>
 </ContentPage>
