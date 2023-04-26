@@ -20,7 +20,7 @@
 
 <!-- android light mode -->
 | Light Mode | Dark Mode |
-| ==== | ==== |
+| ====== | ====== |
 
 <p>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</p>
 <p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</p>
