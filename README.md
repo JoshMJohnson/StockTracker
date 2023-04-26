@@ -17,19 +17,24 @@
 
 <!-- android -->
 <h3 align='center'>Android</h3>
-<h4>Light Mode</h4>
 
-<div align='left'>
-<img width="233" height="350" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
-</div>
-
+<!-- android dark mode -->
 <div align='right'>
-<img width="233" height="350" alt="Settings Screen Light" src="Project_Demo_Images/Android/settings_light.png">
-</div>
-
 <h4>Dark Mode</h4>
+
 <img width="233" height="350" alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
 <img width="233" height="350" alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
+
+</div>
+
+<!-- android light mode -->
+<div align='left'>
+<h4 align=center>Light Mode</h4>
+
+<img width="233" height="350" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
+<img width="233" height="350" alt="Settings Screen Light" src="Project_Demo_Images/Android/settings_light.png">
+
+</div>
 
 <div align='center'>
     <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
