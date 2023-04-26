@@ -6,19 +6,19 @@
 
 ---
 
-<!-- project images -->
-<h2 align='center'>:camera: Project Images :camera:</h2>
-
-<div align='center'>
+<!-- how to download section -->
+<h2 align='center'>:scroll: How to download :scroll:</h2>
 
 ***Available on Android, Windows, macOS and IOS***
 
-</div>
+---
+
+<!-- project images -->
+<h2 align='center'>:camera: Project Images :camera:</h2>
 
 <!-- android -->
 <h3 align='center'>Android OS</h3>
 
-<!-- android light mode -->
 <div>
 <div>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</div>
 <div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</div>
