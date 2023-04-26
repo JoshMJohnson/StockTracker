@@ -11,7 +11,7 @@
 
 <div align='center'>
 
-***Also available on the macOS and IOS***
+***Available on Android, Windows, macOS and IOS***
 
 </div>
 
