@@ -22,7 +22,6 @@
 
             <RadioButton Content="On"
                          IsChecked="True"
-                         CheckedChanged="Notification_Toggle"
                          GroupName="notification_toggle_group"
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
