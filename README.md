@@ -7,7 +7,7 @@
 ---
 
 <!-- how to download section -->
-<h2 align='center'>:scroll: How to download :scroll:</h2>
+<h2 align='center'>:scroll: How To Download :scroll:</h2>
 
 <div align='center'>
 
