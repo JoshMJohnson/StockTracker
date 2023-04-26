@@ -20,6 +20,7 @@
 
 <!-- android light mode -->
 | Light Mode | Dark Mode |
+| ---- | ---- |
 
 <div>
 <img width="233px" height="350px" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
