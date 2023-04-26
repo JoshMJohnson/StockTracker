@@ -9,7 +9,11 @@
 <!-- project images -->
 <h2 align='center'>:camera: Project Images :camera:</h2>
 
-**Also available on the macOS and IOS**
+<div align='center'>
+
+***Also available on the macOS and IOS***
+
+</div>
 
 <!-- android -->
 <h3 align='center'>Android</h3>
