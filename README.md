@@ -45,8 +45,8 @@
 <h3 align='center'>Windows OS</h3>
 
 <div>
-<h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</h4>
-<h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</h4>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</p>
+<p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</p>
 </div>
 
 <div>
