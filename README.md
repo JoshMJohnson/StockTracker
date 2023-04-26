@@ -9,20 +9,14 @@
 <!-- project images -->
 <h2 align='center'>:camera: Project Images :camera:</h2>
 
-<div align='center'>
+**Also available on the macOS and IOS**
 
-**Game Log**<br>
-<img width="400" height="400" alt="Game Log" src="Project_Images/Game_Log.png">
+<!-- android -->
+<h3 align='center'>Android</h3>
 
-**Help Menu**<br>
-<img width="400" height="400" alt="Help Menu" src="Project_Images/Help_Menu.png">
+<!-- windows -->
+<h3 align='center'>Windows</h3>
 
-**Valid Moves**<br>
-<img width="400" height="400" alt="Valid Moves" src="Project_Images/Valid_Moves.png">
-
-**Game Clock**<br>
-<img width="400" height="400" alt="Game Clock" src="Project_Images/Game_Clock.png">
-</div>
 
 ---
 
