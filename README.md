@@ -19,8 +19,7 @@
 <h3 align='center'>Android OS</h3>
 
 <!-- android light mode -->
-&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode
-<p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</p>
+| Light Mode | Dark Mode |
 
 <div>
 <img width="233px" height="350px" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
@@ -45,7 +44,7 @@
 <h3 align='center'>Windows OS</h3>
 
 <div>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</p>
 <p align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</p>
 </div>
 
