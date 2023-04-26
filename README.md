@@ -34,6 +34,8 @@
 <img width="233px" height="350px" align='right' alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
 </div>
 
+<br>
+
 <div align='center'>
     <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
 </div>
