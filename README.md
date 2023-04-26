@@ -24,6 +24,8 @@
 <div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</div>
 </div>
 
+<br>
+
 <div>
 <img width="233px" height="350px" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
 <img width="233px" height="350px" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
@@ -49,6 +51,8 @@
 <div>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</div>
 <div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</div>
 </div>
+
+<br>
 
 <div>
 <img width="300px" height="300px" alt="Home Screen Light" src="Project_Demo_Images/Windows/home_light.png">
