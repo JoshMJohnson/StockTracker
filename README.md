@@ -45,8 +45,8 @@
 <h3 align='center'>Windows</h3>
 
 <div>
-<h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Light Mode</h4>
-<h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h4>
+<h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Light Mode</h4>
+<h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;</h4>
 </div>
 
 <div>
