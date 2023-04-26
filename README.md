@@ -1,7 +1,6 @@
 <h1 align='center'>:chart_with_upwards_trend: Stock Tracker! :chart_with_upwards_trend:</h1>
 <p align='center'>
-    Connects to the stock market and sends push notifications to the device when a stock
-    on the watchlist changes within the specifications given by the user
+    App used to provide notifications on big stock price changes within a watchlist created by the user. Available cross platform
 </p>
 
 ---
