@@ -20,7 +20,7 @@
 
 <!-- android light mode -->
 <div>
-<div>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</div>
+&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode
 <div align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</div>
 </div>
 
