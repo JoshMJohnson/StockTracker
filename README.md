@@ -18,6 +18,7 @@
 <!-- android -->
 <h3 align='center'>Android</h3>
 
+<div>
 <!-- android dark mode -->
 <h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</h4>
 <div align='right'>
@@ -33,6 +34,7 @@
 <img width="233" height="350" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
 <br>
 <img width="233" height="350" alt="Settings Screen Light" src="Project_Demo_Images/Android/settings_light.png">
+</div>
 
 </div>
 
