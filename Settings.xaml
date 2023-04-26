@@ -78,10 +78,12 @@
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>On Threshold</x:String>
-                    <x:String>One T.O.D.</x:String>
-                    <x:String>Two T.O.D.</x:String>
+                    <x:String>Daily</x:String>
+                    <x:String>Bidaily</x:String>
                 </x:Array>
             </Picker.ItemsSource>
+
+            <Picker.SelectedIndex>2</Picker.SelectedIndex>
         </Picker>
 
         <Label Text="Time of Day 1:"
