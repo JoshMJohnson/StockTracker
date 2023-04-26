@@ -41,15 +41,26 @@
 
 <!-- windows -->
 <h3 align='center'>Windows</h3>
-<h4>Light Mode</h4>
-<img width="400" height="400" alt="Home Screen Light" src="Project_Demo_Images/Windows/home_light.png">
-<img width="400" height="400" alt="Settings Screen Light" src="Project_Demo_Images/Windows/settings_light.png">
-<img width="400" height="400" alt="Watchlist Screen Light" src="Project_Demo_Images/Windows/watchlist_light.png">
 
-<h4>Dark Mode</h4>
-<img width="400" height="400" alt="Home Screen Dark" src="Project_Demo_Images/Windows/home_dark.png">
-<img width="400" height="400" alt="Settings Screen Dark" src="Project_Demo_Images/Windows/settings_dark.png">
-<img width="400" height="400" alt="Watchlist Screen Dark" src="Project_Demo_Images/Windows/watchlist_dark.png">
+<div>
+<h4>Light Mode</h4>
+<h4 align='right'>Dark Mode</h4>
+</div>
+
+<div>
+<img width="300" height="300" alt="Home Screen Light" src="Project_Demo_Images/Windows/home_light.png">
+<img width="300" height="300" align='righ' alt="Home Screen Dark" src="Project_Demo_Images/Windows/home_dark.png">
+</div>
+
+<div>
+<img width="300" height="300" alt="Settings Screen Light" src="Project_Demo_Images/Windows/settings_light.png">
+<img width="300" height="300" align='right' alt="Settings Screen Dark" src="Project_Demo_Images/Windows/settings_dark.png">
+</div>
+
+<div>
+<img width="300" height="300" alt="Watchlist Screen Light" src="Project_Demo_Images/Windows/watchlist_light.png">
+<img width="300" height="300" align='right' alt="Watchlist Screen Dark" src="Project_Demo_Images/Windows/watchlist_dark.png">
+</div>
 
 ---
 
