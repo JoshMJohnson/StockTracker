@@ -62,7 +62,7 @@
 <img width="300" height="300" align='right' alt="Watchlist Screen Dark" src="Project_Demo_Images/Windows/watchlist_dark.png">
 </div>
 
----
+<br>
 
 <div align='center'>
     <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
