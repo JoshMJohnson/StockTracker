@@ -22,9 +22,9 @@
 <div align='right'>
 <h4>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</h4>
 
-<img width="233" height="350" alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
+<img width="233" height="350" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
 <br>
-<img width="233" height="350" alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
+<img width="233" height="350" align='right' alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
 
 </div>
 
