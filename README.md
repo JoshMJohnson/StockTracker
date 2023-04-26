@@ -16,11 +16,11 @@
 </div>
 
 <!-- android -->
-<h3 align='center'>Android&nbsp;&nbsp;</h3>
+<h3 align='center'>Android</h3>
 
 <!-- android dark mode -->
 <div align='right'>
-<h4>Dark Mode</h4>
+<h4>Dark Mode&nbsp;&nbsp;</h4>
 
 <img width="233" height="350" alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
 <br>
