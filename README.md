@@ -18,23 +18,23 @@
 <!-- android -->
 <h3 align='center'>Android</h3>
 
-<!-- android dark mode -->
-<h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</h4>
-<img width="233px" height="350px" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
+
+
 
 <!-- android light mode -->
 <h4>&emsp;&emsp;&emsp;&emsp;&ensp;Light Mode</h4>
+<h4 align='right'>Dark Mode&emsp;&emsp;&emsp;&emsp;&ensp;</h4>
+
 <img width="233" height="350" alt="Home Screen Light" src="Project_Demo_Images/Android/home_light.png">
+<img width="233px" height="350px" align='right' alt="Home Screen Dark" src="Project_Demo_Images/Android/home_dark.png">
+
+
 <img width="233px" height="350px" align='right' alt="Settings Screen Dark" src="Project_Demo_Images/Android/settings_dark.png">
 <img width="233" height="350" alt="Settings Screen Light" src="Project_Demo_Images/Android/settings_light.png">
 
 <div align='center'>
     <p>:arrow_up: <a href="#stock-tracker">Back to top</a> :arrow_up:</p>
 </div>
-
-
-
-
 
 <!-- windows -->
 <h3 align='center'>Windows</h3>
