@@ -9,7 +9,13 @@
 <!-- how to download section -->
 <h2 align='center'>:scroll: How to download :scroll:</h2>
 
+<div align='center'>
 ***Available on Android, Windows, macOS and IOS***
+</div>
+
+<p align='center'>
+    Coming soon
+</p>
 
 ---
 
