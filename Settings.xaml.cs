@@ -26,24 +26,21 @@ public partial class Settings : ContentPage
         await DisplayAlert("Pop up", "e", "OK");        
     }
 
-    /* handles action when percent change threshold for push notification is changed */
+    /* handles action when slider for percent threshold is changed */
     private void Percent_Notify_Change(object sender, EventArgs e)
     {
         if (percent_change_slider != null)
         {
-            string value_percent_change_string = percent_change_slider.Value.ToString(); /* retrieve value from slider */
-
-            /* take value from slider and convert to double value and assign to global variable */
-            value_percent_change = double.Parse(value_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
+            /* take value from slider and format to two decimal points */
+            value_percent_change = percent_change_slider.Value;
             value_percent_change = Math.Round(value_percent_change, 2);
 
-            /* convert back to string value for label display after setting value format */
-            value_percent_change_string = value_percent_change.ToString();
-            value_percent_change_label.Text = value_percent_change_string;
+            /* convert to string value for label display */
+            value_percent_change_label.Text = value_percent_change.ToString();
         }        
     }
 
-    /* manages notification types (threshold/1 t.o.d./2 t.o.d.) */
+    /* manages notification type changes (threshold/1 t.o.d./2 t.o.d.) */
     private void Notify_Type_Change(object sender, EventArgs e)
     {
         if (notify_type_picker != null)
