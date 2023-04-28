@@ -7,11 +7,11 @@ namespace StockTracker;
 public partial class Settings : ContentPage
 {
     /* app setting variables */
-    public int value_toggle_notification = 1;
-    public double value_percent_change = 5;
-    public int index_notify_type = 2;
-    public string value_tod1 = "";
-    public string value_tod2 = "";
+    public int value_toggle_notification = 1; /* 0 = off; 1 = on */
+    public double value_percent_change = 5; /* percent change of a stock to receive a push notification */
+    public int index_notify_type = 2; /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
+    public string value_tod1 = ""; /* notification time for T.O.D. #1 */
+    public string value_tod2 = ""; /* notification time for T.O.D. #2 */
 
     public Settings()
 	{
