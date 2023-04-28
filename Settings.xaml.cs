@@ -63,14 +63,14 @@ public partial class Settings : ContentPage
                 tod2_label.IsVisible = false;
                 tod2_selector.IsVisible = false;
             }
-            else if (index_notify_type == 1) /* if notify type is set to 1 T.O.D. (index 1) */
+            else if (index_notify_type == 1) /* else if notify type is set to 1 T.O.D. (index 1) */
             {
                 tod1_label.IsVisible = true;
                 tod1_selector.IsVisible = true;
                 tod2_label.IsVisible = false;
                 tod2_selector.IsVisible = false;
             }
-            else /* if notify type is set to 2 T.O.D. (index 2) */
+            else /* else notify type is set to 2 T.O.D. (index 2) */
             {
                 tod1_label.IsVisible = true;
                 tod1_selector.IsVisible = true;
