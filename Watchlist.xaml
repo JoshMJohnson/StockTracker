@@ -5,10 +5,14 @@
              Title="Watchlist">
                
     <Grid ColumnDefinitions="*, *" 
-          RowDefinitions="*, Auto" >
+          RowDefinitions="*, Auto" 
+          BackgroundColor="Transparent" >
         
         <CollectionView Grid.ColumnSpan="2"
-                        VerticalOptions="Center">
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" >
             
             <CollectionView.EmptyView>
                 <VerticalStackLayout>

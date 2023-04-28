@@ -18,7 +18,7 @@
         <Grid ColumnDefinitions="*, *"
               Grid.Row="0"
               Grid.Column="1"
-              WidthRequest="200" >
+              WidthRequest="125" >
 
             <RadioButton Content="On"
                          IsChecked="True"
@@ -44,22 +44,33 @@
                 VerticalTextAlignment="Center" />
 
         <Grid RowDefinitions="*, *"
+              ColumnDefinitions="*, *"
               Grid.Row="1"
               Grid.Column="1" >
             
-            <Slider Minimum="2"
+            <Slider x:Name="percent_change_slider" 
+                    ValueChanged="Percent_Notify_Change"
+                    Minimum="3"
                     Maximum="10"
                     Value="5" 
-                    WidthRequest="200"
-                    Grid.Row="0"
+                    WidthRequest="175"
+                    Grid.ColumnSpan="2"
                     VerticalOptions="End"
-                    Margin="-17"/>
+                    HorizontalOptions="Center"
+                    Margin="-10" />
 
-            <Label Text="Set at: 5%"
-                   FontSize="10"
+            <Label Text="Set at:"
+                   FontSize="14"
                    Grid.Row="1"
-                   HorizontalOptions="Center"
-                   Margin="13"/>
+                   HorizontalOptions="End"
+                   Margin="10" />
+
+            <Label x:Name="value_percent_change_label"
+                   FontSize="14"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   HorizontalOptions="Start"
+                   Margin="10" />
 
         </Grid>
                 
@@ -70,7 +81,8 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <Picker Grid.Row="2"
+        <Picker x:Name="notify_type_picker" 
+                Grid.Row="2"
                 Grid.Column="1"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" >
@@ -93,7 +105,8 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <TimePicker Time="10:00"
+        <TimePicker x:Name="tod1"
+                    Time="10:00"
                     Grid.Row="3"
                     Grid.Column="1"
                     HorizontalOptions="Center"
@@ -106,7 +119,8 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <TimePicker Time="14:00"         
+        <TimePicker x:Name="tod2" 
+                    Time="14:00"         
                     Grid.Row="4"
                     Grid.Column="1"
                     HorizontalOptions="Center"

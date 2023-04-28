@@ -5,37 +5,40 @@ namespace StockTracker;
 public partial class Settings : ContentPage
 {
     /* app setting variables */
-    
-    /*
-    public static string notification_toggle = "On";
-    public static double percent_change = 5.0;
-    public static int notify_type = 0;
-    public static string tod1 = "10 am";
-    public static string tod2 = "2 pm";
-    */
+    public int value_toggle_notification = 1;
+    public double value_percent_change = 5;
+    public int index_notify_type = 2;
+    public string value_tod1;
+    public string value_tod2;
 
-	public Settings()
+    public Settings()
 	{
 		InitializeComponent();
-	}
+
+        value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
+    }
 
     /* turns on and off push notifications */
     private async void Notification_Toggle(object sender, EventArgs e)
     {
         await DisplayAlert("Pop up", "Notification_Toggle", "OK");
-
-        /* 
-         * if (notification_toggle == "On") notification_toggle = "Off";
-         * else notification_toggle = "On";
-         */
-
-
     }
 
     /* handles action when percent change threshold for push notification is changed */
-    private async void Percent_Notify_Change(object sender, EventArgs e)
+    private void Percent_Notify_Change(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", "Percent_Notify_Change", "OK");
+        if (percent_change_slider != null)
+        {
+            string value_percent_change_string = percent_change_slider.Value.ToString(); /* retrieve value from slider */
+
+            /* take value from slider and convert to double value and assign to global variable */
+            value_percent_change = double.Parse(value_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
+            value_percent_change = Math.Round(value_percent_change, 2);
+
+            /* convert back to string value for label display after setting value format */
+            value_percent_change_string = value_percent_change.ToString();
+            value_percent_change_label.Text = value_percent_change_string;
+        }        
     }
 
     /* toggle between sending push notifications
