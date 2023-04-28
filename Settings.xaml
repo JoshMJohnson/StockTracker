@@ -21,15 +21,15 @@
               WidthRequest="125" >
 
             <RadioButton Content="On"
-                         IsChecked="True"
                          GroupName="notification_toggle_group"
+                         IsChecked="True"                         
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Grid.Column="0" />
 
             <RadioButton Content="Off"
-                         IsChecked="False"
                          GroupName="notification_toggle_group"
+                         IsChecked="False"
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Grid.Column="1" />
@@ -82,6 +82,7 @@
                VerticalTextAlignment="Center" />
 
         <Picker x:Name="notify_type_picker" 
+                SelectedIndexChanged="Notify_Type_Change"
                 Grid.Row="2"
                 Grid.Column="1"
                 HorizontalOptions="Center"

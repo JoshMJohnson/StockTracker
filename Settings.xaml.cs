@@ -1,3 +1,5 @@
+using Microsoft.Maui.Controls.Internals;
+using Microsoft.Maui.Controls.Xaml;
 using System.Numerics;
 
 namespace StockTracker;
@@ -21,7 +23,7 @@ public partial class Settings : ContentPage
     /* turns on and off push notifications */
     private async void Notification_Toggle(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", "Notification_Toggle", "OK");
+        await DisplayAlert("Pop up", "e", "OK");        
     }
 
     /* handles action when percent change threshold for push notification is changed */
@@ -41,12 +43,16 @@ public partial class Settings : ContentPage
         }        
     }
 
-    /* toggle between sending push notifications
-     *  - option 1: send notifications at a given time (ex: 10am CST) 
-     *  - option 2: send notifications at the exact time the stock reaches the change percentage (if overnight then send on open) */
+    /* manages notification types (threshold/1 t.o.d./2 t.o.d.) */
     private async void Notify_Type_Change(object sender, EventArgs e)
-    { 
-        await DisplayAlert("Pop up", "Notify_Type_Change", "OK");
+    {
+        if (notify_type_picker != null)
+        {
+            /* get index chosen for notification type dropdown input */
+            string value_notify_type_string = notify_type_picker.SelectedIndex.ToString();
+            index_notify_type = Int32.Parse(value_notify_type_string);
+            await DisplayAlert("Pop up", index_notify_type.ToString(), "OK");
+        }
     }
 
     /* if send notifications at a given time; then choose that time; else display 'N/A' */
