@@ -10,8 +10,8 @@ public partial class Settings : ContentPage
     public int value_toggle_notification = 1;
     public double value_percent_change = 5;
     public int index_notify_type = 2;
-    public string value_tod1;
-    public string value_tod2;
+    public string value_tod1 = "";
+    public string value_tod2 = "";
 
     public Settings()
 	{
@@ -44,20 +44,45 @@ public partial class Settings : ContentPage
     }
 
     /* manages notification types (threshold/1 t.o.d./2 t.o.d.) */
-    private async void Notify_Type_Change(object sender, EventArgs e)
+    private void Notify_Type_Change(object sender, EventArgs e)
     {
         if (notify_type_picker != null)
         {
             /* get index chosen for notification type dropdown input */
             string value_notify_type_string = notify_type_picker.SelectedIndex.ToString();
             index_notify_type = Int32.Parse(value_notify_type_string);
-            await DisplayAlert("Pop up", index_notify_type.ToString(), "OK");
+        }
+
+        if (tod1_label != null && tod2_label != null
+                && tod1_selector != null && tod2_selector != null) /* display/hide T.O.D. labels and selectors based on notify type chosen */
+        {
+            if (index_notify_type == 0) /* if notify type is set to threshold (index 0) */
+            {
+                tod1_label.IsVisible = false;
+                tod1_selector.IsVisible = false;
+                tod2_label.IsVisible = false;
+                tod2_selector.IsVisible = false;
+            }
+            else if (index_notify_type == 1) /* if notify type is set to 1 T.O.D. (index 1) */
+            {
+                tod1_label.IsVisible = true;
+                tod1_selector.IsVisible = true;
+                tod2_label.IsVisible = false;
+                tod2_selector.IsVisible = false;
+            }
+            else /* if notify type is set to 2 T.O.D. (index 2) */
+            {
+                tod1_label.IsVisible = true;
+                tod1_selector.IsVisible = true;
+                tod2_label.IsVisible = true;
+                tod2_selector.IsVisible = true;
+            }
         }
     }
 
     /* if send notifications at a given time; then choose that time; else display 'N/A' */
     private async void Time_Of_Day_Change(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", "Time_Of_Day_Change", "OK");
+        await DisplayAlert("Pop up", value_tod1, "OK");                
     }
 }

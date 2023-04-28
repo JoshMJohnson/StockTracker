@@ -100,28 +100,30 @@
         </Picker>
 
         <Label Text="Time of Day 1:"
+               x:Name="tod1_label"
                Grid.Row="3"
                Grid.Column="0"
                FontSize="16"
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <TimePicker x:Name="tod1"
-                    Time="10:00"
+        <TimePicker Time="10:00"
+                    x:Name="tod1_selector"
                     Grid.Row="3"
                     Grid.Column="1"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
 
         <Label Text="Time of Day 2:"
+               x:Name="tod2_label"
                Grid.Row="4"
                Grid.Column="0"
                FontSize="16"
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <TimePicker x:Name="tod2" 
-                    Time="14:00"         
+        <TimePicker Time="14:00"  
+                    x:Name="tod2_selector" 
                     Grid.Row="4"
                     Grid.Column="1"
                     HorizontalOptions="Center"
