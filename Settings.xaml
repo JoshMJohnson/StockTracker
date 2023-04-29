@@ -44,34 +44,32 @@
                 VerticalTextAlignment="Center" />
 
         <Grid RowDefinitions="*, *"
-              ColumnDefinitions="*, *"
+              ColumnDefinitions="20, *, *"
               Grid.Row="1"
               Grid.Column="1" >
-            
+
             <Slider x:Name="percent_change_slider" 
                     ValueChanged="Percent_Notify_Change"
                     Minimum="3"
                     Maximum="10"
                     Value="5" 
-                    WidthRequest="175"
-                    Grid.ColumnSpan="2"
+                    WidthRequest="150"
+                    Grid.ColumnSpan="3"
                     VerticalOptions="End"
                     HorizontalOptions="Center"
-                    Margin="-10" />
-
+                    Margin="-5" />
             <Label Text="Set at:"
                    FontSize="14"
                    Grid.Row="1"
+                   Grid.Column="1"
                    HorizontalOptions="End"
-                   Margin="10" />
-
+                   Margin="5" />
             <Label x:Name="value_percent_change_label"
                    FontSize="14"
                    Grid.Row="1"
-                   Grid.Column="1"
+                   Grid.Column="2"
                    HorizontalOptions="Start"
-                   Margin="10" />
-
+                   Margin="5" />
         </Grid>
                 
         <Label Text="Notify Type:"
