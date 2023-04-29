@@ -20,10 +20,22 @@ public partial class Settings : ContentPage
         value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
     }
 
-    /* turns on and off push notifications */
+    /* changes value of notifications when switched */
     private async void Notification_Toggle(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", "e", "OK");        
+        if (notification_on != null && notification_off != null)
+        {
+            if (notification_on.IsChecked) /* if notifications are turned on */
+            {
+                value_toggle_notification = 1;
+            }
+            else /* else notifications are turned off */
+            {
+                value_toggle_notification = 0;
+            }
+
+            await DisplayAlert("Pop up", value_toggle_notification.ToString(), "OK");
+        }
     }
 
     /* handles action when slider for percent threshold is changed */
@@ -40,7 +52,7 @@ public partial class Settings : ContentPage
         }        
     }
 
-    /* manages notification type changes (threshold/1 t.o.d./2 t.o.d.) */
+    /* manages notification type displays (threshold/1 t.o.d./2 t.o.d.) */
     private void Notify_Type_Change(object sender, EventArgs e)
     {
         if (notify_type_picker != null)
@@ -77,7 +89,7 @@ public partial class Settings : ContentPage
         }
     }
 
-    /* if send notifications at a given time; then choose that time; else display 'N/A' */
+    /* if notify type involves T.O.D.; then retrieve that data */
     private async void Time_Of_Day_Change(object sender, EventArgs e)
     {
         await DisplayAlert("Pop up", value_tod1, "OK");                

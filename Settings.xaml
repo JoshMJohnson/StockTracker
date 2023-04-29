@@ -21,14 +21,15 @@
               WidthRequest="125" >
 
             <RadioButton Content="On"
-                         GroupName="notification_toggle_group"
+                         x:Name="notification_on"
+                         CheckedChanged="Notification_Toggle"
                          IsChecked="True"                         
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Grid.Column="0" />
 
             <RadioButton Content="Off"
-                         GroupName="notification_toggle_group"
+                         x:Name="notification_off"
                          IsChecked="False"
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
