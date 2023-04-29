@@ -87,11 +87,37 @@ public partial class Settings : ContentPage
                 tod2_selector.IsVisible = true;
             }
         }
+
+        Time_Of_Day_Change(sender, e);
     }
 
     /* if notify type involves T.O.D.; then retrieve that data */
     private async void Time_Of_Day_Change(object sender, EventArgs e)
     {
-        await DisplayAlert("Pop up", value_tod1, "OK");                
+        if (tod1_selector != null && tod2_selector != null)
+        {
+            if (tod1_selector.IsVisible) /* if tod1 is visible */
+            {
+                var time1 = tod1_selector.Time;
+                value_tod1 = time1.ToString();
+            }
+            else /* else tod1 is not visible */
+            {
+                value_tod1 = "N/A";
+            }
+
+            if (tod2_selector.IsVisible) /* if tod2 is visible */
+            {
+                var time2 = tod2_selector.Time;
+                value_tod2 = time2.ToString();
+            }
+            else /* else tod2 is not visible */
+            {
+                value_tod2 = "N/A";
+            }
+
+            await DisplayAlert("Pop up", value_tod1, "OK");
+            await DisplayAlert("Pop up", value_tod2, "OK");
+        }
     }
 }
