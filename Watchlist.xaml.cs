@@ -6,7 +6,7 @@ public partial class Watchlist : ContentPage
 	{
 		InitializeComponent();
 
-        /* TODO: if collection not empty, set VerticalOptions="Start"*/
+        /* TODO: if collection is empty, set VerticalOptions="Center" for collectionview */
 	}
 
     private async void Add_Stock(object sender, EventArgs e)

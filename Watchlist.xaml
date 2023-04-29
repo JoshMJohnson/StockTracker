@@ -6,8 +6,7 @@
              Title="Watchlist">
                
     <Grid ColumnDefinitions="*, *" 
-          RowDefinitions="*, Auto" 
-          BackgroundColor="Transparent" >
+          RowDefinitions="*, Auto" >
         
         <CollectionView x:Name="watchlist_items_display" 
                         Grid.ColumnSpan="2"
