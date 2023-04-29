@@ -32,6 +32,31 @@
                                  ticker_price="332.86"
                                  ticker_dollar_day_change="15.09"
                                  ticker_percent_day_change="6.89" />
+                    <model:Stock company_name="Microsoft Corp"
+                                 ticker_name="MSFT"
+                                 ticker_price="332.86"
+                                 ticker_dollar_day_change="15.09"
+                                 ticker_percent_day_change="6.89" />
+                    <model:Stock company_name="Microsoft Corp"
+                                 ticker_name="MSFT"
+                                 ticker_price="332.86"
+                                 ticker_dollar_day_change="15.09"
+                                 ticker_percent_day_change="6.89" />
+                    <model:Stock company_name="Microsoft Corp"
+                                 ticker_name="MSFT"
+                                 ticker_price="332.86"
+                                 ticker_dollar_day_change="15.09"
+                                 ticker_percent_day_change="6.89" />
+                    <model:Stock company_name="Microsoft Corp"
+                                 ticker_name="MSFT"
+                                 ticker_price="332.86"
+                                 ticker_dollar_day_change="15.09"
+                                 ticker_percent_day_change="6.89" />
+                    <model:Stock company_name="Corsair"
+                                 ticker_name="CIR"
+                                 ticker_price="12.32"
+                                 ticker_dollar_day_change="1.89"
+                                 ticker_percent_day_change="12.11" />
                 </x:Array>
             </CollectionView.ItemsSource>
 
@@ -91,12 +116,16 @@
         </CollectionView>
 
         <Button Text="Add"
+                FontAttributes="Bold"
+                FontSize="20"
                 Clicked="Add_Stock"
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="8"/>
 
         <Button Text="Remove"
+                FontAttributes="Bold"
+                FontSize="20"
                 Clicked="Remove_Stock"
                 Grid.Row="1"
                 Grid.Column="1"
