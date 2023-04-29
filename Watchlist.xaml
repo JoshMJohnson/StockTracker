@@ -19,7 +19,7 @@
                 <x:Array Type="{x:Type model:Stock}">
                     <model:Stock company_name="Apple"
                                  ticker_name="AAPL"
-                                 ticker_price="123.21"
+                                 ticker_price="2123.21"
                                  ticker_dollar_day_change="5.69"
                                  ticker_percent_day_change="2.45" />
                     <model:Stock company_name="Perpetual Income and Growth Investment Trust PLC"
@@ -38,7 +38,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Stock">
                     <Grid RowDefinitions="*, Auto"
-                          ColumnDefinitions="*, *, 60" 
+                          ColumnDefinitions="*, Auto, 60" 
                           Padding="10" >
                         <Label Text="{Binding ticker_name}"
                                Grid.Row="0"
