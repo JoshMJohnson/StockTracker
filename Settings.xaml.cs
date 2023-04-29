@@ -29,7 +29,7 @@ public partial class Settings : ContentPage
             {
                 value_toggle_notification = 1;
             }
-            else /* else notifications are turned off */
+            else if (notification_off.IsChecked) /* else notifications are turned off */
             {
                 value_toggle_notification = 0;
             }

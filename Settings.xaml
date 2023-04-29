@@ -34,7 +34,6 @@
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Grid.Column="1" />
-
         </Grid>
 
         <Label Text="Percent Change:"
