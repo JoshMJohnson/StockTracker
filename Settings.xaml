@@ -46,10 +46,9 @@
               Grid.Column="1" >
 
             <Slider x:Name="percent_change_slider" 
-                    ValueChanged="Percent_Notify_Change"
+                    ValueChanged="Percent_Notify_Change_Display"
                     Minimum="3"
                     Maximum="10"
-                    Value="5" 
                     WidthRequest="150"
                     Grid.ColumnSpan="3"
                     VerticalOptions="End"

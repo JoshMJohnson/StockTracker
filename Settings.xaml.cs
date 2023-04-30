@@ -29,6 +29,7 @@ public partial class Settings : ContentPage
         notification_off.IsChecked = !notifications;
 
         /* percent change initial display */
+        percent_change_slider.Value = value_percent_change; /* sets the starting value of the slider for percent change */
         value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
 
         /* notify type initial display */
@@ -42,10 +43,7 @@ public partial class Settings : ContentPage
         bool presave_notification_toggle = notification_on.IsChecked; /* value before save */
         bool saved_notification_toggle = Preferences.Get("NotificationToggle", true);
 
-        if (presave_notification_toggle == saved_notification_toggle) 
-        {
-            return;
-        }
+        if (presave_notification_toggle == saved_notification_toggle)  { return; } /* if not change in value since last save */
 
         Preferences.Set("NotificationToggle", presave_notification_toggle);
 
@@ -54,7 +52,23 @@ public partial class Settings : ContentPage
     }
 
     /* handles action when slider for percent threshold is changed */
-    private void Percent_Notify_Change(object sender, EventArgs e)
+    private void Percent_Notify_Change()
+    {
+        double presave_value_percent_change = percent_change_slider.Value;
+        double saved_value_percent_change = Preferences.Get("ValuePercentChange", 5.0);
+
+        if (presave_value_percent_change == saved_value_percent_change) { return; } /* if not change in value since last save */
+
+        presave_value_percent_change = Math.Round(value_percent_change, 2); /* take value from slider and format to two decimal points */
+        Preferences.Set("ValuePercentChange", presave_value_percent_change);
+
+        /* convert to string value for label display */
+        double updated_value = Preferences.Get("ValuePercentChange", 5.0);
+        value_percent_change_label.Text = updated_value.ToString();               
+    }
+
+    /* updates display of value for unsaved percent change slider */
+    private void Percent_Notify_Change_Display(object sender, EventArgs e)
     {
         if (percent_change_slider != null)
         {
@@ -64,7 +78,7 @@ public partial class Settings : ContentPage
 
             /* convert to string value for label display */
             value_percent_change_label.Text = value_percent_change.ToString();
-        }        
+        }
     }
 
     /* manages notification type displays (threshold/1 t.o.d./2 t.o.d.) */
@@ -139,6 +153,7 @@ public partial class Settings : ContentPage
     private async void Save_Button_Clicked(object sender, EventArgs e)
     {
         Check_Notification_Change();
+        Percent_Notify_Change();
 
         await DisplayAlert("Settings", "Settings Saved", "Cool");
     }
