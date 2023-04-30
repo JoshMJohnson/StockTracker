@@ -49,6 +49,7 @@ public partial class Settings : ContentPage
 
         bool updated_value = Preferences.Get("NotificationToggle", true);
         notification_on.IsChecked = updated_value;
+        notification_off.IsChecked = !updated_value;
     }
 
     /* handles action when slider for percent threshold is changed */
