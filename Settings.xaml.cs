@@ -7,35 +7,54 @@ namespace StockTracker;
 public partial class Settings : ContentPage
 {
     /* app setting variables */
-    public int value_toggle_notification = 1; /* 0 = off; 1 = on */
+    public bool notifications = true; /* saves value for notifications being on */
     public double value_percent_change = 5; /* percent change of a stock to receive a push notification */
     public int index_notify_type = 2; /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
-    public string value_tod1 = ""; /* notification time for T.O.D. #1 */
-    public string value_tod2 = ""; /* notification time for T.O.D. #2 */
+    public string value_tod1 = "10:00"; /* notification time for T.O.D. #1 */
+    public string value_tod2 = "12:30"; /* notification time for T.O.D. #2 */
 
     public Settings()
 	{
 		InitializeComponent();
 
+        /* preference key creation */
+        Preferences.Set("NotificationToggleOn", notifications);
+        Preferences.Set("NotificationToggleOff", !notifications);
+        Preferences.Set("ValuePercentChange", value_percent_change);
+        Preferences.Set("IndexNotifyType", index_notify_type);
+        Preferences.Set("ValueTOD1", value_tod1);
+        Preferences.Set("ValueTOD2", value_tod2);
+
+        /* notification initial display */
+        notification_on.IsChecked = Preferences.Get("NotificationToggleOn", true);
+        notification_off.IsChecked = Preferences.Get("NotificationToggleOff", false);
+
+        /* percent change initial display */
         value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
+
+        /* notify type initial display */
+        /* tod1 initial display */
+        /* tod2 initial display */
     }
 
     /* changes value of notifications when switched */
-    private async void Notification_Toggle(object sender, EventArgs e)
+    private async void Check_Notification_Change()
     {
-        if (notification_on != null && notification_off != null)
-        {
-            if (notification_on.IsChecked) /* if notifications are turned on */
-            {
-                value_toggle_notification = 1;
-            }
-            else if (notification_off.IsChecked) /* else notifications are turned off */
-            {
-                value_toggle_notification = 0;
-            }
+        bool presave_notification_toggle = notification_on.IsChecked; /* value before save */
+        bool saved_notification_toggle = Preferences.Get("NotificationToggleOn", true);
 
-            await DisplayAlert("Pop up", value_toggle_notification.ToString(), "OK");
+        if (presave_notification_toggle == saved_notification_toggle) 
+        {
+            return;
         }
+
+        Preferences.Set("NotificationToggleOn", presave_notification_toggle);
+        Preferences.Set("NotificationToggleOff", !presave_notification_toggle);
+
+        notification_on.IsChecked = Preferences.Get("NotificationToggleOn", true);
+        notification_off.IsChecked = Preferences.Get("NotificationToggleOff", false);
+
+        await DisplayAlert("notifications changed", notification_on.IsChecked.ToString(), "changed");
     }
 
     /* handles action when slider for percent threshold is changed */
@@ -119,5 +138,12 @@ public partial class Settings : ContentPage
             await DisplayAlert("Pop up", value_tod1, "OK");
             await DisplayAlert("Pop up", value_tod2, "OK");
         }
+    }
+
+    private async void Save_Button_Clicked(object sender, EventArgs e)
+    {
+        Check_Notification_Change();
+
+        await DisplayAlert("Settings", "Settings Saved", "Cool");
     }
 }

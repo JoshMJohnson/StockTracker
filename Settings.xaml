@@ -4,7 +4,7 @@
              x:Class="StockTracker.Settings"
              Title="Settings" >
 
-    <Grid RowDefinitions="*, *, *, *, *"
+    <Grid RowDefinitions="*, *, *, *, *, *"
           ColumnDefinitions="*, *" 
           Padding="10" >
 
@@ -22,15 +22,12 @@
 
             <RadioButton Content="On"
                          x:Name="notification_on"
-                         CheckedChanged="Notification_Toggle"
-                         IsChecked="True"                         
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Grid.Column="0" />
 
             <RadioButton Content="Off"
                          x:Name="notification_off"
-                         IsChecked="False"
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Grid.Column="1" />
@@ -126,5 +123,16 @@
                     Grid.Column="1"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
+
+        <Button Text="Save"
+                FontAttributes="Bold"
+                FontSize="14"
+                WidthRequest="125"
+                HeightRequest="65"
+                Clicked="Save_Button_Clicked"
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
     </Grid>
 </ContentPage>
