@@ -33,6 +33,8 @@ public partial class Settings : ContentPage
         value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
 
         /* notify type initial display */
+        notify_type_picker.SelectedIndex = index_notify_type;
+
         /* tod1 initial display */
         /* tod2 initial display */
     }
@@ -83,42 +85,54 @@ public partial class Settings : ContentPage
     }
 
     /* manages notification type displays (threshold/1 t.o.d./2 t.o.d.) */
-    private void Notify_Type_Change(object sender, EventArgs e)
+    private void Notify_Type_Change_Display(object sender, EventArgs e)
     {
         if (notify_type_picker != null)
         {
-            /* get index chosen for notification type dropdown input */
-            string value_notify_type_string = notify_type_picker.SelectedIndex.ToString();
-            index_notify_type = Int32.Parse(value_notify_type_string);
-        }
+            index_notify_type = notify_type_picker.SelectedIndex;
 
-        if (tod1_label != null && tod2_label != null
+            if (tod1_label != null && tod2_label != null
                 && tod1_selector != null && tod2_selector != null) /* display/hide T.O.D. labels and selectors based on notify type chosen */
-        {
-            if (index_notify_type == 0) /* if notify type is set to threshold (index 0) */
             {
-                tod1_label.IsVisible = false;
-                tod1_selector.IsVisible = false;
-                tod2_label.IsVisible = false;
-                tod2_selector.IsVisible = false;
+                if (index_notify_type == 0) /* if notify type is set to threshold (index 0) */
+                {
+                    tod1_label.IsVisible = false;
+                    tod1_selector.IsVisible = false;
+                    tod2_label.IsVisible = false;
+                    tod2_selector.IsVisible = false;
+                }
+                else if (index_notify_type == 1) /* else if notify type is set to 1 T.O.D. (index 1) */
+                {
+                    tod1_label.IsVisible = true;
+                    tod1_selector.IsVisible = true;
+                    tod2_label.IsVisible = false;
+                    tod2_selector.IsVisible = false;
+                }
+                else /* else notify type is set to 2 T.O.D. (index 2) */
+                {
+                    tod1_label.IsVisible = true;
+                    tod1_selector.IsVisible = true;
+                    tod2_label.IsVisible = true;
+                    tod2_selector.IsVisible = true;
+                }
             }
-            else if (index_notify_type == 1) /* else if notify type is set to 1 T.O.D. (index 1) */
-            {
-                tod1_label.IsVisible = true;
-                tod1_selector.IsVisible = true;
-                tod2_label.IsVisible = false;
-                tod2_selector.IsVisible = false;
-            }
-            else /* else notify type is set to 2 T.O.D. (index 2) */
-            {
-                tod1_label.IsVisible = true;
-                tod1_selector.IsVisible = true;
-                tod2_label.IsVisible = true;
-                tod2_selector.IsVisible = true;
-            }
-        }
 
-        Time_Of_Day_Change(sender, e);
+            //Time_Of_Day_Change(sender, e);
+        }
+    }
+
+    /* updates display of value for unsaved notify type */
+    private void Notify_Type_Change()
+    {
+        int presave_notify_type = notify_type_picker.SelectedIndex;
+        int saved_notify_type = Preferences.Get("IndexNotifyType", 2);
+
+        if (presave_notify_type == saved_notify_type) { return; } /* if not change in value since last save */
+                
+        Preferences.Set("IndexNotifyType", presave_notify_type);
+
+        int updated_value = Preferences.Get("IndexNotifyType", 2);
+        notify_type_picker.SelectedIndex = updated_value;
     }
 
     /* if notify type involves T.O.D.; then retrieve that data */
@@ -155,6 +169,7 @@ public partial class Settings : ContentPage
     {
         Check_Notification_Change();
         Percent_Notify_Change();
+        Notify_Type_Change();
 
         await DisplayAlert("Settings", "Settings Saved", "Cool");
     }

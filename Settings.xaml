@@ -76,7 +76,7 @@
                VerticalTextAlignment="Center" />
 
         <Picker x:Name="notify_type_picker" 
-                SelectedIndexChanged="Notify_Type_Change"
+                SelectedIndexChanged="Notify_Type_Change_Display"
                 Grid.Row="2"
                 Grid.Column="1"
                 HorizontalOptions="Center"
@@ -89,8 +89,6 @@
                     <x:String>Bidaily</x:String>
                 </x:Array>
             </Picker.ItemsSource>
-
-            <Picker.SelectedIndex>2</Picker.SelectedIndex>
         </Picker>
 
         <Label Text="Time of Day 1:"
