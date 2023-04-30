@@ -7,27 +7,26 @@ namespace StockTracker;
 public partial class Settings : ContentPage
 {
     /* app setting variables */
-    public bool notifications = true; /* saves value for notifications being on */
-    public double value_percent_change = 5; /* percent change of a stock to receive a push notification */
-    public int index_notify_type = 2; /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
-    public string value_tod1 = "10:00"; /* notification time for T.O.D. #1 */
-    public string value_tod2 = "12:30"; /* notification time for T.O.D. #2 */
+    public bool notifications { get; set; } /* saves value for notifications being on */
+    public double value_percent_change { get; set; } /* percent change of a stock to receive a push notification */
+    public int index_notify_type { get; set; } /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
+    public string value_tod1 { get; set; } /* notification time for T.O.D. #1 */
+    public string value_tod2 { get; set; } /* notification time for T.O.D. #2 */
 
     public Settings()
 	{
 		InitializeComponent();
 
         /* preference key creation */
-        Preferences.Set("NotificationToggleOn", notifications);
-        Preferences.Set("NotificationToggleOff", !notifications);
-        Preferences.Set("ValuePercentChange", value_percent_change);
-        Preferences.Set("IndexNotifyType", index_notify_type);
-        Preferences.Set("ValueTOD1", value_tod1);
-        Preferences.Set("ValueTOD2", value_tod2);
+        notifications = Preferences.Get("NotificationToggle", true);
+        value_percent_change = Preferences.Get("ValuePercentChange", 5.0);
+        index_notify_type = Preferences.Get("IndexNotifyType", 2);
+        value_tod1 = Preferences.Get("ValueTOD1", "10:00");
+        value_tod2 = Preferences.Get("ValueTOD2", "12:30");
 
         /* notification initial display */
-        notification_on.IsChecked = Preferences.Get("NotificationToggleOn", true);
-        notification_off.IsChecked = Preferences.Get("NotificationToggleOff", false);
+        notification_on.IsChecked = notifications;
+        notification_off.IsChecked = !notifications;
 
         /* percent change initial display */
         value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
@@ -38,23 +37,20 @@ public partial class Settings : ContentPage
     }
 
     /* changes value of notifications when switched */
-    private async void Check_Notification_Change()
+    private void Check_Notification_Change()
     {
         bool presave_notification_toggle = notification_on.IsChecked; /* value before save */
-        bool saved_notification_toggle = Preferences.Get("NotificationToggleOn", true);
+        bool saved_notification_toggle = Preferences.Get("NotificationToggle", true);
 
         if (presave_notification_toggle == saved_notification_toggle) 
         {
             return;
         }
 
-        Preferences.Set("NotificationToggleOn", presave_notification_toggle);
-        Preferences.Set("NotificationToggleOff", !presave_notification_toggle);
+        Preferences.Set("NotificationToggle", presave_notification_toggle);
 
-        notification_on.IsChecked = Preferences.Get("NotificationToggleOn", true);
-        notification_off.IsChecked = Preferences.Get("NotificationToggleOff", false);
-
-        await DisplayAlert("notifications changed", notification_on.IsChecked.ToString(), "changed");
+        bool updated_value = Preferences.Get("NotificationToggle", true);
+        notification_on.IsChecked = updated_value;
     }
 
     /* handles action when slider for percent threshold is changed */
