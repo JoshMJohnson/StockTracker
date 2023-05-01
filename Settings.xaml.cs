@@ -150,8 +150,8 @@ public partial class Settings : ContentPage
         notify_type_picker.SelectedIndex = updated_value;
     }
 
-    /* if notify type involves T.O.D.; then retrieve that data */
-    private async void Time_Of_Day_Change()
+    /* manages TOD1 and TOD2 local storage */
+    private void Time_Of_Day_Change()
     {
         var saved_time1_var = tod1_selector.Time;
         string saved_time1_string = saved_time1_var.ToString();
@@ -171,10 +171,6 @@ public partial class Settings : ContentPage
             {
                 Preferences.Set("ValueTOD1", saved_time1_string);
             }
-            else /* else tod1 is not visible */
-            {
-                Preferences.Set("ValueTOD1", "N/A");
-            }
         }
 
         if (prev_time2_string != saved_time2_string) /* if time2 changes with save */
@@ -183,10 +179,6 @@ public partial class Settings : ContentPage
             if (tod2_selector.IsVisible) /* if tod2 is visible */
             {
                 Preferences.Set("ValueTOD2", saved_time2_string);
-            }
-            else /* else tod2 is not visible */
-            {
-                Preferences.Set("ValueTOD2", "N/A");
             }
         }
     }
