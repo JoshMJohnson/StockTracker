@@ -36,12 +36,7 @@ public partial class Settings : ContentPage
         notify_type_picker.SelectedIndex = index_notify_type;
 
         /* tod1 initial display */
-        /* update display of time */
-        string updated_value = Preferences.Get("ValueTOD1", "N/A");
-
-        /* convert string to timespan */
-        string[] updated_view_array = updated_value.Split(':');
-
+        string[] updated_view_array = value_tod1.Split(':');
         string hours_string = updated_view_array[0];
         string mins_string = updated_view_array[1];
         int hours = int.Parse(hours_string);
@@ -51,12 +46,7 @@ public partial class Settings : ContentPage
         tod1_selector.Time = temp_time;
 
         /* tod2 initial display */
-        /* update display of time */
-        string updated_value2 = Preferences.Get("ValueTOD2", "N/A");
-
-        /* convert string to timespan */
-        string[] updated_view_array2 = updated_value2.Split(':');
-
+        string[] updated_view_array2 = value_tod2.Split(':');
         string hours_string2 = updated_view_array2[0];
         string mins_string2 = updated_view_array2[1];
         int hours2 = int.Parse(hours_string2);
