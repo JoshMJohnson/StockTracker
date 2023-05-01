@@ -22,7 +22,7 @@ public partial class Settings : ContentPage
         value_percent_change = Preferences.Get("ValuePercentChange", 5.0);
         index_notify_type = Preferences.Get("IndexNotifyType", 2);
         value_tod1 = Preferences.Get("ValueTOD1", "10:00");
-        value_tod2 = Preferences.Get("ValueTOD2", "12:30");
+        value_tod2 = Preferences.Get("ValueTOD2", "2:00");
 
         /* notification initial display */
         notification_on.IsChecked = notifications;
@@ -36,7 +36,34 @@ public partial class Settings : ContentPage
         notify_type_picker.SelectedIndex = index_notify_type;
 
         /* tod1 initial display */
+        /* update display of time */
+        string updated_value = Preferences.Get("ValueTOD1", "N/A");
+
+        /* convert string to timespan */
+        string[] updated_view_array = updated_value.Split(':');
+
+        string hours_string = updated_view_array[0];
+        string mins_string = updated_view_array[1];
+        int hours = int.Parse(hours_string);
+        int mins = int.Parse(mins_string);
+
+        TimeSpan temp_time = new TimeSpan(hours, mins, 0);
+        tod1_selector.Time = temp_time;
+
         /* tod2 initial display */
+        /* update display of time */
+        string updated_value2 = Preferences.Get("ValueTOD2", "N/A");
+
+        /* convert string to timespan */
+        string[] updated_view_array2 = updated_value2.Split(':');
+
+        string hours_string2 = updated_view_array2[0];
+        string mins_string2 = updated_view_array2[1];
+        int hours2 = int.Parse(hours_string2);
+        int mins2 = int.Parse(mins_string2);
+
+        TimeSpan temp_time2 = new TimeSpan(hours2, mins2, 0);
+        tod2_selector.Time = temp_time2;
     }
 
     /* changes value of notifications when switched */
@@ -115,9 +142,7 @@ public partial class Settings : ContentPage
                     tod2_label.IsVisible = true;
                     tod2_selector.IsVisible = true;
                 }
-            }
-
-            //Time_Of_Day_Change(sender, e);
+            }            
         }
     }
 
@@ -136,32 +161,43 @@ public partial class Settings : ContentPage
     }
 
     /* if notify type involves T.O.D.; then retrieve that data */
-    private async void Time_Of_Day_Change(object sender, EventArgs e)
+    private async void Time_Of_Day_Change()
     {
-        if (tod1_selector != null && tod2_selector != null)
+        var saved_time1_var = tod1_selector.Time;
+        string saved_time1_string = saved_time1_var.ToString();
+        string prev_time1_string = Preferences.Get("ValueTOD1", null);
+
+        var saved_time2_var = tod2_selector.Time;
+        string saved_time2_string = saved_time2_var.ToString();
+        string prev_time2_string = Preferences.Get("ValueTOD2", null);
+
+        if (prev_time1_string == saved_time1_string
+                && prev_time2_string == saved_time2_string) { return; } /* if not change in value since last save */
+
+        if (prev_time1_string != saved_time1_string) /* if time1 changes with save */
         {
+            /* change display time */
             if (tod1_selector.IsVisible) /* if tod1 is visible */
             {
-                var time1 = tod1_selector.Time;
-                value_tod1 = time1.ToString();
+                Preferences.Set("ValueTOD1", saved_time1_string);
             }
             else /* else tod1 is not visible */
             {
-                value_tod1 = "N/A";
+                Preferences.Set("ValueTOD1", "N/A");
             }
+        }
 
+        if (prev_time2_string != saved_time2_string) /* if time2 changes with save */
+        {
+            /* change display time */
             if (tod2_selector.IsVisible) /* if tod2 is visible */
             {
-                var time2 = tod2_selector.Time;
-                value_tod2 = time2.ToString();
+                Preferences.Set("ValueTOD2", saved_time2_string);
             }
             else /* else tod2 is not visible */
             {
-                value_tod2 = "N/A";
+                Preferences.Set("ValueTOD2", "N/A");
             }
-
-            await DisplayAlert("Pop up", value_tod1, "OK");
-            await DisplayAlert("Pop up", value_tod2, "OK");
         }
     }
 
@@ -170,6 +206,7 @@ public partial class Settings : ContentPage
         Check_Notification_Change();
         Percent_Notify_Change();
         Notify_Type_Change();
+        Time_Of_Day_Change();
 
         await DisplayAlert("Settings", "Settings Saved", "Cool");
     }

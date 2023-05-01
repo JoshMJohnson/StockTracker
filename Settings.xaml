@@ -99,8 +99,7 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <TimePicker Time="10:00"
-                    x:Name="tod1_selector"
+        <TimePicker x:Name="tod1_selector"
                     Grid.Row="3"
                     Grid.Column="1"
                     HorizontalOptions="Center"
@@ -114,8 +113,7 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center" />
 
-        <TimePicker Time="14:00"  
-                    x:Name="tod2_selector" 
+        <TimePicker x:Name="tod2_selector" 
                     Grid.Row="4"
                     Grid.Column="1"
                     HorizontalOptions="Center"
