@@ -1,11 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+using SQLite;
+
 namespace StockTracker.Model;
 
+[Table("Stocks")]
 public class Stock
 {
-    public string company_name {  get; set; }
+    [PrimaryKey, Unique]
     public string ticker_name { get; set; }
-    public string ticker_price { get; set; }
-    public string ticker_dollar_day_change { get; set; }
-    public string ticker_percent_day_change { get; set; }
-    
+
+    [Unique]
+    public string company_name {  get; set; }
+
+    public double ticker_price { get; set; }
+
+    public double ticker_dollar_day_change { get; set; }
+
+    public double ticker_percent_day_change { get; set; }
 }
