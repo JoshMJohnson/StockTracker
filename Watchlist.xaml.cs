@@ -1,3 +1,5 @@
+using SQLite;
+
 namespace StockTracker;
 
 public partial class Watchlist : ContentPage
@@ -6,16 +8,27 @@ public partial class Watchlist : ContentPage
 	{
 		InitializeComponent();
 
+        string path = FileSystem.Current.AppDataDirectory;
+
+        string filename = Path.Combine(path, "Stock_Watchlist.db");
+        SQLiteConnection conn = new SQLiteConnection(filename);
+
         /* TODO: if collection is empty, set VerticalOptions="Center" for collectionview */
 	}
 
-    private async void Add_Stock(object sender, EventArgs e)
+    /* adds a stock to the database */
+    /*
+    public int AddStock(string ticker)
     {
-        string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text, maxLength: 5);
-    }
 
-    private async void Remove_Stock(object sender, EventArgs e)
-    {
-        string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
     }
+    */
+
+    /* removes a stock from the database */ 
+    /*
+    public int RemoveStock(string ticker)
+    {
+
+    }
+    */
 }
