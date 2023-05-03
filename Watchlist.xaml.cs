@@ -30,10 +30,14 @@ public partial class Watchlist : ContentPage
 
         if (btn.Text == "Add") /* if add button was clicked on */
         {
-            await DisplayAlert("alert", "Add button was clicked", "yayayaya");
+            string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text, maxLength: 5);
+
+            
         } else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
-            await DisplayAlert("alert", "Remove button was clicked", "yayayaya");
+            string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
+
+
         }
     }
 
