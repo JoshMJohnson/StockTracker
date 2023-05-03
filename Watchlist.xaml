@@ -15,9 +15,6 @@
                         VerticalOptions="Start"
                         HorizontalOptions="Center" >
 
-            <CollectionView.ItemsSource>
-            </CollectionView.ItemsSource>
-
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Stock">
                     <Grid RowDefinitions="*, Auto"
@@ -79,7 +76,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="8"
-                Clicked="Create_Stock" />
+                Clicked="Create_Stock_Entity" />
 
         <Button Text="Remove"
                 FontAttributes="Bold"
@@ -87,6 +84,6 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="8"
-                Clicked="Create_Stock" />
+                Clicked="Create_Stock_Entity" />
     </Grid>
 </ContentPage>
