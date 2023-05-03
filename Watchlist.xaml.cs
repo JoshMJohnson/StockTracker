@@ -10,7 +10,6 @@ public partial class Watchlist : ContentPage
 		InitializeComponent();
 
         List<Stock> watchlist = App.StockRepo.Get_Stock_Watchlist();
-        watchlist_items_display.ItemsSource = watchlist;
 
         if (watchlist.Count == 0) /* if watchlist is empty */
         {
@@ -18,7 +17,7 @@ public partial class Watchlist : ContentPage
         } 
         else /* else watchlist is not empty */
         {
-
+            watchlist_items_display.ItemsSource = watchlist;
         }
     }
 

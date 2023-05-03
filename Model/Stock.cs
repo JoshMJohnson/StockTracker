@@ -7,14 +7,14 @@ namespace StockTracker.Model;
 public class Stock
 {
     [PrimaryKey, Unique]
-    public string TickerName { get; set; }
+    public string ticker_name { get; set; }
 
     [Unique]
-    public string CompanyName {  get; set; }
+    public string company_name {  get; set; }
 
-    public double TickerPrice { get; set; }
+    public double ticker_price { get; set; }
 
-    public double TickerDollarDayChange { get; set; }
+    public double ticker_dollar_day_change { get; set; }
 
-    public double TickerPercentDayChange { get; set; }
+    public double ticker_percent_day_change { get; set; }
 }

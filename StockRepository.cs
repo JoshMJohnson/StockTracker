@@ -38,7 +38,7 @@ public class StockRepository
         {
             Init_Database();
 
-            result = conn.Insert(new Stock { TickerName = stock_ticker });
+            result = conn.Insert(new Stock { ticker_name = stock_ticker });
 
             StatusMessage = string.Format("{0} stock added (Ticker: {1})", result, stock_ticker);
         } catch (Exception ex)
