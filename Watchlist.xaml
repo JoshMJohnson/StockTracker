@@ -16,48 +16,6 @@
                         HorizontalOptions="Center" >
 
             <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type model:Stock}">
-                    <model:Stock company_name="Apple"
-                                 ticker_name="AAPL"
-                                 ticker_price="2123.21"
-                                 ticker_dollar_day_change="5.69"
-                                 ticker_percent_day_change="2.45" />
-                    <model:Stock company_name="Perpetual Income and Growth Investment Trust PLC"
-                                 ticker_name="KNDI"
-                                 ticker_price="8.42"
-                                 ticker_dollar_day_change="199.63"
-                                 ticker_percent_day_change="2.98" />
-                    <model:Stock company_name="Microsoft Corp"
-                                 ticker_name="MSFT"
-                                 ticker_price="332.86"
-                                 ticker_dollar_day_change="15.09"
-                                 ticker_percent_day_change="6.89" />
-                    <model:Stock company_name="Microsoft Corp"
-                                 ticker_name="MSFT"
-                                 ticker_price="332.86"
-                                 ticker_dollar_day_change="15.09"
-                                 ticker_percent_day_change="6.89" />
-                    <model:Stock company_name="Microsoft Corp"
-                                 ticker_name="MSFT"
-                                 ticker_price="332.86"
-                                 ticker_dollar_day_change="15.09"
-                                 ticker_percent_day_change="6.89" />
-                    <model:Stock company_name="Microsoft Corp"
-                                 ticker_name="MSFT"
-                                 ticker_price="332.86"
-                                 ticker_dollar_day_change="15.09"
-                                 ticker_percent_day_change="6.89" />
-                    <model:Stock company_name="Microsoft Corp"
-                                 ticker_name="MSFT"
-                                 ticker_price="332.86"
-                                 ticker_dollar_day_change="15.09"
-                                 ticker_percent_day_change="6.89" />
-                    <model:Stock company_name="Corsair"
-                                 ticker_name="CIR"
-                                 ticker_price="12.32"
-                                 ticker_dollar_day_change="1.89"
-                                 ticker_percent_day_change="12.11" />
-                </x:Array>
             </CollectionView.ItemsSource>
 
             <CollectionView.ItemTemplate>
@@ -65,15 +23,15 @@
                     <Grid RowDefinitions="*, Auto"
                           ColumnDefinitions="*, Auto, 60" 
                           Padding="10" >
-                        <Label Text="{Binding ticker_name}"
+                        <Label Text="{Binding TickerName}"
                                Grid.Row="0"
                                Grid.Column="0"
                                FontSize="24" />
-                        <Label Text="{Binding company_name}"
+                        <Label Text="{Binding CompanyName}"
                                Grid.Row="1"
                                Grid.Column="0"
                                FontSize="12" />
-                        <Label Text="{Binding ticker_price,
+                        <Label Text="{Binding TickerPrice,
                                         StringFormat='${0}'}"
                                Grid.RowSpan="2"
                                Grid.Row="0"
@@ -82,14 +40,14 @@
                                Margin="10"
                                VerticalOptions="Center"
                                HorizontalOptions="End" />
-                        <Label Text="{Binding ticker_dollar_day_change,
+                        <Label Text="{Binding TickerDollarDayChange,
                                         StringFormat='${0}'}"
                                Grid.Row="0"
                                Grid.Column="2"
                                FontSize="14"
                                HorizontalOptions="End"
                                VerticalOptions="Start"/>
-                        <Label Text="{Binding ticker_percent_day_change,
+                        <Label Text="{Binding TickerPercentDayChange,
                                         StringFormat='{0}%'}"
                                Grid.Row="1"
                                Grid.Column="2"
@@ -118,17 +76,17 @@
         <Button Text="Add"
                 FontAttributes="Bold"
                 FontSize="20"
-                Clicked="Add_Stock"
                 Grid.Row="1"
                 Grid.Column="0"
-                Margin="8"/>
+                Margin="8"
+                Clicked="Create_Stock" />
 
         <Button Text="Remove"
                 FontAttributes="Bold"
                 FontSize="20"
-                Clicked="Remove_Stock"
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="8"/>
+                Margin="8"
+                Clicked="Create_Stock" />
     </Grid>
 </ContentPage>
