@@ -9,17 +9,17 @@ public class StockRepository
 	
 	public string StatusMessage { get; set; }
 
-	private SQLiteConnection conn;
+	private SQLiteAsyncConnection conn;
 
     /* initializes the database */
-    private void Init_Database()
+    private async Task Init_Database()
     {
         if (conn != null) { return; }
 
         /* connect to database */
-        conn = new SQLiteConnection(_dbpath);
+        conn = new SQLiteAsyncConnection(_dbpath);
 
-        conn.CreateTable<Stock>();
+        await conn.CreateTableAsync<Stock>();
     }
 
     public StockRepository(string dbPath)
@@ -28,7 +28,7 @@ public class StockRepository
     }
 
     /* adds a stock to the database */
-    public void Add_Stock(string stock_ticker)
+    public async Task Add_Stock(string stock_ticker)
     {
         ArgumentNullException.ThrowIfNull(stock_ticker, nameof(stock_ticker));
 
@@ -36,9 +36,9 @@ public class StockRepository
 
         try
         {
-            Init_Database();
+            await Init_Database();
 
-            result = conn.Insert(new Stock { ticker_name = stock_ticker });
+            result = await conn.InsertAsync(new Stock { ticker_name = stock_ticker });
 
             StatusMessage = string.Format("{0} stock added (Ticker: {1})", result, stock_ticker);
         } catch (Exception ex)
@@ -47,21 +47,21 @@ public class StockRepository
         }        
     }
 
-    /* removes a stock from the database */
+    /* removes a stock from the database *//*
     public int Remove_Stock(Stock stock)
     {
         int result = conn.Delete(stock);
         return result;
-    }
+    }*/
 
     /* returns a list of all the stocks within the database */
-    public List<Stock> Get_Stock_Watchlist()
+    public async Task<List<Stock>> Get_Stock_Watchlist()
     {
         try
         {
-            Init_Database();
+            await Init_Database();
 
-            return conn.Table<Stock>().ToList();
+            return await conn.Table<Stock>().ToListAsync();
         } catch(Exception ex) 
         {
             StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);

@@ -6,7 +6,7 @@
              Title="Watchlist">
                
     <Grid ColumnDefinitions="*, *" 
-          RowDefinitions="*, Auto" >
+          RowDefinitions="*, Auto, Auto" >
         
         <CollectionView x:Name="watchlist_items_display" 
                         Grid.ColumnSpan="2"
@@ -70,10 +70,18 @@
                         
         </CollectionView>
 
-        <Button Text="Add"
+        <Button Text="Refresh"
                 FontAttributes="Bold"
                 FontSize="20"
                 Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="8"
+                Clicked="Refresh" />
+        
+        <Button Text="Add"
+                FontAttributes="Bold"
+                FontSize="20"
+                Grid.Row="2"
                 Grid.Column="0"
                 Margin="8"
                 Clicked="Create_Stock_Entity" />
@@ -81,7 +89,7 @@
         <Button Text="Remove"
                 FontAttributes="Bold"
                 FontSize="20"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 Margin="8"
                 Clicked="Create_Stock_Entity" />

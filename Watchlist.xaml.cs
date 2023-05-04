@@ -9,21 +9,21 @@ public partial class Watchlist : ContentPage
 	{
 		InitializeComponent();
 
-        List<Stock> watchlist = App.StockRepo.Get_Stock_Watchlist();
+        //List<Stock> watchlist = App.StockRepo.Get_Stock_Watchlist();
 
-        if (watchlist.Count == 0) /* if watchlist is empty */
-        {
-            watchlist_items_display.VerticalOptions = LayoutOptions.Center;
-        } 
-        else /* else watchlist is not empty */
-        {
-            watchlist_items_display.VerticalOptions = LayoutOptions.Start;
-            watchlist_items_display.ItemsSource = watchlist;
-        }
+        //if (watchlist.Count == 0) /* if watchlist is empty */
+        //{
+        //    watchlist_items_display.VerticalOptions = LayoutOptions.Center;
+        //} 
+        //else /* else watchlist is not empty */
+        //{
+        //    watchlist_items_display.VerticalOptions = LayoutOptions.Start;
+        //    watchlist_items_display.ItemsSource = watchlist;
+        //}
     }
 
     /* handles the adding and removing buttons on watchlist page */
-    private async void Create_Stock_Entity(object sender, EventArgs e)
+    public async void Create_Stock_Entity(object sender, EventArgs e)
     {
         Button btn = (Button) sender; /* identifies the button that directed to this function */
 
@@ -31,12 +31,19 @@ public partial class Watchlist : ContentPage
         {
             string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text, maxLength: 5);
 
-
+            await App.StockRepo.Add_Stock(stock);
         } else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
             string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
 
-
+            
         }
+    }
+
+    /* gets all the stocks on the database and displays on UI */
+    public async void Refresh(Object sender, EventArgs e)
+    {
+        List<Stock> stocks = await App.StockRepo.Get_Stock_Watchlist();
+        watchlist_items_display.ItemsSource = stocks;
     }
 }
