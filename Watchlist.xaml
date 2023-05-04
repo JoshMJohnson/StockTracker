@@ -7,7 +7,7 @@
                
     <Grid ColumnDefinitions="*, *" 
           RowDefinitions="*, Auto, Auto" >
-        
+
         <CollectionView x:Name="watchlist_items_display" 
                         Grid.ColumnSpan="2"
                         Grid.Row="0"
@@ -51,10 +51,10 @@
                                FontSize="14" 
                                HorizontalOptions="End"
                                VerticalOptions="End"/>
-                    </Grid>                    
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-            
+
             <CollectionView.EmptyView>
                 <VerticalStackLayout>
                     <Label Text="No stocks in watchlist"
@@ -67,17 +67,9 @@
                            HeightRequest="200" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
-                        
+
         </CollectionView>
 
-        <Button Text="Refresh"
-                FontAttributes="Bold"
-                FontSize="20"
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Margin="8"
-                Clicked="Refresh" />
-        
         <Button Text="Add"
                 FontAttributes="Bold"
                 FontSize="20"

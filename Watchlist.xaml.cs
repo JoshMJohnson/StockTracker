@@ -22,6 +22,8 @@ public partial class Watchlist : ContentPage
             string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text, maxLength: 5);
 
             await App.StockRepo.Add_Stock(stock);
+
+            Refresh(null, null);
         } else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
             string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
