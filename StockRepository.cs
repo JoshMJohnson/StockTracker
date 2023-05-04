@@ -10,7 +10,7 @@ public class StockRepository
 	
 	public string StatusMessage { get; set; }
 
-	private SQLiteAsyncConnection conn;
+	private static SQLiteAsyncConnection conn;
 
     /* initializes the database */
     private async Task Init_Database()
@@ -33,24 +33,23 @@ public class StockRepository
     {
         ArgumentNullException.ThrowIfNull(stock_ticker, nameof(stock_ticker));
 
-        int result = 0;
-
         try
         {
             await Init_Database();
 
-            var stock = new Stock
+            Stock stock = new Stock
             {
                 ticker_name = stock_ticker,
-                company_name = "",
+                company_name = "The " + stock_ticker + " company",
                 ticker_price = -1,
                 ticker_dollar_day_change = -1,
                 ticker_percent_day_change = -1
             };
 
             Debug.WriteLine("****************ticker added***: " + stock.ticker_name);
+            Debug.WriteLine("****************db***: " + _dbpath);
 
-            result = await conn.InsertAsync(stock);
+            int result = await conn.InsertAsync(stock);
 
             Debug.WriteLine("****************ticker added***22: " + stock.ticker_name);
 
@@ -61,12 +60,26 @@ public class StockRepository
         }        
     }
 
-    /* removes a stock from the database *//*
-    public int Remove_Stock(Stock stock)
+    /* removes a stock from the database */
+    public async Task Remove_Stock(string stock_ticker)
     {
-        int result = conn.Delete(stock);
-        return result;
-    }*/
+        ArgumentNullException.ThrowIfNull(stock_ticker, nameof(stock_ticker));
+
+        try
+        {
+            await Init_Database();
+
+            Debug.WriteLine("****************ticker removed***: " + stock_ticker);
+
+            await conn.DeleteAsync(stock_ticker);
+
+            Debug.WriteLine("****************ticker removed***22: " + stock_ticker);
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = string.Format("Failed to remove {0}. Error: {1}", stock_ticker, ex.Message);
+        }
+    }
 
     /* returns a list of all the stocks within the database */
     public async Task<List<Stock>> Get_Stock_Watchlist()
