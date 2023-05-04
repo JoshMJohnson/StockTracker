@@ -9,17 +9,7 @@ public partial class Watchlist : ContentPage
 	{
 		InitializeComponent();
 
-        //List<Stock> watchlist = App.StockRepo.Get_Stock_Watchlist();
-
-        //if (watchlist.Count == 0) /* if watchlist is empty */
-        //{
-        //    watchlist_items_display.VerticalOptions = LayoutOptions.Center;
-        //} 
-        //else /* else watchlist is not empty */
-        //{
-        //    watchlist_items_display.VerticalOptions = LayoutOptions.Start;
-        //    watchlist_items_display.ItemsSource = watchlist;
-        //}
+        Refresh(null, null);
     }
 
     /* handles the adding and removing buttons on watchlist page */
@@ -43,7 +33,16 @@ public partial class Watchlist : ContentPage
     /* gets all the stocks on the database and displays on UI */
     public async void Refresh(Object sender, EventArgs e)
     {
-        List<Stock> stocks = await App.StockRepo.Get_Stock_Watchlist();
-        watchlist_items_display.ItemsSource = stocks;
+        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist();
+
+        if (watchlist.Count == 0) /* if watchlist is empty */
+        {
+            watchlist_items_display.VerticalOptions = LayoutOptions.Center;
+        }
+        else /* else watchlist is not empty */
+        {
+            watchlist_items_display.VerticalOptions = LayoutOptions.Start;
+            watchlist_items_display.ItemsSource = watchlist;
+        }
     }
 }
