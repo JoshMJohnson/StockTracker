@@ -21,14 +21,14 @@ public partial class Watchlist : ContentPage
             string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text, maxLength: 5);
 
             await App.StockRepo.Add_Stock(stock);
-
-            Refresh();
         } else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
             string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
 
-            
+            //await App.StockRepo.Remove_Stock(stock);
         }
+
+        Refresh();
     }
 
     /* gets all the stocks on the database and displays on UI */
