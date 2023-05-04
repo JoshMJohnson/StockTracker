@@ -1,5 +1,6 @@
 using StockTracker.Model;
 using SQLite;
+using System.Diagnostics;
 
 namespace StockTracker;
 
@@ -38,7 +39,20 @@ public class StockRepository
         {
             await Init_Database();
 
-            result = await conn.InsertAsync(new Stock { ticker_name = stock_ticker });
+            var stock = new Stock
+            {
+                ticker_name = stock_ticker,
+                company_name = "",
+                ticker_price = -1,
+                ticker_dollar_day_change = -1,
+                ticker_percent_day_change = -1
+            };
+
+            Debug.WriteLine("****************ticker added***: " + stock.ticker_name);
+
+            result = await conn.InsertAsync(stock);
+
+            Debug.WriteLine("****************ticker added***22: " + stock.ticker_name);
 
             StatusMessage = string.Format("{0} stock added (Ticker: {1})", result, stock_ticker);
         } catch (Exception ex)
@@ -60,6 +74,8 @@ public class StockRepository
         try
         {
             await Init_Database();
+
+            Debug.WriteLine("****database location: " + _dbpath);
 
             return await conn.Table<Stock>().ToListAsync();
         } catch(Exception ex) 
