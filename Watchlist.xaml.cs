@@ -8,8 +8,7 @@ public partial class Watchlist : ContentPage
     public Watchlist()
 	{
 		InitializeComponent();
-
-        Refresh(null, null);
+        Refresh();
     }
 
     /* handles the adding and removing buttons on watchlist page */
@@ -23,7 +22,7 @@ public partial class Watchlist : ContentPage
 
             await App.StockRepo.Add_Stock(stock);
 
-            Refresh(null, null);
+            Refresh();
         } else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
             string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
@@ -33,7 +32,7 @@ public partial class Watchlist : ContentPage
     }
 
     /* gets all the stocks on the database and displays on UI */
-    public async void Refresh(Object sender, EventArgs e)
+    public async void Refresh()
     {
         List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist();
 
