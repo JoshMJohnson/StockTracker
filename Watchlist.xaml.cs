@@ -5,19 +5,19 @@ namespace StockTracker;
 
 public partial class Watchlist : ContentPage
 {
-    VerticalStackLayout vertical_layout;
+    VerticalStackLayout vertical_layout_watchlist_empty;
 
     public Watchlist()
 	{
 		InitializeComponent();
         Refresh();
 
-        vertical_layout = new VerticalStackLayout();
+        vertical_layout_watchlist_empty = new VerticalStackLayout();
 
-        vertical_layout.VerticalOptions = LayoutOptions.Center;
-        vertical_layout.HorizontalOptions = LayoutOptions.Center;
+        vertical_layout_watchlist_empty.VerticalOptions = LayoutOptions.Center;
+        vertical_layout_watchlist_empty.HorizontalOptions = LayoutOptions.Center;
 
-        vertical_layout.Add(new Label
+        vertical_layout_watchlist_empty.Add(new Label
         {
             Text = "No stocks in watchlist",
             FontSize = 20,
@@ -25,16 +25,16 @@ public partial class Watchlist : ContentPage
             HorizontalOptions = LayoutOptions.Center
         });
 
-        vertical_layout.Add(new Image
+        vertical_layout_watchlist_empty.Add(new Image
         {
             Source = "empty_watchlist.png",
             HeightRequest = 200
         });
 
         Grid watchlist_layout = watchlist_page_layout;
-        Grid.SetColumnSpan(vertical_layout, 2);
-        Grid.SetRow(vertical_layout, 0);
-        watchlist_layout.Children.Add(vertical_layout);
+        Grid.SetColumnSpan(vertical_layout_watchlist_empty, 2);
+        Grid.SetRow(vertical_layout_watchlist_empty, 0);
+        watchlist_layout.Children.Add(vertical_layout_watchlist_empty);
     }
 
     /* handles the adding and removing buttons on watchlist page */
@@ -79,11 +79,11 @@ public partial class Watchlist : ContentPage
 
         if (watchlist.Count == 0) /* if watchlist is empty */
         {
-            vertical_layout.IsVisible = true;
+            vertical_layout_watchlist_empty.IsVisible = true;
         }
         else /* else watchlist is not empty */
         {
-            vertical_layout.IsVisible = false;
+            vertical_layout_watchlist_empty.IsVisible = false;
             watchlist_items_display.VerticalOptions = LayoutOptions.Start;
         }
 
