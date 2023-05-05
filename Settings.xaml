@@ -123,7 +123,7 @@
                 FontAttributes="Bold"
                 FontSize="14"
                 WidthRequest="125"
-                HeightRequest="65"
+                HeightRequest="50"
                 Clicked="Save_Button_Clicked"
                 Grid.Row="5"
                 Grid.ColumnSpan="2"
