@@ -46,12 +46,7 @@ public class StockRepository
                 ticker_percent_day_change = -1
             };
 
-            Debug.WriteLine("****************ticker added***: " + stock.ticker_name);
-            Debug.WriteLine("****************db***: " + _dbpath);
-
             int result = await conn.InsertAsync(stock);
-
-            Debug.WriteLine("****************ticker added***22: " + stock.ticker_name);
 
             StatusMessage = string.Format("{0} stock added (Ticker: {1})", result, stock_ticker);
         } catch (Exception ex)
@@ -69,11 +64,9 @@ public class StockRepository
         {
             await Init_Database();
 
-            Debug.WriteLine("****************ticker removed***: " + stock_ticker);
+            Stock removing_stock = await conn.FindAsync<Stock>(stock_ticker);
 
-            await conn.DeleteAsync(stock_ticker);
-
-            Debug.WriteLine("****************ticker removed***22: " + stock_ticker);
+            await conn.DeleteAsync(removing_stock);
         }
         catch (Exception ex)
         {
@@ -87,8 +80,6 @@ public class StockRepository
         try
         {
             await Init_Database();
-
-            Debug.WriteLine("****database location: " + _dbpath);
 
             return await conn.Table<Stock>().ToListAsync();
         } catch(Exception ex) 
