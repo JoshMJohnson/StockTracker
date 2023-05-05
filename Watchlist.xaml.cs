@@ -16,7 +16,7 @@ public partial class Watchlist : ContentPage
 
         /* sorting the list */
         sort_alpha = Preferences.Get("SortAlphaValue", true);
-        sort_display = Preferences.Get("SortDisplay", "Sort: Alpha");
+        sort_display = Preferences.Get("SortDisplay", "Sorted: Alpha");
 
         sort_button.Text = sort_display;
 
@@ -91,15 +91,15 @@ public partial class Watchlist : ContentPage
         if (sort_alpha) /* set to sort by price */
         {
             Preferences.Set("SortAlphaValue", false);
-            Preferences.Set("SortDisplay", "Sort: Price");
+            Preferences.Set("SortDisplay", "Sorted: Price");
         }
         else /* set to sort alphabetically */
         {
             Preferences.Set("SortAlphaValue", true);
-            Preferences.Set("SortDisplay", "Sort: Alpha");
+            Preferences.Set("SortDisplay", "Sorted: Alpha");
         }
 
-        sort_display = Preferences.Get("SortDisplay", "Sort: Alpha");
+        sort_display = Preferences.Get("SortDisplay", "Sorted: Alpha");
         sort_button.Text = sort_display;
 
         Refresh();
