@@ -65,11 +65,19 @@
                 Margin="8"
                 Clicked="Create_Stock_Entity" />
 
-        <Button Text="Remove"
+        <Button x:Name="sort_button"
                 FontAttributes="Bold"
                 FontSize="16"
                 Grid.Row="1"
                 Grid.Column="1"
+                Margin="8"
+                Clicked="Sort_Watchlist" />
+
+        <Button Text="Remove"
+                FontAttributes="Bold"
+                FontSize="16"
+                Grid.Row="2"
+                Grid.Column="0"
                 Margin="8"
                 Clicked="Create_Stock_Entity" />
 
@@ -77,7 +85,7 @@
                 FontAttributes="Bold"
                 FontSize="16"
                 Grid.Row="2"
-                Grid.ColumnSpan="2"
+                Grid.Column="1"
                 Margin="8"
                 Clicked="Clear_Watchlist" />
     </Grid>

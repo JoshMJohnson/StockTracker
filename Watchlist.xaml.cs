@@ -5,13 +5,24 @@ namespace StockTracker;
 
 public partial class Watchlist : ContentPage
 {
-    VerticalStackLayout vertical_layout_watchlist_empty;
+    private VerticalStackLayout vertical_layout_watchlist_empty;
+
+    private bool sort_alpha { get; set; }
+    private string sort_display { get; set; }
 
     public Watchlist()
 	{
 		InitializeComponent();
+
+        /* sorting the list */
+        sort_alpha = Preferences.Get("SortAlphaValue", true);
+        sort_display = Preferences.Get("SortDisplay", "Sort: Alpha");
+
+        sort_button.Text = sort_display;
+
         Refresh();
 
+        /* creates display for an empty watchlist */
         vertical_layout_watchlist_empty = new VerticalStackLayout();
 
         vertical_layout_watchlist_empty.VerticalOptions = LayoutOptions.Center;
@@ -72,10 +83,34 @@ public partial class Watchlist : ContentPage
         Refresh();
     }
 
+    /* sort button clicked on the watchlist page; toggles between alphabetical and stock price */
+    public void Sort_Watchlist(object sender, EventArgs e)
+    {
+        sort_alpha = Preferences.Get("SortAlphaValue", true);
+   
+        if (sort_alpha) /* set to sort by price */
+        {
+            Preferences.Set("SortAlphaValue", false);
+            Preferences.Set("SortDisplay", "Sort: Price");
+        }
+        else /* set to sort alphabetically */
+        {
+            Preferences.Set("SortAlphaValue", true);
+            Preferences.Set("SortDisplay", "Sort: Alpha");
+        }
+
+        sort_display = Preferences.Get("SortDisplay", "Sort: Alpha");
+        sort_button.Text = sort_display;
+
+        Refresh();
+    }
+
     /* gets all the stocks on the database and displays on UI */
     public async void Refresh()
     {
-        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist();
+        sort_alpha = Preferences.Get("SortAlphaValue", true);
+
+        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
 
         if (watchlist.Count == 0) /* if watchlist is empty */
         {

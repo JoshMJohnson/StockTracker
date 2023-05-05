@@ -90,13 +90,24 @@ public class StockRepository
     }
 
     /* returns a list of all the stocks within the database */
-    public async Task<List<Stock>> Get_Stock_Watchlist()
+    public async Task<List<Stock>> Get_Stock_Watchlist(bool sort_alpha)
     {
         try
         {
             await Init_Database();
 
-            return await conn.Table<Stock>().ToListAsync();
+            List<Stock> watchlist = await conn.Table<Stock>().ToListAsync();
+
+            if (sort_alpha) /* set sort of watchlist to be alphabetical */
+            {
+                watchlist = watchlist.OrderBy(stock => stock.ticker_name).ToList();
+            }
+            else /* set sort of watchlist to be by stock price */
+            {
+                watchlist = watchlist.OrderBy(stock => stock.ticker_price).Reverse().ToList();
+            }
+
+            return watchlist;
         } catch(Exception ex) 
         {
             StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
