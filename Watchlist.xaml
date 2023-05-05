@@ -73,7 +73,7 @@
         <Button Text="Add"
                 FontAttributes="Bold"
                 FontSize="16"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="0"
                 Margin="8"
                 Clicked="Create_Stock_Entity" />
@@ -81,9 +81,17 @@
         <Button Text="Remove"
                 FontAttributes="Bold"
                 FontSize="16"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="1"
                 Margin="8"
                 Clicked="Create_Stock_Entity" />
+
+        <Button Text="Clear"
+                FontAttributes="Bold"
+                FontSize="16"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="8"
+                Clicked="Clear_Watchlist" />
     </Grid>
 </ContentPage>

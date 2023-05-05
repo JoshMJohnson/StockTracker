@@ -74,6 +74,21 @@ public class StockRepository
         }
     }
 
+    /* clears the watchlist; deletes all stocks */
+    public async Task Clear_Watchlist()
+    {
+        try
+        {
+            await Init_Database();
+
+            await conn.DeleteAllAsync<Stock>();
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
+        }
+    }
+
     /* returns a list of all the stocks within the database */
     public async Task<List<Stock>> Get_Stock_Watchlist()
     {

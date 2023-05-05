@@ -39,6 +39,14 @@ public partial class Watchlist : ContentPage
         Refresh();
     }
 
+    /* clear button clicked on the watchlist page; deletes all stocks */
+    public async void Clear_Watchlist(object sender, EventArgs e)
+    {
+        await App.StockRepo.Clear_Watchlist();
+        Refresh();
+    }
+
+
     /* gets all the stocks on the database and displays on UI */
     public async void Refresh()
     {
@@ -51,7 +59,8 @@ public partial class Watchlist : ContentPage
         else /* else watchlist is not empty */
         {
             watchlist_items_display.VerticalOptions = LayoutOptions.Start;
-            watchlist_items_display.ItemsSource = watchlist;
         }
+
+        watchlist_items_display.ItemsSource = watchlist;
     }
 }
