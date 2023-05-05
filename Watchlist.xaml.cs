@@ -5,10 +5,36 @@ namespace StockTracker;
 
 public partial class Watchlist : ContentPage
 {
+    VerticalStackLayout vertical_layout;
+
     public Watchlist()
 	{
 		InitializeComponent();
         Refresh();
+
+        vertical_layout = new VerticalStackLayout();
+
+        vertical_layout.VerticalOptions = LayoutOptions.Center;
+        vertical_layout.HorizontalOptions = LayoutOptions.Center;
+
+        vertical_layout.Add(new Label
+        {
+            Text = "No stocks in watchlist",
+            FontSize = 20,
+            FontAttributes = FontAttributes.Italic,
+            HorizontalOptions = LayoutOptions.Center
+        });
+
+        vertical_layout.Add(new Image
+        {
+            Source = "empty_watchlist.png",
+            HeightRequest = 200
+        });
+
+        Grid watchlist_layout = watchlist_page_layout;
+        Grid.SetColumnSpan(vertical_layout, 2);
+        Grid.SetRow(vertical_layout, 0);
+        watchlist_layout.Children.Add(vertical_layout);
     }
 
     /* handles the adding and removing buttons on watchlist page */
@@ -46,7 +72,6 @@ public partial class Watchlist : ContentPage
         Refresh();
     }
 
-
     /* gets all the stocks on the database and displays on UI */
     public async void Refresh()
     {
@@ -54,10 +79,11 @@ public partial class Watchlist : ContentPage
 
         if (watchlist.Count == 0) /* if watchlist is empty */
         {
-            watchlist_items_display.VerticalOptions = LayoutOptions.Center;
+            vertical_layout.IsVisible = true;
         }
         else /* else watchlist is not empty */
         {
+            vertical_layout.IsVisible = false;
             watchlist_items_display.VerticalOptions = LayoutOptions.Start;
         }
 

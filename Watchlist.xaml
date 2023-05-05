@@ -5,7 +5,8 @@
              x:Class="StockTracker.Watchlist"
              Title="Watchlist">
                
-    <Grid ColumnDefinitions="*, *" 
+    <Grid x:Name="watchlist_page_layout"
+          ColumnDefinitions="*, *" 
           RowDefinitions="*, Auto, Auto" >
 
         <CollectionView x:Name="watchlist_items_display" 
@@ -54,20 +55,6 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
-            <CollectionView.EmptyView>
-                <VerticalStackLayout>
-                    <Label Text="No stocks in watchlist"
-                           FontSize="Subtitle"
-                           FontAttributes="Italic"
-                           HorizontalOptions="Center" />
-
-                    <Image Source="empty_watchlist.png"
-                           SemanticProperties.Description="Your watchlist is empty!"
-                           HeightRequest="200" />
-                </VerticalStackLayout>
-            </CollectionView.EmptyView>
-
         </CollectionView>
 
         <Button Text="Add"
