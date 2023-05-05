@@ -119,7 +119,6 @@ public partial class Watchlist : ContentPage
         else /* else watchlist is not empty */
         {
             vertical_layout_watchlist_empty.IsVisible = false;
-            watchlist_items_display.VerticalOptions = LayoutOptions.Start;
         }
 
         watchlist_items_display.ItemsSource = watchlist;
