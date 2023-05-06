@@ -17,19 +17,19 @@
             <Label Text="Rule #1 is never lose money"
                    Grid.Row="0"
                    SemanticProperties.HeadingLevel="Level1"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalOptions="Center" />
 
             <Label Text="Rule #2 is never forget Rule #1"
                    Grid.Row="1"
                    SemanticProperties.HeadingLevel="Level1"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalOptions="Center" />
 
             <Label Text="- Warren Buffett"
                    Grid.Row="2"
                    SemanticProperties.HeadingLevel="Level1"
-                   FontSize="12"
+                   FontSize="16"
                    HorizontalOptions="Center" />
         </Grid>
 
@@ -37,7 +37,7 @@
                Grid.ColumnSpan="2"
                Source="{AppThemeBinding Light=linear_chart_light.png, Dark=linear_chart_dark.png}"
                SemanticProperties.Description="chart jumping up and down!"
-               HeightRequest="200"
+               HeightRequest="250"
                HorizontalOptions="Center"
                VerticalOptions="Center" />
 
