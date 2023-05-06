@@ -21,7 +21,7 @@ public partial class Settings : ContentPage
         /* preference key creation */
         notifications = Preferences.Get("NotificationToggle", true);
         value_percent_change = Preferences.Get("ValuePercentChange", 5.0);
-        num_notification_times = Preferences.Get("NumNotifications", 2);
+        num_notification_times = Preferences.Get("NumNotifications", 3);
         value_tod1 = Preferences.Get("ValueTOD1", "8:45");
         value_tod2 = Preferences.Get("ValueTOD2", "12:00");
         value_tod3 = Preferences.Get("ValueTOD3", "2:30");
@@ -215,6 +215,7 @@ public partial class Settings : ContentPage
         }
     }
 
+    /* action when the save button is clicked in settings */
     private async void Save_Button_Clicked(object sender, EventArgs e)
     {
         Check_Notification_Change();
@@ -222,6 +223,6 @@ public partial class Settings : ContentPage
         Notify_Type_Change();
         Time_Of_Day_Change();
 
-        await DisplayAlert("Settings", "Settings Saved", "Cool");
+        await DisplayAlert("Settings", "Saved", "ok");
     }
 }

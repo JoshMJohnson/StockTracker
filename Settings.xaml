@@ -135,7 +135,7 @@
 
         <Button Text="Save"
                 FontAttributes="Bold"
-                FontSize="14"
+                FontSize="16"
                 WidthRequest="125"
                 HeightRequest="50"
                 Clicked="Save_Button_Clicked"
