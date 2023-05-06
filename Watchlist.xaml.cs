@@ -87,7 +87,7 @@ public partial class Watchlist : ContentPage
         }
         else /* else watchlist is not empty */
         {
-            bool confirm = await DisplayAlert("Clear", "Are you sure", "Confirm", "Cancel");
+            bool confirm = await DisplayAlert("Clear", "Are you sure?", "Confirm", "Cancel");
 
             if (confirm) /* confirmed clear of watchlist */
             {
