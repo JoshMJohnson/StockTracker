@@ -32,10 +32,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\stock_tracker_icon.png" ForegroundFile="Resources\AppIcon\stock_tracker_icon.png" />
-
+		<MauiIcon Include="Resources\AppIcon\stock_tracker_icon.png" ForegroundFile="Resources\AppIcon\stock_tracker_icon.png" Color="#0A290A" />
+		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash_stock_tracker2.png" Color="#22B14C" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash_stock_tracker2.png" Color="#0A290A" BaseSize="128,128" />
 		
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
