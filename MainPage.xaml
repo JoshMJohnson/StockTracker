@@ -35,7 +35,7 @@
 
         <Image Grid.Row="1"
                Grid.ColumnSpan="2"
-               Source="{AppThemeBinding Light=linear_chart_light.png, Dark=linear_chart_dark.png}"
+               Source="{AppThemeBinding Light=man_on_graph_light.png, Dark=man_on_graph_dark.png}"
                SemanticProperties.Description="chart jumping up and down!"
                HeightRequest="200"
                HorizontalOptions="Center"
