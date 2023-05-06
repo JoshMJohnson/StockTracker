@@ -4,7 +4,7 @@
              x:Class="StockTracker.Settings"
              Title="Settings" >
 
-    <Grid RowDefinitions="*, *, *, *, *, *"
+    <Grid RowDefinitions="*, *, *, *, *, *, *"
           ColumnDefinitions="*, *" 
           Padding="10" >
 
@@ -84,9 +84,9 @@
                      
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
-                    <x:String>On Threshold</x:String>
-                    <x:String>Daily</x:String>
-                    <x:String>Bidaily</x:String>
+                    <x:String>1 Daily</x:String>
+                    <x:String>2 Daily</x:String>
+                    <x:String>3 Daily</x:String>
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
@@ -119,13 +119,27 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
 
+        <Label Text="Time of Day 3:"
+               x:Name="tod3_label"
+               Grid.Row="5"
+               Grid.Column="0"
+               FontSize="16"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
+
+        <TimePicker x:Name="tod3_selector" 
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
         <Button Text="Save"
                 FontAttributes="Bold"
                 FontSize="14"
                 WidthRequest="125"
                 HeightRequest="50"
                 Clicked="Save_Button_Clicked"
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.ColumnSpan="2"
                 VerticalOptions="Center"
                 HorizontalOptions="Center" />

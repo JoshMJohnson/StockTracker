@@ -9,9 +9,10 @@ public partial class Settings : ContentPage
     /* app setting variables */
     public bool notifications { get; set; } /* saves value for notifications being on */
     public double value_percent_change { get; set; } /* percent change of a stock to receive a push notification */
-    public int index_notify_type { get; set; } /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
+    public int num_notification_times { get; set; } /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
     public string value_tod1 { get; set; } /* notification time for T.O.D. #1 */
     public string value_tod2 { get; set; } /* notification time for T.O.D. #2 */
+    public string value_tod3 { get; set; } /* notification time for T.O.D. #3 */
 
     public Settings()
 	{
@@ -20,9 +21,10 @@ public partial class Settings : ContentPage
         /* preference key creation */
         notifications = Preferences.Get("NotificationToggle", true);
         value_percent_change = Preferences.Get("ValuePercentChange", 5.0);
-        index_notify_type = Preferences.Get("IndexNotifyType", 2);
-        value_tod1 = Preferences.Get("ValueTOD1", "10:00");
-        value_tod2 = Preferences.Get("ValueTOD2", "2:00");
+        num_notification_times = Preferences.Get("NumNotifications", 2);
+        value_tod1 = Preferences.Get("ValueTOD1", "8:45");
+        value_tod2 = Preferences.Get("ValueTOD2", "12:00");
+        value_tod3 = Preferences.Get("ValueTOD3", "2:30");
 
         /* notification initial display */
         notification_on.IsChecked = notifications;
@@ -33,7 +35,7 @@ public partial class Settings : ContentPage
         value_percent_change_label.Text = value_percent_change.ToString(); /* display initial percent change value label */
 
         /* notify type initial display */
-        notify_type_picker.SelectedIndex = index_notify_type;
+        notify_type_picker.SelectedIndex = num_notification_times;
 
         /* tod1 initial display */
         string[] updated_view_array = value_tod1.Split(':');
@@ -54,6 +56,16 @@ public partial class Settings : ContentPage
 
         TimeSpan temp_time2 = new TimeSpan(hours2, mins2, 0);
         tod2_selector.Time = temp_time2;
+
+        /* tod3 initial display */
+        string[] updated_view_array3 = value_tod3.Split(':');
+        string hours_string3 = updated_view_array3[0];
+        string mins_string3 = updated_view_array3[1];
+        int hours3 = int.Parse(hours_string3);
+        int mins3 = int.Parse(mins_string3);
+
+        TimeSpan temp_time3 = new TimeSpan(hours3, mins3, 0);
+        tod3_selector.Time = temp_time3;
     }
 
     /* changes value of notifications when switched */
@@ -106,24 +118,28 @@ public partial class Settings : ContentPage
     {
         if (notify_type_picker != null)
         {
-            index_notify_type = notify_type_picker.SelectedIndex;
+            num_notification_times = notify_type_picker.SelectedIndex;
 
             if (tod1_label != null && tod2_label != null
                 && tod1_selector != null && tod2_selector != null) /* display/hide T.O.D. labels and selectors based on notify type chosen */
             {
-                if (index_notify_type == 0) /* if notify type is set to threshold (index 0) */
-                {
-                    tod1_label.IsVisible = false;
-                    tod1_selector.IsVisible = false;
-                    tod2_label.IsVisible = false;
-                    tod2_selector.IsVisible = false;
-                }
-                else if (index_notify_type == 1) /* else if notify type is set to 1 T.O.D. (index 1) */
+                if (num_notification_times == 0) /* if notify type is set to threshold (index 0) */
                 {
                     tod1_label.IsVisible = true;
                     tod1_selector.IsVisible = true;
                     tod2_label.IsVisible = false;
                     tod2_selector.IsVisible = false;
+                    tod3_label.IsVisible = false;
+                    tod3_selector.IsVisible = false;
+                }
+                else if (num_notification_times == 1) /* else if notify type is set to 1 T.O.D. (index 1) */
+                {
+                    tod1_label.IsVisible = true;
+                    tod1_selector.IsVisible = true;
+                    tod2_label.IsVisible = true;
+                    tod2_selector.IsVisible = true;
+                    tod3_label.IsVisible = false;
+                    tod3_selector.IsVisible = false;
                 }
                 else /* else notify type is set to 2 T.O.D. (index 2) */
                 {
@@ -131,6 +147,8 @@ public partial class Settings : ContentPage
                     tod1_selector.IsVisible = true;
                     tod2_label.IsVisible = true;
                     tod2_selector.IsVisible = true;
+                    tod3_label.IsVisible = true;
+                    tod3_selector.IsVisible = true;
                 }
             }            
         }
@@ -139,14 +157,14 @@ public partial class Settings : ContentPage
     /* updates display of value for unsaved notify type */
     private void Notify_Type_Change()
     {
-        int presave_notify_type = notify_type_picker.SelectedIndex;
-        int saved_notify_type = Preferences.Get("IndexNotifyType", 2);
+        int presave_num_notifications = notify_type_picker.SelectedIndex;
+        int saved_num_notifications = Preferences.Get("NumNotifications", 2);
 
-        if (presave_notify_type == saved_notify_type) { return; } /* if not change in value since last save */
+        if (presave_num_notifications == saved_num_notifications) { return; } /* if not change in value since last save */
                 
-        Preferences.Set("IndexNotifyType", presave_notify_type);
+        Preferences.Set("NumNotifications", presave_num_notifications);
 
-        int updated_value = Preferences.Get("IndexNotifyType", 2);
+        int updated_value = Preferences.Get("NumNotifications", 2);
         notify_type_picker.SelectedIndex = updated_value;
     }
 
@@ -161,8 +179,13 @@ public partial class Settings : ContentPage
         string saved_time2_string = saved_time2_var.ToString();
         string prev_time2_string = Preferences.Get("ValueTOD2", null);
 
+        var saved_time3_var = tod3_selector.Time;
+        string saved_time3_string = saved_time3_var.ToString();
+        string prev_time3_string = Preferences.Get("ValueTOD3", null);
+
         if (prev_time1_string == saved_time1_string
-                && prev_time2_string == saved_time2_string) { return; } /* if not change in value since last save */
+                && prev_time2_string == saved_time2_string
+                && prev_time3_string == saved_time3_string) { return; } /* if not change in value since last save */
 
         if (prev_time1_string != saved_time1_string) /* if time1 changes with save */
         {
@@ -179,6 +202,15 @@ public partial class Settings : ContentPage
             if (tod2_selector.IsVisible) /* if tod2 is visible */
             {
                 Preferences.Set("ValueTOD2", saved_time2_string);
+            }
+        }
+
+        if (prev_time3_string != saved_time3_string) /* if time3 changes with save */
+        {
+            /* change display time */
+            if (tod3_selector.IsVisible) /* if tod3 is visible */
+            {
+                Preferences.Set("ValueTOD3", saved_time3_string);
             }
         }
     }
