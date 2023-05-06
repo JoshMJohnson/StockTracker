@@ -37,7 +37,7 @@
                Grid.ColumnSpan="2"
                Source="{AppThemeBinding Light=linear_chart_light.png, Dark=linear_chart_dark.png}"
                SemanticProperties.Description="chart jumping up and down!"
-               HeightRequest="250"
+               HeightRequest="200"
                HorizontalOptions="Center"
                VerticalOptions="Center" />
 
