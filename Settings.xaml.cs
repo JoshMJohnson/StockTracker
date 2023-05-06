@@ -21,7 +21,7 @@ public partial class Settings : ContentPage
         /* preference key creation */
         notifications = Preferences.Get("NotificationToggle", true);
         value_percent_change = Preferences.Get("ValuePercentChange", 5.0);
-        num_notification_times = Preferences.Get("NumNotifications", 3);
+        num_notification_times = Preferences.Get("NumNotifications", 2);
         value_tod1 = Preferences.Get("ValueTOD1", "8:45");
         value_tod2 = Preferences.Get("ValueTOD2", "12:00");
         value_tod3 = Preferences.Get("ValueTOD3", "2:30");
