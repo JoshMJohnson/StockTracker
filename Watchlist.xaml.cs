@@ -79,8 +79,22 @@ public partial class Watchlist : ContentPage
     /* clear button clicked on the watchlist page; deletes all stocks */
     public async void Clear_Watchlist(object sender, EventArgs e)
     {
-        await App.StockRepo.Clear_Watchlist();
-        Refresh();
+        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
+
+        if (watchlist.Count == 0) /* if watchlist was already empty */
+        {
+            await DisplayAlert("Clear", "Watchlist is already empty", "ok");
+        }
+        else /* else watchlist is not empty */
+        {
+            bool confirm = await DisplayAlert("Clear", "Are you sure", "Confirm", "Cancel");
+
+            if (confirm) /* confirmed clear of watchlist */
+            {
+                await App.StockRepo.Clear_Watchlist();
+                Refresh();
+            }
+        }
     }
 
     /* sort button clicked on the watchlist page; toggles between alphabetical and stock price */
