@@ -25,7 +25,7 @@
 
 <div align='center'>
 
-<img width="200px" height="200px" alt="App icon" src="Project_Images/stock_app_update_icon.png">
+<img width="200px" height="200px" alt="App icon" src="Project_Demo_Images/stock_app_update_icon.png">
 
 <br>
 
@@ -43,13 +43,13 @@ Jump To:<br>
 
 <div align='center'>
 
-<img width="270px" height="585px" alt="Pixel splash screen light" src="Project_Images/Android/Phone/splash_screen.png">
-<img width="270px" height="585px" alt="Pixel home light mode" src="Project_Images/Android/Phone/home_light.png">
-<img width="270px" height="585px" alt="Pixel home dark mode" src="Project_Images/Android/Phone/home_dark.png">
-<img width="270px" height="585px" alt="Pixel empty watchlist light mode" src="Project_Images/Android/Phone/empty_watchlist_light.png">
-<img width="270px" height="585px" alt="Pixel empty watchlist dark mode" src="Project_Images/Android/Phone/empty_watchlist_dark.png">
-<img width="270px" height="585px" alt="Pixel settings light mode" src="Project_Images/Android/Phone/settings_light.png">
-<img width="270px" height="585px" alt="Pixel settings dark mode" src="Project_Images/Android/Phone/settings_dark.png">
+<img width="270px" height="585px" alt="Pixel splash screen light" src="Project_Demo_Images/Android/Phone/splash_screen.png">
+<img width="270px" height="585px" alt="Pixel home light mode" src="Project_Demo_Images/Android/Phone/home_light.png">
+<img width="270px" height="585px" alt="Pixel home dark mode" src="Project_Demo_Images/Android/Phone/home_dark.png">
+<img width="270px" height="585px" alt="Pixel empty watchlist light mode" src="Project_Demo_Images/Android/Phone/empty_watchlist_light.png">
+<img width="270px" height="585px" alt="Pixel empty watchlist dark mode" src="Project_Demo_Images/Android/Phone/empty_watchlist_dark.png">
+<img width="270px" height="585px" alt="Pixel settings light mode" src="Project_Demo_Images/Android/Phone/settings_light.png">
+<img width="270px" height="585px" alt="Pixel settings dark mode" src="Project_Demo_Images/Android/Phone/settings_dark.png">
 
 </div>
 
@@ -61,13 +61,13 @@ Jump To:<br>
 
 <div align='center'>
 
-<img width="512px" height="300px" alt="Tablet splash screen" src="Project_Images/Android/Tablet/splash_screen.png">
-<img width="512px" height="300px" alt="Tablet home light mode" src="Project_Images/Android/Tablet/home_light.png">
-<img width="512px" height="300px" alt="Tablet home dark mode" src="Project_Images/Android/Tablet/home_dark.png">
-<img width="512px" height="300px" alt="Tablet empty watchlist light mode" src="Project_Images/Android/Tablet/empty_watchlist_light.png">
-<img width="512px" height="300px" alt="Tablet empty watchlist dark mode" src="Project_Images/Android/Tablet/empty_watchlist_dark.png">
-<img width="512px" height="300px" alt="Tablet settings light mode" src="Project_Images/Android/Tablet/settings_light.png">
-<img width="512px" height="300px" alt="Tablet settings light mode" src="Project_Images/Android/Tablet/settings_dark.png">
+<img width="512px" height="300px" alt="Tablet splash screen" src="Project_Demo_Images/Android/Tablet/splash_screen.png">
+<img width="512px" height="300px" alt="Tablet home light mode" src="Project_Demo_Images/Android/Tablet/home_light.png">
+<img width="512px" height="300px" alt="Tablet home dark mode" src="Project_Demo_Images/Android/Tablet/home_dark.png">
+<img width="512px" height="300px" alt="Tablet empty watchlist light mode" src="Project_Demo_Images/Android/Tablet/empty_watchlist_light.png">
+<img width="512px" height="300px" alt="Tablet empty watchlist dark mode" src="Project_Demo_Images/Android/Tablet/empty_watchlist_dark.png">
+<img width="512px" height="300px" alt="Tablet settings light mode" src="Project_Demo_Images/Android/Tablet/settings_light.png">
+<img width="512px" height="300px" alt="Tablet settings light mode" src="Project_Demo_Images/Android/Tablet/settings_dark.png">
 
 </div>
 
@@ -82,12 +82,12 @@ Jump To:<br>
 
 <div align='center'>
 
-<img width="300px" height="300px" alt="Windows home light mode" src="Project_Images/Windows/home_light.png">
-<img width="300px" height="300px" alt="Windows home dark mode" src="Project_Images/Windows/home_dark.png">
-<img width="300px" height="300px" alt="Windows empty watchlist light mode" src="Project_Images/Windows/empty_watchlist_light.png">
-<img width="300px" height="300px" alt="Windows empty watchlist dark mode" src="Project_Images/Windows/empty_watchlist_dark.png">
-<img width="300px" height="300px" alt="Windows settings light mode" src="Project_Images/Windows/settings_light.png">
-<img width="300px" height="300px" alt="Windows settings dark mode" src="Project_Images/Windows/settings_dark.png">
+<img width="300px" height="300px" alt="Windows home light mode" src="Project_Demo_Images/Windows/home_light.png">
+<img width="300px" height="300px" alt="Windows home dark mode" src="Project_Demo_Images/Windows/home_dark.png">
+<img width="300px" height="300px" alt="Windows empty watchlist light mode" src="Project_Demo_Images/Windows/empty_watchlist_light.png">
+<img width="300px" height="300px" alt="Windows empty watchlist dark mode" src="Project_Demo_Images/Windows/empty_watchlist_dark.png">
+<img width="300px" height="300px" alt="Windows settings light mode" src="Project_Demo_Images/Windows/settings_light.png">
+<img width="300px" height="300px" alt="Windows settings dark mode" src="Project_Demo_Images/Windows/settings_dark.png">
 
 </div>
 
