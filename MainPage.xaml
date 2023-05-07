@@ -8,7 +8,6 @@
         <Image Grid.Row="0"
                Grid.ColumnSpan="2"
                Source="{AppThemeBinding Light=homepage_header_light.png, Dark=homepage_header_dark.png}"
-               SemanticProperties.Description="chart jumping up and down!"
                HeightRequest="200"
                HorizontalOptions="Center"
                VerticalOptions="Center" />
