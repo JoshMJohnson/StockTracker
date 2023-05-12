@@ -114,11 +114,12 @@ public class StockRepository
         ticker_api_call = ticker_api_call.TrimEnd(',');
 
         string api_key = "1a5736c710a640679295533e0c6a53ca";
-        string download_url = $"https://api.twelvedata.com/price?symbol={ticker_api_call}&apikey={api_key}";
+        string download_url = $"https://api.twelvedata.com/quote?symbol={ticker_api_call}&apikey={api_key}";
 
         WebClient wc = new WebClient();
         var response = wc.DownloadString(download_url);
-        string[] request_array = response.Split(',');
+        response = response.Remove(0, 1);
+        string[] request_array = response.Split("},");
 
         /* update watchlist database with data from api */
         try
@@ -128,25 +129,57 @@ public class StockRepository
             /* update database for each stock on watchlist */
             for (int i = 0; i < watchlist.Count; i++)
             {
-                string current_stock_ticker = watchlist[i].ticker_name;
-
-                /* update stock price - convert to double with two decimal points */
+                /* transform api request to array of data */
                 string current_request = request_array[i];
 
-                var fetched_data = current_request.Split(":");
-                var fetched_price_string = fetched_data[2];
-                fetched_price_string = fetched_price_string.Replace("\"", "");
-                fetched_price_string = fetched_price_string.Replace("}", "");
-                double fetched_price = double.Parse(fetched_price_string, System.Globalization.CultureInfo.InvariantCulture);
-                fetched_price = Math.Truncate(fetched_price * 100) / 100;
-                                
+                Debug.WriteLine("current_request: " + current_request);
+
+                string[] current_stock_data_array = current_request.Split("\"");
+
+                /* get ticker symbol */
+                string current_stock_ticker = current_stock_data_array[1];
+
+                Debug.WriteLine("current_stock_ticker: " + current_stock_ticker);
+
+                /* get company name */
+                string current_company_name = current_stock_data_array[9];
+
+                Debug.WriteLine("current_company_name: " + current_company_name);
+
+                /* get stock price change - convert to double with two decimal points */
+                string current_stock_price_change_string = current_stock_data_array[55];
+
+                double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
+                current_stock_price_change = Math.Truncate(current_stock_price_change * 100) / 100;
+
+                Debug.WriteLine("current_stock_price_change: " + current_stock_price_change.ToString());
+
+                /* get stock price - convert to double with two decimal points */
+                string current_stock_open_price_string = current_stock_data_array[31];
+
+                double current_stock_open_price = double.Parse(current_stock_open_price_string, System.Globalization.CultureInfo.InvariantCulture);
+                current_stock_open_price = Math.Truncate(current_stock_open_price * 100) / 100;
+
+                double current_stock_price = current_stock_open_price - current_stock_price_change;
+                current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
+
+                Debug.WriteLine("current_stock_price: " + current_stock_price.ToString());
+
+                /* get stock percent change */
+                string current_stock_percent_change_string = current_stock_data_array[59];
+
+                double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
+                current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
+
+                Debug.WriteLine("current_stock_percent_change: " + current_stock_percent_change.ToString());
+
                 Stock stock = new Stock
                 {
                     ticker_name = current_stock_ticker,
-                    company_name = "The " + current_stock_ticker + " company",
-                    ticker_price = fetched_price,
-                    ticker_dollar_day_change = -1,
-                    ticker_percent_day_change = -1
+                    company_name = current_company_name,
+                    ticker_price = current_stock_price,
+                    ticker_dollar_day_change = current_stock_price_change,
+                    ticker_percent_day_change = current_stock_percent_change
                 };
 
                 await conn.UpdateAsync(stock);
