@@ -1,4 +1,3 @@
-using SQLite;
 using StockTracker.Model;
 
 namespace StockTracker;
@@ -49,7 +48,7 @@ public partial class Watchlist : ContentPage
     }
 
     /* handles the adding and removing buttons on watchlist page */
-    public async void Create_Stock_Entity(object sender, EventArgs e)
+    private async void Create_Stock_Entity(object sender, EventArgs e)
     {
         Button btn = (Button) sender; /* identifies the button that directed to this function */
 
@@ -77,7 +76,7 @@ public partial class Watchlist : ContentPage
     }
 
     /* clear button clicked on the watchlist page; deletes all stocks */
-    public async void Clear_Watchlist(object sender, EventArgs e)
+    private async void Clear_Watchlist(object sender, EventArgs e)
     {
         List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
 
@@ -98,7 +97,7 @@ public partial class Watchlist : ContentPage
     }
 
     /* sort button clicked on the watchlist page; toggles between alphabetical and stock price */
-    public void Sort_Watchlist(object sender, EventArgs e)
+    private void Sort_Watchlist(object sender, EventArgs e)
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
    
@@ -120,7 +119,7 @@ public partial class Watchlist : ContentPage
     }
 
     /* gets all the stocks on the database and displays on UI */
-    public async void Refresh()
+    private async void Refresh()
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
 
@@ -133,6 +132,7 @@ public partial class Watchlist : ContentPage
         else /* else watchlist is not empty */
         {
             vertical_layout_watchlist_empty.IsVisible = false;
+            await App.StockRepo.Update_Watchlist(sort_alpha);
         }
 
         watchlist_items_display.ItemsSource = watchlist;

@@ -1,6 +1,10 @@
 using StockTracker.Model;
 using SQLite;
 using System.Diagnostics;
+using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace StockTracker;
 
@@ -88,6 +92,38 @@ public class StockRepository
             StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
         }
     }
+
+    /* TODO updates the watchlist data from the stock market */
+    public async Task Update_Watchlist(bool sort_alpha)
+    {
+        /* loop through watchlist database and retrieve all stock tickers */
+        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
+
+
+
+
+
+
+
+        string current_stock_ticker = watchlist[1].ticker_name;
+        string api_key = "1a5736c710a640679295533e0c6a53ca";
+        string download_url = $"https://api.twelvedata.com/price?symbol={current_stock_ticker}&apikey={api_key}";
+
+        /* retrieves data from stock market */
+        WebClient wc = new WebClient();
+        var response = wc.DownloadString(download_url);
+
+        /* convert to double with two decimal points */
+        var fetched_data = response.Split(":");
+        var fetched_price_string = fetched_data[1];
+        fetched_price_string = fetched_price_string.Replace("\"", "");
+        fetched_price_string = fetched_price_string.Replace("}", "");
+        double fetched_price = double.Parse(fetched_price_string, System.Globalization.CultureInfo.InvariantCulture);
+        fetched_price = Math.Truncate(fetched_price * 100) / 100;
+
+
+    }
+
 
     /* returns a list of all the stocks within the database */
     public async Task<List<Stock>> Get_Stock_Watchlist(bool sort_alpha)
