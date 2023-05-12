@@ -139,10 +139,7 @@ public class StockRepository
                 fetched_price_string = fetched_price_string.Replace("}", "");
                 double fetched_price = double.Parse(fetched_price_string, System.Globalization.CultureInfo.InvariantCulture);
                 fetched_price = Math.Truncate(fetched_price * 100) / 100;
-
-                Debug.WriteLine("stock ticker: " + current_stock_ticker);
-                Debug.WriteLine("fetched price: " + fetched_price);
-                
+                                
                 Stock stock = new Stock
                 {
                     ticker_name = current_stock_ticker,
