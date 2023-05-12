@@ -30,7 +30,7 @@
                                Grid.Column="0"
                                FontSize="12" />
                         <Label Text="{Binding ticker_price,
-                                        StringFormat='${0}'}"
+                                        StringFormat='${0:0.00}'}"
                                Grid.RowSpan="2"
                                Grid.Row="0"
                                Grid.Column="1"                               
@@ -39,14 +39,14 @@
                                VerticalOptions="Center"
                                HorizontalOptions="End" />
                         <Label Text="{Binding ticker_dollar_day_change,
-                                        StringFormat='${0}'}"
+                                        StringFormat='${0:0.00}'}"
                                Grid.Row="0"
                                Grid.Column="2"
                                FontSize="14"
                                HorizontalOptions="End"
                                VerticalOptions="Start"/>
                         <Label Text="{Binding ticker_percent_day_change,
-                                        StringFormat='{0}%'}"
+                                        StringFormat='{0:0.00}%'}"
                                Grid.Row="1"
                                Grid.Column="2"
                                FontSize="14" 
