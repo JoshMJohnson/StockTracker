@@ -131,54 +131,36 @@ public class StockRepository
             {
                 /* transform api request to array of data */
                 string current_request = request_array[i];
-
-                Debug.WriteLine("current_request: " + current_request);
-
                 string[] current_stock_data_array = current_request.Split("\"");
 
                 /* get ticker symbol */
                 string current_stock_ticker = current_stock_data_array[1];
 
-                Debug.WriteLine("current_stock_ticker: " + current_stock_ticker);
-
                 /* get company name */
                 string current_company_name = current_stock_data_array[9];
 
-                Debug.WriteLine("current_company_name: " + current_company_name);
-
                 /* get stock price change - convert to double with two decimal points */
                 string current_stock_price_change_string = current_stock_data_array[55];
-
                 double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
-                current_stock_price_change = Math.Truncate(current_stock_price_change * 100) / 100;
-
-                Debug.WriteLine("current_stock_price_change: " + current_stock_price_change.ToString());
+                double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
 
                 /* get stock price - convert to double with two decimal points */
                 string current_stock_open_price_string = current_stock_data_array[31];
-
                 double current_stock_open_price = double.Parse(current_stock_open_price_string, System.Globalization.CultureInfo.InvariantCulture);
-                current_stock_open_price = Math.Truncate(current_stock_open_price * 100) / 100;
-
-                double current_stock_price = current_stock_open_price - current_stock_price_change;
+                double current_stock_price = current_stock_open_price + current_stock_price_change;
                 current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
-
-                Debug.WriteLine("current_stock_price: " + current_stock_price.ToString());
 
                 /* get stock percent change */
                 string current_stock_percent_change_string = current_stock_data_array[59];
-
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
-
-                Debug.WriteLine("current_stock_percent_change: " + current_stock_percent_change.ToString());
 
                 Stock stock = new Stock
                 {
                     ticker_name = current_stock_ticker,
                     company_name = current_company_name,
                     ticker_price = current_stock_price,
-                    ticker_dollar_day_change = current_stock_price_change,
+                    ticker_dollar_day_change = current_stock_price_change_rounded,
                     ticker_percent_day_change = current_stock_percent_change
                 };
 
