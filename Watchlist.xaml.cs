@@ -135,6 +135,8 @@ public partial class Watchlist : ContentPage
             await App.StockRepo.Update_Watchlist(sort_alpha);
         }
 
+        watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
+
         watchlist_items_display.ItemsSource = watchlist;
     }
 }

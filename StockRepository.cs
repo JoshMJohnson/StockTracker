@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Net;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StockTracker;
 
@@ -93,37 +95,71 @@ public class StockRepository
         }
     }
 
-    /* TODO updates the watchlist data from the stock market */
+    /* updates the watchlist data from the stock market */
     public async Task Update_Watchlist(bool sort_alpha)
     {
         /* loop through watchlist database and retrieve all stock tickers */
-        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
+        List<Stock> watchlist = await Get_Stock_Watchlist(sort_alpha);
+        List<string> ticker_list = new List<string>();
 
+        /* build list of stock tickers from watchlist */
+        for (int i = 0; i < watchlist.Count; i++)
+        {
+            string current_ticker = watchlist[i].ticker_name;
+            ticker_list.Add(current_ticker);
+        }
 
+        /* call api to retrieve stock ticker data */
+        string ticker_api_call = string.Join(",", ticker_list);
+        ticker_api_call = ticker_api_call.TrimEnd(',');
 
-
-
-
-
-        string current_stock_ticker = watchlist[1].ticker_name;
         string api_key = "1a5736c710a640679295533e0c6a53ca";
-        string download_url = $"https://api.twelvedata.com/price?symbol={current_stock_ticker}&apikey={api_key}";
+        string download_url = $"https://api.twelvedata.com/price?symbol={ticker_api_call}&apikey={api_key}";
 
-        /* retrieves data from stock market */
         WebClient wc = new WebClient();
         var response = wc.DownloadString(download_url);
+        string[] request_array = response.Split(',');
 
-        /* convert to double with two decimal points */
-        var fetched_data = response.Split(":");
-        var fetched_price_string = fetched_data[1];
-        fetched_price_string = fetched_price_string.Replace("\"", "");
-        fetched_price_string = fetched_price_string.Replace("}", "");
-        double fetched_price = double.Parse(fetched_price_string, System.Globalization.CultureInfo.InvariantCulture);
-        fetched_price = Math.Truncate(fetched_price * 100) / 100;
+        /* update watchlist database with data from api */
+        try
+        {
+            await Init_Database();
 
+            /* update database for each stock on watchlist */
+            for (int i = 0; i < watchlist.Count; i++)
+            {
+                string current_stock_ticker = watchlist[i].ticker_name;
 
+                /* update stock price - convert to double with two decimal points */
+                string current_request = request_array[i];
+
+                var fetched_data = current_request.Split(":");
+                var fetched_price_string = fetched_data[2];
+                fetched_price_string = fetched_price_string.Replace("\"", "");
+                fetched_price_string = fetched_price_string.Replace("}", "");
+                double fetched_price = double.Parse(fetched_price_string, System.Globalization.CultureInfo.InvariantCulture);
+                fetched_price = Math.Truncate(fetched_price * 100) / 100;
+
+                Debug.WriteLine("stock ticker: " + current_stock_ticker);
+                Debug.WriteLine("fetched price: " + fetched_price);
+                
+                Stock stock = new Stock
+                {
+                    ticker_name = current_stock_ticker,
+                    company_name = "The " + current_stock_ticker + " company",
+                    ticker_price = fetched_price,
+                    ticker_dollar_day_change = -1,
+                    ticker_percent_day_change = -1
+                };
+
+                await conn.UpdateAsync(stock);
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = string.Format("Failed to update. Error: {0}", ex.Message);
+        }
     }
-
 
     /* returns a list of all the stocks within the database */
     public async Task<List<Stock>> Get_Stock_Watchlist(bool sort_alpha)
