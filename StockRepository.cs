@@ -43,18 +43,32 @@ public class StockRepository
         {
             await Init_Database();
 
-            Stock stock = new Stock
+            /* call api to retrieve stock ticker data */
+            string api_key = "1a5736c710a640679295533e0c6a53ca";
+            string download_url = $"https://api.twelvedata.com/quote?symbol={stock_ticker}&apikey={api_key}";
+
+            WebClient wc = new WebClient();
+            var response = wc.DownloadString(download_url);
+            response = response.Remove(0, 1);
+
+            string[] current_stock_data_array = response.Split("\"");
+            string api_error_check = current_stock_data_array[2];
+
+            if (api_error_check != ":400,")
             {
-                ticker_name = stock_ticker,
-                company_name = "The " + stock_ticker + " company",
-                ticker_price = -1,
-                ticker_dollar_day_change = -1,
-                ticker_percent_day_change = -1
-            };
+                Stock stock = new Stock
+                {
+                    ticker_name = stock_ticker,
+                    company_name = "The " + stock_ticker + " company",
+                    ticker_price = -1,
+                    ticker_dollar_day_change = -1,
+                    ticker_percent_day_change = -1
+                };
 
-            int result = await conn.InsertAsync(stock);
+                int result = await conn.InsertAsync(stock);
 
-            StatusMessage = string.Format("{0} stock added (Ticker: {1})", result, stock_ticker);
+                StatusMessage = string.Format("{0} stock added (Ticker: {1})", result, stock_ticker);
+            }
         } catch (Exception ex)
         {
             StatusMessage = string.Format("Failed to add {0}. Error: {1}", stock_ticker, ex.Message);

@@ -58,8 +58,20 @@ public partial class Watchlist : ContentPage
             
             if (stock != null) /* if not cancelled add */
             {
-                stock = stock.ToUpper();
-                await App.StockRepo.Add_Stock(stock);
+                if (stock.Length != 0)
+                {
+                    List<Stock> watchlist_before = await App.StockRepo.Get_Stock_Watchlist(true);
+
+                    stock = stock.ToUpper();
+                    await App.StockRepo.Add_Stock(stock);
+
+                    List<Stock> watchlist_after = await App.StockRepo.Get_Stock_Watchlist(true);
+
+                    if (watchlist_before.Count == watchlist_after.Count)
+                    {
+                        await DisplayAlert("Add Stock", $"No stock with ticker {stock} found on stock market", "ok");
+                    }
+                }
             }
         } else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
@@ -67,8 +79,20 @@ public partial class Watchlist : ContentPage
             
             if (stock != null) /* if not cancelled remove */
             {
-                stock = stock.ToUpper();
-                await App.StockRepo.Remove_Stock(stock);
+                if (stock.Length != 0)
+                {
+                    List<Stock> watchlist_before = await App.StockRepo.Get_Stock_Watchlist(true);
+
+                    stock = stock.ToUpper();
+                    await App.StockRepo.Remove_Stock(stock);
+
+                    List<Stock> watchlist_after = await App.StockRepo.Get_Stock_Watchlist(true);
+
+                    if (watchlist_before.Count == watchlist_after.Count)
+                    {
+                        await DisplayAlert("Remove Stock", $"No stock with ticker {stock} was on watchlist", "ok");
+                    }
+                }
             }
         }
 
