@@ -8,54 +8,66 @@
     <Grid x:Name="watchlist_page_layout"
           ColumnDefinitions="*, *" 
           RowDefinitions="*, Auto, Auto" >
+            
+            <CollectionView x:Name="watchlist_items_display"                             
+                            HorizontalOptions="Center"
+                            Grid.ColumnSpan="2"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            VerticalOptions="Start">
+                
+                <CollectionView.ItemTemplate>                    
+                    <DataTemplate x:DataType="model:Stock">
+                        <SwipeView >
+                            <SwipeView.LeftItems>
+                                <SwipeItems SwipeBehaviorOnInvoked="Close">
+                                    <SwipeItem Text="{Binding ticker_name}"
+                                               IconImageSource="trash_icon.png"
+                                               BackgroundColor="red"
+                                               Invoked="Swipe_Remove" />
+                                </SwipeItems>
+                             </SwipeView.LeftItems>
 
-        <CollectionView x:Name="watchlist_items_display" 
-                        Grid.ColumnSpan="2"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        VerticalOptions="Start"
-                        HorizontalOptions="Center" >
-
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Stock">
-                    <Grid RowDefinitions="*, Auto"
-                          ColumnDefinitions="*, Auto, 60" 
-                          Padding="10" >
-                        <Label Text="{Binding ticker_name}"
-                               Grid.Row="0"
-                               Grid.Column="0"
-                               FontSize="24" />
-                        <Label Text="{Binding company_name}"
-                               Grid.Row="1"
-                               Grid.Column="0"
-                               FontSize="12" />
-                        <Label Text="{Binding ticker_price,
-                                        StringFormat='${0:0.00}'}"
-                               Grid.RowSpan="2"
-                               Grid.Row="0"
-                               Grid.Column="1"                               
-                               FontSize="20"
-                               Margin="10"
-                               VerticalOptions="Center"
-                               HorizontalOptions="End" />
-                        <Label Text="{Binding ticker_dollar_day_change,
-                                        StringFormat='${0:0.00}'}"
-                               Grid.Row="0"
-                               Grid.Column="2"
-                               FontSize="14"
-                               HorizontalOptions="End"
-                               VerticalOptions="Start"/>
-                        <Label Text="{Binding ticker_percent_day_change,
-                                        StringFormat='{0:0.00}%'}"
-                               Grid.Row="1"
-                               Grid.Column="2"
-                               FontSize="14" 
-                               HorizontalOptions="End"
-                               VerticalOptions="End"/>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            <Grid RowDefinitions="*, Auto"
+                                  ColumnDefinitions="*, Auto, 60" 
+                                  Padding="10" >
+                                <Label Text="{Binding ticker_name}"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       FontSize="24" />
+                                <Label Text="{Binding company_name}"
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       FontSize="12" />
+                                <Label Text="{Binding ticker_price,
+                                                StringFormat='${0:0.00}'}"
+                                       Grid.RowSpan="2"
+                                       Grid.Row="0"
+                                       Grid.Column="1"                               
+                                       FontSize="20"
+                                       Margin="10"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="End" />
+                                <Label Text="{Binding ticker_dollar_day_change,
+                                                StringFormat='${0:0.00}'}"
+                                       Grid.Row="0"
+                                       Grid.Column="2"
+                                       FontSize="14"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Start"/>
+                                <Label Text="{Binding ticker_percent_day_change,
+                                                StringFormat='{0:0.00}%'}"
+                                       Grid.Row="1"
+                                       Grid.Column="2"
+                                       FontSize="14" 
+                                       HorizontalOptions="End"
+                                       VerticalOptions="End"/>
+                            </Grid>
+                        </SwipeView>                    
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        
 
         <Button Text="Add"
                 FontAttributes="Bold"

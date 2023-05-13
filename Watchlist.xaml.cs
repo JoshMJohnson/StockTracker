@@ -75,6 +75,16 @@ public partial class Watchlist : ContentPage
         Refresh();
     }
 
+    /* handles removing a stock from watchlist with swipeview */
+    private async void Swipe_Remove(object sender, EventArgs e)
+    {
+        SwipeItem remove_stock = (SwipeItem) sender;
+        string stock_ticker = remove_stock.Text;
+
+        await App.StockRepo.Remove_Stock(stock_ticker);
+        Refresh();
+    }
+
     /* clear button clicked on the watchlist page; deletes all stocks */
     private async void Clear_Watchlist(object sender, EventArgs e)
     {
