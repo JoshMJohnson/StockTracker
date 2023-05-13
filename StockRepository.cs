@@ -141,40 +141,21 @@ public class StockRepository
                 string current_stock_open_price_string;
                 string current_stock_percent_change_string;
 
-
                 if (watchlist.Count == 1)
                 {
-                    /* get ticker symbol */
-                    current_stock_ticker = current_stock_data_array[3];
-
-                    /* get company name */
-                    current_company_name = current_stock_data_array[7];
-
-                    /* get stock price change */
-                    current_stock_price_change_string = current_stock_data_array[53];
-
-                    /* get stock price */
-                    current_stock_open_price_string = current_stock_data_array[29];
-
-                    /* get stock percent change */
-                    current_stock_percent_change_string = current_stock_data_array[57];
+                    current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
+                    current_company_name = current_stock_data_array[7]; /* get company name */
+                    current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
+                    current_stock_open_price_string = current_stock_data_array[29]; /* get stock price */
+                    current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
                 }
                 else
                 {
-                    /* get ticker symbol */
-                    current_stock_ticker = current_stock_data_array[1];
-
-                    /* get company name */
-                    current_company_name = current_stock_data_array[9];
-
-                    /* get stock price change */
-                    current_stock_price_change_string = current_stock_data_array[55];
-                    
-                    /* get stock price */
-                    current_stock_open_price_string = current_stock_data_array[31];
-                    
-                    /* get stock percent change */
-                    current_stock_percent_change_string = current_stock_data_array[59];
+                    current_stock_ticker = current_stock_data_array[1]; /* get ticker symbol */
+                    current_company_name = current_stock_data_array[9]; /* get company name */
+                    current_stock_price_change_string = current_stock_data_array[55]; /* get stock price change */
+                    current_stock_open_price_string = current_stock_data_array[31]; /* get stock price */
+                    current_stock_percent_change_string = current_stock_data_array[59]; /* get stock percent change */
                 }
 
                 /* stock price dollar change round to two decimal points */
