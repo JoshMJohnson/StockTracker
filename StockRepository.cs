@@ -133,25 +133,60 @@ public class StockRepository
                 string current_request = request_array[i];
                 string[] current_stock_data_array = current_request.Split("\"");
 
-                /* get ticker symbol */
-                string current_stock_ticker = current_stock_data_array[1];
+                Debug.WriteLine("CURRENT REQUEST: " + current_request);
 
-                /* get company name */
-                string current_company_name = current_stock_data_array[9];
+                string current_stock_ticker;
+                string current_company_name;
+                string current_stock_price_change_string;
+                string current_stock_open_price_string;
+                string current_stock_percent_change_string;
 
-                /* get stock price change - convert to double with two decimal points */
-                string current_stock_price_change_string = current_stock_data_array[55];
+
+                if (watchlist.Count == 1)
+                {
+                    /* get ticker symbol */
+                    current_stock_ticker = current_stock_data_array[3];
+
+                    /* get company name */
+                    current_company_name = current_stock_data_array[7];
+
+                    /* get stock price change */
+                    current_stock_price_change_string = current_stock_data_array[53];
+
+                    /* get stock price */
+                    current_stock_open_price_string = current_stock_data_array[29];
+
+                    /* get stock percent change */
+                    current_stock_percent_change_string = current_stock_data_array[57];
+                }
+                else
+                {
+                    /* get ticker symbol */
+                    current_stock_ticker = current_stock_data_array[1];
+
+                    /* get company name */
+                    current_company_name = current_stock_data_array[9];
+
+                    /* get stock price change */
+                    current_stock_price_change_string = current_stock_data_array[55];
+                    
+                    /* get stock price */
+                    current_stock_open_price_string = current_stock_data_array[31];
+                    
+                    /* get stock percent change */
+                    current_stock_percent_change_string = current_stock_data_array[59];
+                }
+
+                /* stock price dollar change round to two decimal points */
                 double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
 
-                /* get stock price - convert to double with two decimal points */
-                string current_stock_open_price_string = current_stock_data_array[31];
+                /* stock price round to two decimal points */
                 double current_stock_open_price = double.Parse(current_stock_open_price_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price = current_stock_open_price + current_stock_price_change;
                 current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
 
-                /* get stock percent change */
-                string current_stock_percent_change_string = current_stock_data_array[59];
+                /* percent change format to two decimal points */
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
 
