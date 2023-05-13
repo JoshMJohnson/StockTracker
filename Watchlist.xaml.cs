@@ -19,7 +19,7 @@ public partial class Watchlist : ContentPage
 
         sort_button.Text = sort_display;
 
-        Refresh();
+        Refresh(true);
 
         /* creates display for an empty watchlist */
         vertical_layout_watchlist_empty = new VerticalStackLayout();
@@ -96,7 +96,7 @@ public partial class Watchlist : ContentPage
             }
         }
 
-        Refresh();
+        Refresh(true);
     }
 
     /* handles removing a stock from watchlist with swipeview */
@@ -106,7 +106,7 @@ public partial class Watchlist : ContentPage
         string stock_ticker = remove_stock.Text;
 
         await App.StockRepo.Remove_Stock(stock_ticker);
-        Refresh();
+        Refresh(false);
     }
 
     /* clear button clicked on the watchlist page; deletes all stocks */
@@ -125,7 +125,7 @@ public partial class Watchlist : ContentPage
             if (confirm) /* confirmed clear of watchlist */
             {
                 await App.StockRepo.Clear_Watchlist();
-                Refresh();
+                Refresh(false);
             }
         }
     }
@@ -149,11 +149,11 @@ public partial class Watchlist : ContentPage
         sort_display = Preferences.Get("SortDisplay", "Sorted: Alpha");
         sort_button.Text = sort_display;
 
-        Refresh();
+        Refresh(false);
     }
 
     /* gets all the stocks on the database and displays on UI */
-    private async void Refresh()
+    private async void Refresh(bool call_api)
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
 
@@ -166,11 +166,73 @@ public partial class Watchlist : ContentPage
         else /* else watchlist is not empty */
         {
             vertical_layout_watchlist_empty.IsVisible = false;
-            await App.StockRepo.Update_Watchlist(sort_alpha);
+
+            if (call_api) /* only calls api when desired */
+            {
+                await App.StockRepo.Update_Watchlist(sort_alpha);
+            }
         }
 
         watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
-
         watchlist_items_display.ItemsSource = watchlist;
+        Gather_Threshold_Stocks();
+    }
+
+    /* finds the stocks from watchlist that meet the requirements for a local push notification */
+    private async void Gather_Threshold_Stocks()
+    {
+        /* access settings variables */
+        Settings local_settings = new Settings();
+
+        bool notifications = local_settings.notifications; /* notifications on/off */
+        double value_percent_change_threshold = local_settings.value_percent_change; /* percent change of a stock to receive a push notification */
+        int num_notification_times = local_settings.num_notification_times; /* 0 = one T.O.D.; 1 = two T.O.D.; 2 = three T.O.D. */
+        string value_tod1 = local_settings.value_tod1; /* notification time for T.O.D. #1 */
+        string value_tod2 = local_settings.value_tod2; /* notification time for T.O.D. #2 */
+        string value_tod3 = local_settings.value_tod3; /* notification time for T.O.D. #3 */
+
+        if (notifications) /* if notifications are turned on */
+        {
+            /* gathering list of stocks from watchlist that meet change threshold */
+            List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
+            List<Stock> stock_positive_threshold = new List<Stock>();
+            List<Stock> stock_negative_threshold = new List<Stock>();
+
+            for (int i = 0; i < watchlist.Count; i++)
+            {
+                Stock temp_stock = watchlist[i];
+                
+                double stock_percent_change = temp_stock.ticker_percent_day_change;
+                double stock_percent_change_abs = Math.Abs(stock_percent_change);
+
+                if (stock_percent_change_abs > value_percent_change_threshold) /* if percent change threshold reached either positive or negative */
+                {
+                    if (stock_percent_change > 0) /* if positive threshold reached */
+                    {
+                        stock_positive_threshold.Add(temp_stock);
+                    } 
+                    else /* else negative threshold reached */
+                    {
+                        stock_negative_threshold.Add(temp_stock);
+                    }
+                }
+            }
+
+            if (stock_positive_threshold.Count > 0) /* if any positive stocks past threshold */
+            {
+                Create_Notification(stock_positive_threshold, true);
+            }
+
+            if (stock_negative_threshold.Count > 0) /* if any negative stocks past threshold */
+            {
+                Create_Notification(stock_negative_threshold, false);
+            }
+        }
+    }
+
+    /* creates and sends local push notifications */
+    private async void Create_Notification(List<Stock> threshold_list, bool is_positive_list)
+    {
+
     }
 }

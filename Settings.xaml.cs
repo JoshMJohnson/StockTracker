@@ -9,7 +9,7 @@ public partial class Settings : ContentPage
     /* app setting variables */
     public bool notifications { get; set; } /* saves value for notifications being on */
     public double value_percent_change { get; set; } /* percent change of a stock to receive a push notification */
-    public int num_notification_times { get; set; } /* 0 = threshold; 1 = one T.O.D.; 2 = two T.O.D. */
+    public int num_notification_times { get; set; } /* 0 = one T.O.D.; 1 = two T.O.D.; 2 = three T.O.D. */
     public string value_tod1 { get; set; } /* notification time for T.O.D. #1 */
     public string value_tod2 { get; set; } /* notification time for T.O.D. #2 */
     public string value_tod3 { get; set; } /* notification time for T.O.D. #3 */
