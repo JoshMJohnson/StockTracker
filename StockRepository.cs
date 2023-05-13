@@ -133,8 +133,6 @@ public class StockRepository
                 string current_request = request_array[i];
                 string[] current_stock_data_array = current_request.Split("\"");
 
-                Debug.WriteLine("CURRENT REQUEST: " + current_request);
-
                 string current_stock_ticker;
                 string current_company_name;
                 string current_stock_price_change_string;
