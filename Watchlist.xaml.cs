@@ -70,7 +70,7 @@ public partial class Watchlist : ContentPage
 
                     if (watchlist_before.Count == watchlist_after.Count)
                     {
-                        await DisplayAlert("Add Stock", $"No stock with ticker {stock} found on stock market", "ok");
+                        await DisplayAlert("Add Stock", $"No stock with ticker {stock} found on stock market or already on watchlist", "ok");
                     }
                 }
             }
@@ -176,6 +176,10 @@ public partial class Watchlist : ContentPage
 
         watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
         watchlist_items_display.ItemsSource = watchlist;
+
+
+
+
         Gather_Threshold_Stocks();
     }
 
@@ -253,10 +257,14 @@ public partial class Watchlist : ContentPage
             var notification_alert = new NotificationRequest
             {
                 NotificationId = 1,
-                Title = "Stock Threshold Alert",
-                Subtitle = "Bull Stocks",
+                Title = "Bull Stocks",
+                Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 1
+                BadgeNumber = 1,
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = DateTime.Now.AddSeconds(5)
+                }
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
@@ -282,11 +290,15 @@ public partial class Watchlist : ContentPage
 
             var notification_alert = new NotificationRequest
             {
-                NotificationId = 1,
-                Title = "Stock Threshold Alert",
-                Subtitle = "Bear Stocks",
+                NotificationId = 2,
+                Title = "Bear Stocks",
+                Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 1
+                BadgeNumber = 2,
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = DateTime.Now.AddSeconds(3)
+                }
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
