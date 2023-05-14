@@ -1,4 +1,5 @@
 using StockTracker.Model;
+using Plugin.LocalNotification;
 
 namespace StockTracker;
 
@@ -231,8 +232,64 @@ public partial class Watchlist : ContentPage
     }
 
     /* creates and sends local push notifications */
-    private async void Create_Notification(List<Stock> threshold_list, bool is_positive_list)
+    private void Create_Notification(List<Stock> threshold_list, bool is_positive_list)
     {
+        if (is_positive_list) /* if list of positive stocks past threshold */
+        {
+            string notification_description = "";
 
+            /* fill lists for notification display */
+            for (int i = 0; i < threshold_list.Count; i++)
+            {
+                if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
+                {
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${threshold_list[i].ticker_dollar_day_change} ({threshold_list[i].ticker_percent_day_change}%)";
+                    break;
+                }
+
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${threshold_list[i].ticker_dollar_day_change} ({threshold_list[i].ticker_percent_day_change}%)\n";
+            }
+
+            var notification_alert = new NotificationRequest
+            {
+                NotificationId = 1,
+                Title = "Stock Threshold Alert",
+                Subtitle = "Bull Stocks",
+                Description = notification_description,
+                BadgeNumber = 1
+            };
+
+            LocalNotificationCenter.Current.Show(notification_alert);
+        }
+        else /* else list of negative stocks past threshold */
+        {
+            string notification_description = "";
+
+            /* fill lists for notification display */
+            for (int i = 0; i < threshold_list.Count; i++)
+            {
+                double abs_dollar_change = Math.Abs(threshold_list[i].ticker_dollar_day_change);
+                double abs_percent_change = Math.Abs(threshold_list[i].ticker_percent_day_change);
+
+                if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
+                {
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${abs_dollar_change} (-{abs_percent_change}%)";
+                    break;
+                }
+
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${abs_dollar_change} (-{abs_percent_change}%)\n";
+            }
+
+            var notification_alert = new NotificationRequest
+            {
+                NotificationId = 1,
+                Title = "Stock Threshold Alert",
+                Subtitle = "Bear Stocks",
+                Description = notification_description,
+                BadgeNumber = 1
+            };
+
+            LocalNotificationCenter.Current.Show(notification_alert);
+        }
     }
 }
