@@ -24,7 +24,7 @@ public partial class Settings : ContentPage
         num_notification_times = Preferences.Get("NumNotifications", 2);
         value_tod1 = Preferences.Get("ValueTOD1", "8:45");
         value_tod2 = Preferences.Get("ValueTOD2", "12:00");
-        value_tod3 = Preferences.Get("ValueTOD3", "2:30");
+        value_tod3 = Preferences.Get("ValueTOD3", "14:30");
 
         /* notification initial display */
         notification_on.IsChecked = notifications;
