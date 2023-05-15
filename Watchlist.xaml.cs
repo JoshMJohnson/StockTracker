@@ -20,7 +20,7 @@ public partial class Watchlist : ContentPage
 
         sort_button.Text = sort_display;
 
-        Refresh(true);
+        Refresh(true, false);
 
         /* creates display for an empty watchlist */
         vertical_layout_watchlist_empty = new VerticalStackLayout();
@@ -97,7 +97,7 @@ public partial class Watchlist : ContentPage
             }
         }
 
-        Refresh(true);
+        Refresh(true, false);
     }
 
     /* handles removing a stock from watchlist with swipeview */
@@ -107,7 +107,7 @@ public partial class Watchlist : ContentPage
         string stock_ticker = remove_stock.Text;
 
         await App.StockRepo.Remove_Stock(stock_ticker);
-        Refresh(false);
+        Refresh(false, false);
     }
 
     /* clear button clicked on the watchlist page; deletes all stocks */
@@ -126,7 +126,7 @@ public partial class Watchlist : ContentPage
             if (confirm) /* confirmed clear of watchlist */
             {
                 await App.StockRepo.Clear_Watchlist();
-                Refresh(false);
+                Refresh(false, false);
             }
         }
     }
@@ -150,14 +150,14 @@ public partial class Watchlist : ContentPage
         sort_display = Preferences.Get("SortDisplay", "Sorted: Alpha");
         sort_button.Text = sort_display;
 
-        Refresh(false);
+        Refresh(false, false);
     }
 
     /*
      * updates all the stocks on the database within watchlist
      * - this code is executed at notification alert times given within app settings
      */
-    private async void Refresh(bool call_api)
+    private async void Refresh(bool call_api, bool create_local_notification)
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
 
@@ -174,12 +174,16 @@ public partial class Watchlist : ContentPage
             if (call_api) /* only calls api when desired */
             {
                 await App.StockRepo.Update_Watchlist(sort_alpha);
-                Gather_Threshold_Stocks();
             }
         }
 
         watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
         watchlist_items_display.ItemsSource = watchlist;
+
+        if (create_local_notification) /* if local push notification needs to be created */
+        {
+            Gather_Threshold_Stocks();
+        }
     }
 
     /* finds the stocks from watchlist that meet the requirements for a local push notification */
