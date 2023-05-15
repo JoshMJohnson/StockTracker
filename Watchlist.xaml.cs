@@ -177,12 +177,25 @@ public partial class Watchlist : ContentPage
             }
         }
 
-        watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
-        watchlist_items_display.ItemsSource = watchlist;
+        List<Stock>  watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
+        watchlist_items_display.ItemsSource = watchlist_updated;
 
-        if (create_local_notification) /* if local push notification needs to be created */
+        if (create_local_notification && watchlist_updated.Count != 0) /* if local push notification needs to be created */
         {
-            Gather_Threshold_Stocks();
+            bool market_open = false;
+            for (int i = 0; i < watchlist_updated.Count; i++) /* loop through the watchlist */
+            {
+                if ((watchlist[i].ticker_price != watchlist_updated[i].ticker_price) && (watchlist[i].ticker_dollar_day_change != watchlist_updated[i].ticker_dollar_day_change)) /* if all values are the same in previous watchlist and updated watchlist; then stockmarket is closed and send no alert */
+                {
+                    market_open = true;
+                    break;
+                }
+            }
+
+            if (market_open) /* if the stock market is open; send local push notification */
+            {
+                Gather_Threshold_Stocks();
+            }
         }
     }
 
