@@ -153,7 +153,10 @@ public partial class Watchlist : ContentPage
         Refresh(false);
     }
 
-    /* gets all the stocks on the database and displays on UI */
+    /*
+     * updates all the stocks on the database within watchlist
+     * - this code is executed at notification alert times given within app settings
+     */
     private async void Refresh(bool call_api)
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
@@ -171,16 +174,12 @@ public partial class Watchlist : ContentPage
             if (call_api) /* only calls api when desired */
             {
                 await App.StockRepo.Update_Watchlist(sort_alpha);
+                Gather_Threshold_Stocks();
             }
         }
 
         watchlist = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
         watchlist_items_display.ItemsSource = watchlist;
-
-
-
-
-        Gather_Threshold_Stocks();
     }
 
     /* finds the stocks from watchlist that meet the requirements for a local push notification */
@@ -191,11 +190,7 @@ public partial class Watchlist : ContentPage
 
         bool notifications = local_settings.notifications; /* notifications on/off */
         double value_percent_change_threshold = local_settings.value_percent_change; /* percent change of a stock to receive a push notification */
-        int num_notification_times = local_settings.num_notification_times; /* 0 = one T.O.D.; 1 = two T.O.D.; 2 = three T.O.D. */
-        string value_tod1 = local_settings.value_tod1; /* notification time for T.O.D. #1 */
-        string value_tod2 = local_settings.value_tod2; /* notification time for T.O.D. #2 */
-        string value_tod3 = local_settings.value_tod3; /* notification time for T.O.D. #3 */
-
+        
         if (notifications) /* if notifications are turned on */
         {
             /* gathering list of stocks from watchlist that meet change threshold */
@@ -260,11 +255,7 @@ public partial class Watchlist : ContentPage
                 Title = "Bull Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 1,
-                Schedule = new NotificationRequestSchedule
-                {
-                    NotifyTime = DateTime.Now.AddSeconds(5)
-                }
+                BadgeNumber = 1
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
@@ -294,11 +285,7 @@ public partial class Watchlist : ContentPage
                 Title = "Bear Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 2,
-                Schedule = new NotificationRequestSchedule
-                {
-                    NotifyTime = DateTime.Now.AddSeconds(3)
-                }
+                BadgeNumber = 2
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
