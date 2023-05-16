@@ -1,5 +1,7 @@
 using StockTracker.Model;
 using Plugin.LocalNotification;
+using System;
+using System.Threading;
 
 namespace StockTracker;
 
@@ -45,7 +47,7 @@ public partial class Watchlist : ContentPage
         Grid watchlist_layout = watchlist_page_layout;
         Grid.SetColumnSpan(vertical_layout_watchlist_empty, 2);
         Grid.SetRow(vertical_layout_watchlist_empty, 0);
-        watchlist_layout.Children.Add(vertical_layout_watchlist_empty);
+        watchlist_layout.Children.Add(vertical_layout_watchlist_empty);        
     }
 
     /* handles the adding and removing buttons on watchlist page */
@@ -204,47 +206,43 @@ public partial class Watchlist : ContentPage
     {
         /* access settings variables */
         Settings local_settings = new Settings();
-
-        bool notifications = local_settings.notifications; /* notifications on/off */
         double value_percent_change_threshold = local_settings.value_percent_change; /* percent change of a stock to receive a push notification */
         
-        if (notifications) /* if notifications are turned on */
+        /* gathering list of stocks from watchlist that meet change threshold */
+        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
+        List<Stock> stock_positive_threshold = new List<Stock>();
+        List<Stock> stock_negative_threshold = new List<Stock>();
+
+        for (int i = 0; i < watchlist.Count; i++)
         {
-            /* gathering list of stocks from watchlist that meet change threshold */
-            List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
-            List<Stock> stock_positive_threshold = new List<Stock>();
-            List<Stock> stock_negative_threshold = new List<Stock>();
-
-            for (int i = 0; i < watchlist.Count; i++)
-            {
-                Stock temp_stock = watchlist[i];
+            Stock temp_stock = watchlist[i];
                 
-                double stock_percent_change = temp_stock.ticker_percent_day_change;
-                double stock_percent_change_abs = Math.Abs(stock_percent_change);
+            double stock_percent_change = temp_stock.ticker_percent_day_change;
+            double stock_percent_change_abs = Math.Abs(stock_percent_change);
 
-                if (stock_percent_change_abs > value_percent_change_threshold) /* if percent change threshold reached either positive or negative */
+            if (stock_percent_change_abs > value_percent_change_threshold) /* if percent change threshold reached either positive or negative */
+            {
+                if (stock_percent_change > 0) /* if positive threshold reached */
                 {
-                    if (stock_percent_change > 0) /* if positive threshold reached */
-                    {
-                        stock_positive_threshold.Add(temp_stock);
-                    } 
-                    else /* else negative threshold reached */
-                    {
-                        stock_negative_threshold.Add(temp_stock);
-                    }
+                    stock_positive_threshold.Add(temp_stock);
+                } 
+                else /* else negative threshold reached */
+                {
+                    stock_negative_threshold.Add(temp_stock);
                 }
             }
-
-            if (stock_positive_threshold.Count > 0) /* if any positive stocks past threshold */
-            {
-                Create_Notification(stock_positive_threshold, true);
-            }
-
-            if (stock_negative_threshold.Count > 0) /* if any negative stocks past threshold */
-            {
-                Create_Notification(stock_negative_threshold, false);
-            }
         }
+
+        if (stock_positive_threshold.Count > 0) /* if any positive stocks past threshold */
+        {
+            Create_Notification(stock_positive_threshold, true);
+        }
+
+        if (stock_negative_threshold.Count > 0) /* if any negative stocks past threshold */
+        {
+            Create_Notification(stock_negative_threshold, false);
+        }
+        
     }
 
     /* creates and sends local push notifications */
@@ -306,6 +304,81 @@ public partial class Watchlist : ContentPage
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
+        }
+    }
+
+    /* trigger local notification alert */
+    public void Trigger_Notifications()
+    {
+        Settings settings = new Settings();
+
+        bool notifications = settings.notifications;
+        
+
+        if (notifications) /* if notifications are turned on */
+        {
+            int num_notifications = settings.num_notification_times;
+            string notification_time1 = settings.value_tod1;
+            string notification_time2 = settings.value_tod2;
+            string notification_time3 = settings.value_tod3;
+
+            /* timer 1 info */
+            string[] updated_view_array = notification_time1.Split(':');
+            string hours_string = updated_view_array[0];
+            string mins_string = updated_view_array[1];
+            int hours = int.Parse(hours_string);
+            int mins = int.Parse(mins_string);
+
+            /* timer 2 info */
+            string[] updated_view_array2 = notification_time2.Split(':');
+            string hours_string2 = updated_view_array2[0];
+            string mins_string2 = updated_view_array2[1];
+            int hours2 = int.Parse(hours_string2);
+            int mins2 = int.Parse(mins_string2);
+
+            /* timer 3 info */
+            string[] updated_view_array3 = notification_time3.Split(':');
+            string hours_string3 = updated_view_array3[0];
+            string mins_string3 = updated_view_array3[1];
+            int hours3 = int.Parse(hours_string3);
+            int mins3 = int.Parse(mins_string3);
+
+            if (num_notifications == 0) /* if 1 timer set */
+            {
+                var timer1 = new Timer(Refresh(true, true));
+
+                /* figures out how much time until timer */
+                string time_until_string = $"{hours}.{mins}";
+                double time_until_double = double.Parse(time_until_string, System.Globalization.CultureInfo.InvariantCulture);
+
+                DateTime current_time = DateTime.Now;
+                DateTime notification_time = DateTime.Today.AddHours(time_until_double);
+                                
+                if (current_time > notification_time) /* if already past notification time for that day */
+                {
+                    notification_time = notification_time.AddDays(1.0);
+                }
+
+                int ms_until_notification_time = (int) ((notification_time - current_time).TotalMilliseconds);
+
+                /* set timer to elapse only once at the notification time */
+                timer1.Change(ms_until_notification_time, Timeout.Infinite);
+            }
+            else if (num_notifications == 1) /* else 2 timers set */
+            {
+                //var timer1 = new Timer(TimerCallback);
+                //var timer2 = new Timer(TimerCallback);
+
+
+            }
+            else /* else 3 timers set */
+            {
+                //var timer1 = new Timer(TimerCallback);
+                //var timer2 = new Timer(TimerCallback);
+                //var timer3 = new Timer(TimerCallback);
+
+
+            }
         }
     }
 }
