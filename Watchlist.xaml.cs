@@ -2,6 +2,7 @@ using StockTracker.Model;
 using Plugin.LocalNotification;
 using System;
 using System.Threading;
+using Android.OS;
 
 namespace StockTracker;
 
@@ -14,7 +15,7 @@ public partial class Watchlist : ContentPage
 
     public Watchlist()
 	{
-		InitializeComponent();
+        InitializeComponent();
 
         /* sorting the list */
         sort_alpha = Preferences.Get("SortAlphaValue", true);
@@ -22,7 +23,7 @@ public partial class Watchlist : ContentPage
 
         sort_button.Text = sort_display;
 
-        Refresh(true, false);
+        Refresh(true);
 
         /* creates display for an empty watchlist */
         vertical_layout_watchlist_empty = new VerticalStackLayout();
@@ -47,7 +48,7 @@ public partial class Watchlist : ContentPage
         Grid watchlist_layout = watchlist_page_layout;
         Grid.SetColumnSpan(vertical_layout_watchlist_empty, 2);
         Grid.SetRow(vertical_layout_watchlist_empty, 0);
-        watchlist_layout.Children.Add(vertical_layout_watchlist_empty);        
+        watchlist_layout.Children.Add(vertical_layout_watchlist_empty);
     }
 
     /* handles the adding and removing buttons on watchlist page */
@@ -99,7 +100,7 @@ public partial class Watchlist : ContentPage
             }
         }
 
-        Refresh(true, false);
+        Refresh(true);
     }
 
     /* handles removing a stock from watchlist with swipeview */
@@ -109,7 +110,7 @@ public partial class Watchlist : ContentPage
         string stock_ticker = remove_stock.Text;
 
         await App.StockRepo.Remove_Stock(stock_ticker);
-        Refresh(false, false);
+        Refresh(false);
     }
 
     /* clear button clicked on the watchlist page; deletes all stocks */
@@ -128,7 +129,7 @@ public partial class Watchlist : ContentPage
             if (confirm) /* confirmed clear of watchlist */
             {
                 await App.StockRepo.Clear_Watchlist();
-                Refresh(false, false);
+                Refresh(false);
             }
         }
     }
@@ -152,14 +153,14 @@ public partial class Watchlist : ContentPage
         sort_display = Preferences.Get("SortDisplay", "Sorted: Alpha");
         sort_button.Text = sort_display;
 
-        Refresh(false, false);
+        Refresh(false);
     }
 
     /*
      * updates all the stocks on the database within watchlist
      * - this code is executed at notification alert times given within app settings
      */
-    private async void Refresh(bool call_api, bool create_local_notification)
+    private async void Refresh(bool call_api)
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
 
@@ -181,204 +182,5 @@ public partial class Watchlist : ContentPage
 
         List<Stock>  watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
         watchlist_items_display.ItemsSource = watchlist_updated;
-
-        if (create_local_notification && watchlist_updated.Count != 0) /* if local push notification needs to be created */
-        {
-            bool market_open = false;
-            for (int i = 0; i < watchlist_updated.Count; i++) /* loop through the watchlist */
-            {
-                if ((watchlist[i].ticker_price != watchlist_updated[i].ticker_price) && (watchlist[i].ticker_dollar_day_change != watchlist_updated[i].ticker_dollar_day_change)) /* if all values are the same in previous watchlist and updated watchlist; then stockmarket is closed and send no alert */
-                {
-                    market_open = true;
-                    break;
-                }
-            }
-
-            if (market_open) /* if the stock market is open; send local push notification */
-            {
-                Gather_Threshold_Stocks();
-            }
-        }
-    }
-
-    /* finds the stocks from watchlist that meet the requirements for a local push notification */
-    private async void Gather_Threshold_Stocks()
-    {
-        /* access settings variables */
-        Settings local_settings = new Settings();
-        double value_percent_change_threshold = local_settings.value_percent_change; /* percent change of a stock to receive a push notification */
-        
-        /* gathering list of stocks from watchlist that meet change threshold */
-        List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
-        List<Stock> stock_positive_threshold = new List<Stock>();
-        List<Stock> stock_negative_threshold = new List<Stock>();
-
-        for (int i = 0; i < watchlist.Count; i++)
-        {
-            Stock temp_stock = watchlist[i];
-                
-            double stock_percent_change = temp_stock.ticker_percent_day_change;
-            double stock_percent_change_abs = Math.Abs(stock_percent_change);
-
-            if (stock_percent_change_abs > value_percent_change_threshold) /* if percent change threshold reached either positive or negative */
-            {
-                if (stock_percent_change > 0) /* if positive threshold reached */
-                {
-                    stock_positive_threshold.Add(temp_stock);
-                } 
-                else /* else negative threshold reached */
-                {
-                    stock_negative_threshold.Add(temp_stock);
-                }
-            }
-        }
-
-        if (stock_positive_threshold.Count > 0) /* if any positive stocks past threshold */
-        {
-            Create_Notification(stock_positive_threshold, true);
-        }
-
-        if (stock_negative_threshold.Count > 0) /* if any negative stocks past threshold */
-        {
-            Create_Notification(stock_negative_threshold, false);
-        }
-        
-    }
-
-    /* creates and sends local push notifications */
-    private void Create_Notification(List<Stock> threshold_list, bool is_positive_list)
-    {
-        if (is_positive_list) /* if list of positive stocks past threshold */
-        {
-            string notification_description = "";
-
-            /* fill lists for notification display */
-            for (int i = 0; i < threshold_list.Count; i++)
-            {
-                if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
-                {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${threshold_list[i].ticker_dollar_day_change} ({threshold_list[i].ticker_percent_day_change}%)";
-                    break;
-                }
-
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${threshold_list[i].ticker_dollar_day_change} ({threshold_list[i].ticker_percent_day_change}%)\n";
-            }
-
-            var notification_alert = new NotificationRequest
-            {
-                NotificationId = 1,
-                Title = "Bull Stocks",
-                Subtitle = "Stock Threshold Alert",
-                Description = notification_description,
-                BadgeNumber = 1
-            };
-
-            LocalNotificationCenter.Current.Show(notification_alert);
-        }
-        else /* else list of negative stocks past threshold */
-        {
-            string notification_description = "";
-
-            /* fill lists for notification display */
-            for (int i = 0; i < threshold_list.Count; i++)
-            {
-                double abs_dollar_change = Math.Abs(threshold_list[i].ticker_dollar_day_change);
-                double abs_percent_change = Math.Abs(threshold_list[i].ticker_percent_day_change);
-
-                if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
-                {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${abs_dollar_change} (-{abs_percent_change}%)";
-                    break;
-                }
-
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${abs_dollar_change} (-{abs_percent_change}%)\n";
-            }
-
-            var notification_alert = new NotificationRequest
-            {
-                NotificationId = 2,
-                Title = "Bear Stocks",
-                Subtitle = "Stock Threshold Alert",
-                Description = notification_description,
-                BadgeNumber = 2
-            };
-
-            LocalNotificationCenter.Current.Show(notification_alert);
-        }
-    }
-
-    /* trigger local notification alert */
-    public void Trigger_Notifications()
-    {
-        Settings settings = new Settings();
-
-        bool notifications = settings.notifications;
-        
-
-        if (notifications) /* if notifications are turned on */
-        {
-            int num_notifications = settings.num_notification_times;
-            string notification_time1 = settings.value_tod1;
-            string notification_time2 = settings.value_tod2;
-            string notification_time3 = settings.value_tod3;
-
-            /* timer 1 info */
-            string[] updated_view_array = notification_time1.Split(':');
-            string hours_string = updated_view_array[0];
-            string mins_string = updated_view_array[1];
-            int hours = int.Parse(hours_string);
-            int mins = int.Parse(mins_string);
-
-            /* timer 2 info */
-            string[] updated_view_array2 = notification_time2.Split(':');
-            string hours_string2 = updated_view_array2[0];
-            string mins_string2 = updated_view_array2[1];
-            int hours2 = int.Parse(hours_string2);
-            int mins2 = int.Parse(mins_string2);
-
-            /* timer 3 info */
-            string[] updated_view_array3 = notification_time3.Split(':');
-            string hours_string3 = updated_view_array3[0];
-            string mins_string3 = updated_view_array3[1];
-            int hours3 = int.Parse(hours_string3);
-            int mins3 = int.Parse(mins_string3);
-
-            if (num_notifications == 0) /* if 1 timer set */
-            {
-                var timer1 = new Timer(Refresh(true, true));
-
-                /* figures out how much time until timer */
-                string time_until_string = $"{hours}.{mins}";
-                double time_until_double = double.Parse(time_until_string, System.Globalization.CultureInfo.InvariantCulture);
-
-                DateTime current_time = DateTime.Now;
-                DateTime notification_time = DateTime.Today.AddHours(time_until_double);
-                                
-                if (current_time > notification_time) /* if already past notification time for that day */
-                {
-                    notification_time = notification_time.AddDays(1.0);
-                }
-
-                int ms_until_notification_time = (int) ((notification_time - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time, Timeout.Infinite);
-            }
-            else if (num_notifications == 1) /* else 2 timers set */
-            {
-                //var timer1 = new Timer(TimerCallback);
-                //var timer2 = new Timer(TimerCallback);
-
-
-            }
-            else /* else 3 timers set */
-            {
-                //var timer1 = new Timer(TimerCallback);
-                //var timer2 = new Timer(TimerCallback);
-                //var timer3 = new Timer(TimerCallback);
-
-
-            }
-        }
     }
 }

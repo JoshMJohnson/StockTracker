@@ -223,9 +223,7 @@ public partial class Settings : ContentPage
         Notify_Type_Change();
         Time_Of_Day_Change();
 
-        /* trigger local notification when current time equals notificaiton time in settings */
-        Watchlist watchlist_page = new Watchlist();
-        watchlist_page.Trigger_Notifications(); 
+        new Notification_Timers();
 
         await DisplayAlert("Settings", "Saved", "ok");
     }
