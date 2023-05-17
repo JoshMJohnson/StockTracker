@@ -58,8 +58,6 @@ public class Notification_Timers
 
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time, Timeout.Infinite);
-
-                Console.WriteLine($"{current_time} : {notification_time_total} : {ms_until_notification_time}");
             }
             else if (num_notifications == 1) /* else 2 timers set */
             {
@@ -85,8 +83,6 @@ public class Notification_Timers
      */
     private async void Refresh(object state)
     {
-        Console.WriteLine("yo2222222222222222222222222222222222222222222222");
-
         List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
 
         if (watchlist.Count != 0) /* if watchlist is not empty */
@@ -108,8 +104,6 @@ public class Notification_Timers
                 }
             }
 
-            Gather_Threshold_Stocks();
-
             if (market_open) /* if the stock market is open; send local push notification */
             {
                 Gather_Threshold_Stocks();
@@ -120,8 +114,6 @@ public class Notification_Timers
     /* finds the stocks from watchlist that meet the requirements for a local push notification */
     private async void Gather_Threshold_Stocks()
     {
-        Console.WriteLine("yo333333333333333333333333333333333333333333333333");
-
         /* access settings variables */
         Settings local_settings = new Settings();
         double value_percent_change_threshold = local_settings.value_percent_change; /* percent change of a stock to receive a push notification */
@@ -166,8 +158,6 @@ public class Notification_Timers
     /* creates and sends local push notifications */
     private void Create_Notification(List<Stock> threshold_list, bool is_positive_list)
     {
-        Console.WriteLine("yo4444444444444444444444444444444444444444");
-
         if (is_positive_list) /* if list of positive stocks past threshold */
         {
             string notification_description = "";
