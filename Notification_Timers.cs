@@ -13,9 +13,9 @@ public class Notification_Timers
 
     public Notification_Timers()
 	{
-        timer1 = null;
-        timer2 = null;
-        timer3 = null;
+        timer1 = new Timer(Refresh); 
+        timer2 = new Timer(Refresh);
+        timer3 = new Timer(Refresh);
     }
 
     /* prepares timers */
@@ -54,14 +54,11 @@ public class Notification_Timers
             int hours3 = int.Parse(hours_string3);
             int mins3 = int.Parse(mins_string3);
 
+            DateTime current_time = DateTime.Now;
+
             if (num_notifications == 0) /* if 1 timer set */
             {
-                timer1 = new Timer(Refresh);
-                timer2 = null;
-                timer3 = null;
-
                 /* timer 1 setup */
-                DateTime current_time = DateTime.Now;
                 DateTime notification_time_hours = DateTime.Today.AddHours(hours);
                 DateTime notification_time_total = notification_time_hours.AddMinutes(mins);
 
@@ -74,15 +71,11 @@ public class Notification_Timers
 
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time, Timeout.Infinite);
+                timer2.Change(Timeout.Infinite, Timeout.Infinite);
+                timer3.Change(Timeout.Infinite, Timeout.Infinite);
             }
             else if (num_notifications == 1) /* else 2 timers set */
-            {
-                timer1 = new Timer(Refresh);
-                timer2 = new Timer(Refresh);
-                timer3 = null;
-                                
-                DateTime current_time = DateTime.Now;
-
+            {                                
                 /* timer 1 setup */
                 DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
                 DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
@@ -109,16 +102,12 @@ public class Notification_Timers
                 int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
+                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
                 timer2.Change(ms_until_notification_time2, Timeout.Infinite);
+                timer3.Change(Timeout.Infinite, Timeout.Infinite);
             }
             else /* else 3 timers set */
             {
-                timer1 = new Timer(Refresh);
-                timer2 = new Timer(Refresh);
-                timer3 = new Timer(Refresh);
-
-                DateTime current_time = DateTime.Now;
-
                 /* timer 1 setup */
                 DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
                 DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
@@ -159,6 +148,8 @@ public class Notification_Timers
                 int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
+                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+                timer2.Change(ms_until_notification_time2, Timeout.Infinite);
                 timer3.Change(ms_until_notification_time3, Timeout.Infinite);
             }
         }
