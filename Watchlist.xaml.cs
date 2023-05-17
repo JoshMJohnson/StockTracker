@@ -1,8 +1,4 @@
 using StockTracker.Model;
-using Plugin.LocalNotification;
-using System;
-using System.Threading;
-using Android.OS;
 
 namespace StockTracker;
 

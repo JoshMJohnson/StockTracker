@@ -1,5 +1,3 @@
-using Android.OS;
-using AndroidX.Activity;
 using Plugin.LocalNotification;
 using StockTracker.Model;
 
@@ -181,8 +179,6 @@ public class Notification_Timers
                     break;
                 }
             }
-
-            Gather_Threshold_Stocks();
 
             if (market_open) /* if the stock market is open; send local push notification */
             {

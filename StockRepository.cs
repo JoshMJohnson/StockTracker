@@ -1,12 +1,6 @@
 using StockTracker.Model;
 using SQLite;
-using System.Diagnostics;
 using System.Net;
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StockTracker;
 
