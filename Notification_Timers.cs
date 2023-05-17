@@ -8,14 +8,6 @@ public class Notification_Timers
 {
 	public Notification_Timers()
 	{
-        Trigger_Notifications();
-    }
-
-    /* trigger local notification alert */
-    private void Trigger_Notifications()
-    {
-        Console.WriteLine("yooooooooooooooooooooooooooooooooooooooooooo");
-
         Settings settings = new Settings();
 
         bool notifications = settings.notifications;
@@ -51,26 +43,23 @@ public class Notification_Timers
 
             if (num_notifications == 0) /* if 1 timer set */
             {
-                Timer timer1 = new Timer(state => Refresh());
-
-                /* figures out how much time until notification alarm time */
-                string notification_timer_saved_string = $"{hours}.{mins}";
-                double notification_timer_saved_double = double.Parse(notification_timer_saved_string, System.Globalization.CultureInfo.InvariantCulture);
+                Timer timer1 = new Timer(Refresh);
 
                 DateTime current_time = DateTime.Now;
-                DateTime notification_time = DateTime.Today.AddHours(notification_timer_saved_double);
+                DateTime notification_time_hours = DateTime.Today.AddHours(hours);
+                DateTime notification_time_total = notification_time_hours.AddMinutes(mins);
 
-                if (current_time > notification_time) /* if already past notification time for that day */
+                if (current_time > notification_time_total) /* if already past notification time for that day */
                 {
-                    notification_time = notification_time.AddDays(1.0);
+                    notification_time_total = notification_time_total.AddDays(1.0);
                 }
 
-                int ms_until_notification_time = (int)((notification_time - current_time).TotalMilliseconds);
+                int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time, Timeout.Infinite);
 
-                Console.WriteLine($"{current_time} : {notification_time} : {ms_until_notification_time}");
+                Console.WriteLine($"{current_time} : {notification_time_total} : {ms_until_notification_time}");
             }
             else if (num_notifications == 1) /* else 2 timers set */
             {
@@ -94,7 +83,7 @@ public class Notification_Timers
      * updates all the stocks on the database within watchlist
      * - this code is executed at notification alert times given within app settings
      */
-    private async void Refresh()
+    private async void Refresh(object state)
     {
         Console.WriteLine("yo2222222222222222222222222222222222222222222222");
 

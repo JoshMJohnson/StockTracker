@@ -227,4 +227,6 @@ public partial class Settings : ContentPage
 
         await DisplayAlert("Settings", "Saved", "ok");
     }
+
+
 }
