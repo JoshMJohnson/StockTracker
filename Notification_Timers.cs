@@ -57,7 +57,10 @@ public class Notification_Timers
             if (num_notifications == 0) /* if 1 timer set */
             {
                 timer1 = new Timer(Refresh);
+                timer2 = null;
+                timer3 = null;
 
+                /* timer 1 setup */
                 DateTime current_time = DateTime.Now;
                 DateTime notification_time_hours = DateTime.Today.AddHours(hours);
                 DateTime notification_time_total = notification_time_hours.AddMinutes(mins);
@@ -74,18 +77,89 @@ public class Notification_Timers
             }
             else if (num_notifications == 1) /* else 2 timers set */
             {
-                //var timer1 = new Timer(TimerCallback);
-                //var timer2 = new Timer(TimerCallback);
+                timer1 = new Timer(Refresh);
+                timer2 = new Timer(Refresh);
+                timer3 = null;
+                                
+                DateTime current_time = DateTime.Now;
 
+                /* timer 1 setup */
+                DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
+                DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
 
+                if (current_time > notification_time_total1) /* if already past notification time for that day */
+                {
+                    notification_time_total1 = notification_time_total1.AddDays(1.0);
+                }
+
+                int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
+
+                /* set timer to elapse only once at the notification time */
+                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+
+                /* timer 2 setup */
+                DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
+                DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
+
+                if (current_time > notification_time_total2) /* if already past notification time for that day */
+                {
+                    notification_time_total2 = notification_time_total2.AddDays(1.0);
+                }
+
+                int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
+
+                /* set timer to elapse only once at the notification time */
+                timer2.Change(ms_until_notification_time2, Timeout.Infinite);
             }
             else /* else 3 timers set */
             {
-                //var timer1 = new Timer(TimerCallback);
-                //var timer2 = new Timer(TimerCallback);
-                //var timer3 = new Timer(TimerCallback);
+                timer1 = new Timer(Refresh);
+                timer2 = new Timer(Refresh);
+                timer3 = new Timer(Refresh);
 
+                DateTime current_time = DateTime.Now;
 
+                /* timer 1 setup */
+                DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
+                DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
+
+                if (current_time > notification_time_total1) /* if already past notification time for that day */
+                {
+                    notification_time_total1 = notification_time_total1.AddDays(1.0);
+                }
+
+                int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
+
+                /* set timer to elapse only once at the notification time */
+                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+
+                /* timer 2 setup */
+                DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
+                DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
+
+                if (current_time > notification_time_total2) /* if already past notification time for that day */
+                {
+                    notification_time_total2 = notification_time_total2.AddDays(1.0);
+                }
+
+                int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
+
+                /* set timer to elapse only once at the notification time */
+                timer2.Change(ms_until_notification_time2, Timeout.Infinite);
+
+                /* timer 3 setup */
+                DateTime notification_time_hours3 = DateTime.Today.AddHours(hours3);
+                DateTime notification_time_total3 = notification_time_hours3.AddMinutes(mins3);
+
+                if (current_time > notification_time_total3) /* if already past notification time for that day */
+                {
+                    notification_time_total3 = notification_time_total3.AddDays(1.0);
+                }
+
+                int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
+
+                /* set timer to elapse only once at the notification time */
+                timer3.Change(ms_until_notification_time3, Timeout.Infinite);
             }
         }
     }
