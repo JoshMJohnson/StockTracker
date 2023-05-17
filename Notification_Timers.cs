@@ -108,6 +108,8 @@ public class Notification_Timers
                 }
             }
 
+            Gather_Threshold_Stocks();
+
             if (market_open) /* if the stock market is open; send local push notification */
             {
                 Gather_Threshold_Stocks();
