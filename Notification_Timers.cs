@@ -1,4 +1,5 @@
 using Android.OS;
+using AndroidX.Activity;
 using Plugin.LocalNotification;
 using StockTracker.Model;
 
@@ -6,8 +7,20 @@ namespace StockTracker;
 
 public class Notification_Timers
 {
-	public Notification_Timers()
+    private Timer timer1;
+    private Timer timer2;
+    private Timer timer3;
+
+    public Notification_Timers()
 	{
+        timer1 = null;
+        timer2 = null;
+        timer3 = null;
+    }
+
+    /* prepares timers */
+    public void Create_Timers()
+    {
         Settings settings = new Settings();
 
         bool notifications = settings.notifications;
@@ -43,7 +56,7 @@ public class Notification_Timers
 
             if (num_notifications == 0) /* if 1 timer set */
             {
-                Timer timer1 = new Timer(Refresh);
+                timer1 = new Timer(Refresh);
 
                 DateTime current_time = DateTime.Now;
                 DateTime notification_time_hours = DateTime.Today.AddHours(hours);
@@ -103,6 +116,8 @@ public class Notification_Timers
                     break;
                 }
             }
+
+            Gather_Threshold_Stocks();
 
             if (market_open) /* if the stock market is open; send local push notification */
             {

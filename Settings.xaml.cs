@@ -6,6 +6,8 @@ namespace StockTracker;
 
 public partial class Settings : ContentPage
 {
+    private Notification_Timers timer_class = new Notification_Timers();
+
     /* app setting variables */
     public bool notifications { get; set; } /* saves value for notifications being on */
     public double value_percent_change { get; set; } /* percent change of a stock to receive a push notification */
@@ -222,8 +224,8 @@ public partial class Settings : ContentPage
         Percent_Notify_Change();
         Notify_Type_Change();
         Time_Of_Day_Change();
-
-        new Notification_Timers();
+               
+        timer_class.Create_Timers();
 
         await DisplayAlert("Settings", "Saved", "ok");
     }
