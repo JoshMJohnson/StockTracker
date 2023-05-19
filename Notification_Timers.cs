@@ -164,13 +164,11 @@ public class Notification_Timers
         if (watchlist.Count != 0) /* if watchlist is not empty */
         {
             await App.StockRepo.Update_Watchlist(true);
-        }
 
-        List<Stock> watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(true);
+            List<Stock> watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(true);
 
-        if (watchlist_updated.Count != 0) /* if local push notification needs to be created */
-        {
             bool market_open = false;
+
             for (int i = 0; i < watchlist_updated.Count; i++) /* loop through the watchlist */
             {
                 if (watchlist[i].ticker_price != watchlist_updated[i].ticker_price) /* if ticker prices are the same in previous watchlist and updated watchlist; then stockmarket is closed and send no alert */
@@ -179,6 +177,8 @@ public class Notification_Timers
                     break;
                 }
             }
+
+            Gather_Threshold_Stocks();
 
             if (market_open) /* if the stock market is open; send local push notification */
             {

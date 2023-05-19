@@ -26,7 +26,9 @@
                 Clicked="Watchlist_Button_Clicked"
                 Grid.Row="2"
                 Grid.Column="0"
-                Margin="8"/>
+                WidthRequest="175"
+                HeightRequest="50"
+                Margin="40"/>
 
         <Button Text="Settings"
                 FontAttributes="Bold"
@@ -34,6 +36,7 @@
                 Clicked="Settings_Button_Clicked"
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="8"/>
+                WidthRequest="175"
+                HeightRequest="50" />
     </Grid>
 </ContentPage>
