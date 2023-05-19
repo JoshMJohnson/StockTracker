@@ -6,9 +6,12 @@ namespace StockTracker;
 
 public class StockRepository
 {
-	string _dbpath;
-	
-	public string StatusMessage { get; set; }
+	public string _dbpath;
+    public bool api_limit_reached;
+    public bool stock_not_found;
+
+
+    public string StatusMessage { get; set; }
 
 	private static SQLiteAsyncConnection conn;
 
@@ -33,6 +36,9 @@ public class StockRepository
     {
         ArgumentNullException.ThrowIfNull(stock_ticker, nameof(stock_ticker));
 
+        api_limit_reached = false;
+        stock_not_found = false;
+
         try
         {
             await Init_Database();
@@ -48,15 +54,43 @@ public class StockRepository
             string[] current_stock_data_array = response.Split("\"");
             string api_error_check = current_stock_data_array[2];
 
-            if (api_error_check != ":400,")
+            if (api_error_check == ":429,") /* if api limit reached for the day */
             {
+                api_limit_reached = true;
+            }
+            else if (api_error_check == ":400,") /* if stock does not exist on market */
+            {
+                stock_not_found = true;
+            }
+            else /* stock found and api limit not reached */
+            {
+                /* transform api request to array of data */
+                string current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
+                string current_company_name = current_stock_data_array[7]; /* get company name */
+                string current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
+                string current_stock_open_price_string = current_stock_data_array[29]; /* get stock price */
+                string current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
+
+                /* stock price dollar change round to two decimal points */
+                double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
+                double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
+
+                /* stock price round to two decimal points */
+                double current_stock_open_price = double.Parse(current_stock_open_price_string, System.Globalization.CultureInfo.InvariantCulture);
+                double current_stock_price = current_stock_open_price + current_stock_price_change;
+                current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
+
+                /* percent change format to two decimal points */
+                double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
+                current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
+
                 Stock stock = new Stock
                 {
-                    ticker_name = stock_ticker,
-                    company_name = "The " + stock_ticker + " company",
-                    ticker_price = -1,
-                    ticker_dollar_day_change = -1,
-                    ticker_percent_day_change = -1
+                    ticker_name = current_stock_ticker,
+                    company_name = current_company_name,
+                    ticker_price = current_stock_price,
+                    ticker_dollar_day_change = current_stock_price_change_rounded,
+                    ticker_percent_day_change = current_stock_percent_change
                 };
 
                 int result = await conn.InsertAsync(stock);

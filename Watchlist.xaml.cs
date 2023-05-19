@@ -19,7 +19,7 @@ public partial class Watchlist : ContentPage
 
         sort_button.Text = sort_display;
 
-        Refresh(true);
+        Refresh();
 
         /* creates display for an empty watchlist */
         vertical_layout_watchlist_empty = new VerticalStackLayout();
@@ -67,9 +67,17 @@ public partial class Watchlist : ContentPage
 
                     List<Stock> watchlist_after = await App.StockRepo.Get_Stock_Watchlist(true);
 
-                    if (watchlist_before.Count == watchlist_after.Count)
+                    if (App.StockRepo.api_limit_reached) /* if api limit reached for the day */
                     {
-                        await DisplayAlert("Add Stock", $"No stock with ticker {stock} found on stock market or already on watchlist", "ok");
+                        await DisplayAlert("Add Stock", "API Get Request limit reached. Wait 1 minute", "ok");
+                    }
+                    else if (App.StockRepo.stock_not_found) /* if stock does not exist on market */
+                    {
+                        await DisplayAlert("Add Stock", $"No stock with ticker {stock} found on stock market", "ok");
+                    }
+                    else if (watchlist_before.Count == watchlist_after.Count) /* if duplicate; stock already on watchlist */
+                    {
+                        await DisplayAlert("Add Stock", $"Stock with ticker {stock} is already on your watchlist", "ok");
                     }
                 }
             }
@@ -96,7 +104,7 @@ public partial class Watchlist : ContentPage
             }
         }
 
-        Refresh(true);
+        Refresh();
     }
 
     /* handles removing a stock from watchlist with swipeview */
@@ -106,7 +114,7 @@ public partial class Watchlist : ContentPage
         string stock_ticker = remove_stock.Text;
 
         await App.StockRepo.Remove_Stock(stock_ticker);
-        Refresh(false);
+        Refresh();
     }
 
     /* clear button clicked on the watchlist page; deletes all stocks */
@@ -125,7 +133,7 @@ public partial class Watchlist : ContentPage
             if (confirm) /* confirmed clear of watchlist */
             {
                 await App.StockRepo.Clear_Watchlist();
-                Refresh(false);
+                Refresh();
             }
         }
     }
@@ -149,14 +157,14 @@ public partial class Watchlist : ContentPage
         sort_display = Preferences.Get("SortDisplay", "Sorted: Alpha");
         sort_button.Text = sort_display;
 
-        Refresh(false);
+        Refresh();
     }
 
     /*
      * updates all the stocks on the database within watchlist
      * - this code is executed at notification alert times given within app settings
      */
-    private async void Refresh(bool call_api)
+    private async void Refresh()
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
 
@@ -169,11 +177,6 @@ public partial class Watchlist : ContentPage
         else /* else watchlist is not empty */
         {
             vertical_layout_watchlist_empty.IsVisible = false;
-
-            if (call_api) /* only calls api when desired */
-            {
-                await App.StockRepo.Update_Watchlist(sort_alpha);
-            }
         }
 
         List<Stock>  watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
