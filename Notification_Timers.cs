@@ -178,7 +178,7 @@ public class Notification_Timers
                 }
             }
 
-            Gather_Threshold_Stocks();
+            //Gather_Threshold_Stocks(); /* used for testing even when the stock market is closed */
 
             if (market_open) /* if the stock market is open; send local push notification */
             {
