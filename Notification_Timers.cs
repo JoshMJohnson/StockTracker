@@ -228,7 +228,6 @@ public class Notification_Timers
         {
             Create_Notification(stock_negative_threshold, false);
         }
-
     }
 
     /* creates and sends local push notifications */
