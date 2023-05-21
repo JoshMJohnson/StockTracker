@@ -17,8 +17,16 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
+		/* stock database access */
 		string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Stock_App_Database.db");
         builder.Services.AddSingleton<StockRepository>(s => ActivatorUtilities.CreateInstance<StockRepository>(s, dbPath));
+
+		/* background service */
+		builder.Services.AddSingleton<Settings>();
+
+#if ANDROID
+		builder.Services.AddTransient<Notification_Timers>();
+#endif
 
 #if DEBUG
 		builder.Logging.AddDebug();

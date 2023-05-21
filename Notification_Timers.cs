@@ -1,9 +1,14 @@
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
 using Plugin.LocalNotification;
 using StockTracker.Model;
 
 namespace StockTracker;
 
-public class Notification_Timers
+[Service]
+public class Notification_Timers : Service
 {
     private Timer timer1;
     private Timer timer2;
@@ -16,147 +21,188 @@ public class Notification_Timers
         timer3 = new Timer(Refresh);
     }
 
+    public override IBinder OnBind(Intent intent)
+    {
+        throw new NotImplementedException();
+    }
+
+    [return: GeneratedEnum]
+    public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
+    {
+        if (intent.Action == "START_SERVICE")
+        {
+            RegisterNotification();//Proceed to notify
+        }
+        else if (intent.Action == "STOP_SERVICE")
+        {
+            StopForeground(true);//Stop the service
+            StopSelfResult(startId);
+        }
+
+        return StartCommandResult.NotSticky;
+    }
+
+    //Start and Stop Intents, set the actions for the MainActivity to get the state of the foreground service
+    //Setting one action to start and one action to stop the foreground service
+    public void Start()
+    {
+        Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
+        startService.SetAction("START_SERVICE");
+        MainActivity.ActivityCurrent.StartService(startService);
+        Create_Timers();
+    }
+
+    public void Stop()
+    {
+        Intent stopIntent = new Intent(MainActivity.ActivityCurrent, this.Class);
+        stopIntent.SetAction("STOP_SERVICE");
+        MainActivity.ActivityCurrent.StartService(stopIntent);
+    }
+
+    private void RegisterNotification()
+    {
+        NotificationChannel channel = new NotificationChannel("ServiceChannel", "ServiceDemo", NotificationImportance.Max);
+        NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
+        manager.CreateNotificationChannel(channel);
+        Notification notification = new Notification.Builder(this, "ServiceChannel")
+           .SetContentTitle("Service Working")
+           .SetSmallIcon(Resource.Drawable.abc_ab_share_pack_mtrl_alpha)
+           .SetOngoing(true)
+           .Build();
+
+        StartForeground(100, notification);
+    }
+
     /* prepares timers */
     public void Create_Timers()
     {
         Settings settings = new Settings();
 
-        bool notifications = settings.notifications;
+        int num_notifications = settings.num_notification_times;
 
-        if (notifications) /* if notifications are turned on */
+        string notification_time1 = settings.value_tod1;
+        string notification_time2 = settings.value_tod2;
+        string notification_time3 = settings.value_tod3;
+
+        /* timer 1 info */
+        string[] updated_view_array = notification_time1.Split(':');
+        string hours_string = updated_view_array[0];
+        string mins_string = updated_view_array[1];
+        int hours = int.Parse(hours_string);
+        int mins = int.Parse(mins_string);
+
+        /* timer 2 info */
+        string[] updated_view_array2 = notification_time2.Split(':');
+        string hours_string2 = updated_view_array2[0];
+        string mins_string2 = updated_view_array2[1];
+        int hours2 = int.Parse(hours_string2);
+        int mins2 = int.Parse(mins_string2);
+
+        /* timer 3 info */
+        string[] updated_view_array3 = notification_time3.Split(':');
+        string hours_string3 = updated_view_array3[0];
+        string mins_string3 = updated_view_array3[1];
+        int hours3 = int.Parse(hours_string3);
+        int mins3 = int.Parse(mins_string3);
+
+        DateTime current_time = DateTime.Now;
+
+        if (num_notifications == 0) /* if 1 timer set */
         {
-            int num_notifications = settings.num_notification_times;
+            /* timer 1 setup */
+            DateTime notification_time_hours = DateTime.Today.AddHours(hours);
+            DateTime notification_time_total = notification_time_hours.AddMinutes(mins);
 
-            string notification_time1 = settings.value_tod1;
-            string notification_time2 = settings.value_tod2;
-            string notification_time3 = settings.value_tod3;
-
-            /* timer 1 info */
-            string[] updated_view_array = notification_time1.Split(':');
-            string hours_string = updated_view_array[0];
-            string mins_string = updated_view_array[1];
-            int hours = int.Parse(hours_string);
-            int mins = int.Parse(mins_string);
-
-            /* timer 2 info */
-            string[] updated_view_array2 = notification_time2.Split(':');
-            string hours_string2 = updated_view_array2[0];
-            string mins_string2 = updated_view_array2[1];
-            int hours2 = int.Parse(hours_string2);
-            int mins2 = int.Parse(mins_string2);
-
-            /* timer 3 info */
-            string[] updated_view_array3 = notification_time3.Split(':');
-            string hours_string3 = updated_view_array3[0];
-            string mins_string3 = updated_view_array3[1];
-            int hours3 = int.Parse(hours_string3);
-            int mins3 = int.Parse(mins_string3);
-
-            DateTime current_time = DateTime.Now;
-
-            if (num_notifications == 0) /* if 1 timer set */
+            if (current_time > notification_time_total) /* if already past notification time for that day */
             {
-                /* timer 1 setup */
-                DateTime notification_time_hours = DateTime.Today.AddHours(hours);
-                DateTime notification_time_total = notification_time_hours.AddMinutes(mins);
-
-                if (current_time > notification_time_total) /* if already past notification time for that day */
-                {
-                    notification_time_total = notification_time_total.AddDays(1.0);
-                }
-
-                int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time, Timeout.Infinite);
-                timer2.Change(Timeout.Infinite, Timeout.Infinite);
-                timer3.Change(Timeout.Infinite, Timeout.Infinite);
+                notification_time_total = notification_time_total.AddDays(1.0);
             }
-            else if (num_notifications == 1) /* else 2 timers set */
-            {                                
-                /* timer 1 setup */
-                DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
-                DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
 
-                if (current_time > notification_time_total1) /* if already past notification time for that day */
-                {
-                    notification_time_total1 = notification_time_total1.AddDays(1.0);
-                }
+            int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
 
-                int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-
-                /* timer 2 setup */
-                DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
-                DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
-
-                if (current_time > notification_time_total2) /* if already past notification time for that day */
-                {
-                    notification_time_total2 = notification_time_total2.AddDays(1.0);
-                }
-
-                int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-                timer2.Change(ms_until_notification_time2, Timeout.Infinite);
-                timer3.Change(Timeout.Infinite, Timeout.Infinite);
-            }
-            else /* else 3 timers set */
-            {
-                /* timer 1 setup */
-                DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
-                DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
-
-                if (current_time > notification_time_total1) /* if already past notification time for that day */
-                {
-                    notification_time_total1 = notification_time_total1.AddDays(1.0);
-                }
-
-                int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-
-                /* timer 2 setup */
-                DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
-                DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
-
-                if (current_time > notification_time_total2) /* if already past notification time for that day */
-                {
-                    notification_time_total2 = notification_time_total2.AddDays(1.0);
-                }
-
-                int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer2.Change(ms_until_notification_time2, Timeout.Infinite);
-
-                /* timer 3 setup */
-                DateTime notification_time_hours3 = DateTime.Today.AddHours(hours3);
-                DateTime notification_time_total3 = notification_time_hours3.AddMinutes(mins3);
-
-                if (current_time > notification_time_total3) /* if already past notification time for that day */
-                {
-                    notification_time_total3 = notification_time_total3.AddDays(1.0);
-                }
-
-                int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
-
-                /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-                timer2.Change(ms_until_notification_time2, Timeout.Infinite);
-                timer3.Change(ms_until_notification_time3, Timeout.Infinite);
-            }
-        }
-        else /* notifications are turned off in settings */
-        {
-            timer1.Change(Timeout.Infinite, Timeout.Infinite);
+            /* set timer to elapse only once at the notification time */
+            timer1.Change(ms_until_notification_time, Timeout.Infinite);
             timer2.Change(Timeout.Infinite, Timeout.Infinite);
             timer3.Change(Timeout.Infinite, Timeout.Infinite);
         }
+        else if (num_notifications == 1) /* else 2 timers set */
+        {                                
+            /* timer 1 setup */
+            DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
+            DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
+
+            if (current_time > notification_time_total1) /* if already past notification time for that day */
+            {
+                notification_time_total1 = notification_time_total1.AddDays(1.0);
+            }
+
+            int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
+
+            /* set timer to elapse only once at the notification time */
+            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+
+            /* timer 2 setup */
+            DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
+            DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
+
+            if (current_time > notification_time_total2) /* if already past notification time for that day */
+            {
+                notification_time_total2 = notification_time_total2.AddDays(1.0);
+            }
+
+            int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
+            
+            /* set timer to elapse only once at the notification time */
+            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+            timer2.Change(ms_until_notification_time2, Timeout.Infinite);
+            timer3.Change(Timeout.Infinite, Timeout.Infinite);
+        }
+        else /* else 3 timers set */
+        {
+            /* timer 1 setup */
+            DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
+            DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
+            
+            if (current_time > notification_time_total1) /* if already past notification time for that day */
+            {
+                notification_time_total1 = notification_time_total1.AddDays(1.0);
+            }
+
+            int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
+
+            /* set timer to elapse only once at the notification time */
+            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+
+            /* timer 2 setup */
+            DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
+            DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
+
+            if (current_time > notification_time_total2) /* if already past notification time for that day */
+            {
+                notification_time_total2 = notification_time_total2.AddDays(1.0);
+            }
+
+            int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
+
+            /* set timer to elapse only once at the notification time */
+            timer2.Change(ms_until_notification_time2, Timeout.Infinite);
+            
+            /* timer 3 setup */
+            DateTime notification_time_hours3 = DateTime.Today.AddHours(hours3);
+            DateTime notification_time_total3 = notification_time_hours3.AddMinutes(mins3);
+
+            if (current_time > notification_time_total3) /* if already past notification time for that day */
+            {
+                notification_time_total3 = notification_time_total3.AddDays(1.0);
+            }
+
+            int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
+
+            /* set timer to elapse only once at the notification time */
+            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
+            timer2.Change(ms_until_notification_time2, Timeout.Infinite);
+            timer3.Change(ms_until_notification_time3, Timeout.Infinite);
+        }       
     }
 
     /*

@@ -224,8 +224,17 @@ public partial class Settings : ContentPage
         Percent_Notify_Change();
         Notify_Type_Change();
         Time_Of_Day_Change();
-               
-        timer_class.Create_Timers();
+
+        notifications = Preferences.Get("NotificationToggle", true);
+
+        if (notifications) /* if notifications are on */
+        {
+            timer_class.Start();
+        }
+        else /* else notifications are off */
+        {
+            timer_class.Stop();
+        }
 
         await DisplayAlert("Settings", "Saved", "ok");
     }
