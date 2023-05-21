@@ -151,6 +151,12 @@ public class Notification_Timers
                 timer3.Change(ms_until_notification_time3, Timeout.Infinite);
             }
         }
+        else /* notifications are turned off in settings */
+        {
+            timer1.Change(Timeout.Infinite, Timeout.Infinite);
+            timer2.Change(Timeout.Infinite, Timeout.Infinite);
+            timer3.Change(Timeout.Infinite, Timeout.Infinite);
+        }
     }
 
     /*
@@ -178,7 +184,7 @@ public class Notification_Timers
                 }
             }
 
-            //Gather_Threshold_Stocks(); /* used for testing even when the stock market is closed */
+            Gather_Threshold_Stocks(); /* used for testing even when the stock market is closed */
 
             if (market_open) /* if the stock market is open; send local push notification */
             {
