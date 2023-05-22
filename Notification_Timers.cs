@@ -65,9 +65,8 @@ public class Notification_Timers : Service
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
         Notification notification = new Notification.Builder(this, "ServiceChannel")
-           .SetContentTitle("Service Working")
-           .SetSmallIcon(Resource.Drawable.abc_ab_share_pack_mtrl_alpha)
-           .SetOngoing(true)
+           .SetSmallIcon(Resource.Drawable.man_on_graph_light)
+           .SetOngoing(false)
            .Build();
 
         StartForeground(100, notification);
@@ -307,7 +306,8 @@ public class Notification_Timers : Service
                 Title = "Bull Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 1
+                BadgeNumber = 1,
+                
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
