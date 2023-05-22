@@ -3,6 +3,7 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Plugin.LocalNotification;
+using Plugin.LocalNotification.AndroidOption;
 using StockTracker.Model;
 
 namespace StockTracker;
@@ -61,10 +62,10 @@ public class Notification_Timers : Service
 
     private void RegisterNotification()
     {
-        NotificationChannel channel = new NotificationChannel("ServiceChannel", "ServiceDemo", NotificationImportance.Max);
+        NotificationChannel channel = new NotificationChannel("BackgroundService", "ServiceDemo", NotificationImportance.Max);
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
-        Notification notification = new Notification.Builder(this, "ServiceChannel")
+        Notification notification = new Notification.Builder(this, "BackgroundService")
            .SetSmallIcon(Resource.Drawable.man_on_graph_light)
            .SetOngoing(false)
            .Build();
@@ -229,8 +230,6 @@ public class Notification_Timers : Service
                 }
             }
 
-            Gather_Threshold_Stocks(); /* used for testing even when the stock market is closed */
-
             if (market_open) /* if the stock market is open; send local push notification */
             {
                 Gather_Threshold_Stocks();
@@ -306,8 +305,7 @@ public class Notification_Timers : Service
                 Title = "Bull Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 1,
-                
+                BadgeNumber = 1
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
