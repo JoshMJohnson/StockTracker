@@ -43,8 +43,6 @@ public class Notification_Timers : Service
         return StartCommandResult.NotSticky;
     }
 
-    //Start and Stop Intents, set the actions for the MainActivity to get the state of the foreground service
-    //Setting one action to start and one action to stop the foreground service
     public void Start()
     {
         Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
@@ -62,7 +60,7 @@ public class Notification_Timers : Service
 
     private void RegisterNotification()
     {
-        NotificationChannel channel = new NotificationChannel("BackgroundService", "ServiceDemo", NotificationImportance.Max);
+        NotificationChannel channel = new NotificationChannel("BackgroundService", "ServiceNotification", NotificationImportance.Max);
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
         Notification notification = new Notification.Builder(this, "BackgroundService")
@@ -118,7 +116,7 @@ public class Notification_Timers : Service
                 notification_time_total = notification_time_total.AddDays(1.0);
             }
 
-            int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
+            int ms_until_notification_time = (int) ((notification_time_total - current_time).TotalMilliseconds);
 
             /* set timer to elapse only once at the notification time */
             timer1.Change(ms_until_notification_time, Timeout.Infinite);
@@ -210,7 +208,7 @@ public class Notification_Timers : Service
      * - this code is executed at notification alert times given within app settings
      */
     private async void Refresh(object state)
-    {
+    {       
         List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
 
         if (watchlist.Count != 0) /* if watchlist is not empty */

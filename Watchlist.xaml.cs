@@ -164,7 +164,7 @@ public partial class Watchlist : ContentPage
      * updates all the stocks on the database within watchlist
      * - this code is executed at notification alert times given within app settings
      */
-    private async void Refresh()
+    public async void Refresh()
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
 
