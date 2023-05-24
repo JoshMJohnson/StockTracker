@@ -138,15 +138,15 @@ public partial class Watchlist : ContentPage
         }
     }
 
-    /* sort button clicked on the watchlist page; toggles between alphabetical and stock price */
+    /* sort button clicked on the watchlist page; toggles between alphabetical and stock percent day change */
     private void Sort_Watchlist(object sender, EventArgs e)
     {
         sort_alpha = Preferences.Get("SortAlphaValue", true);
    
-        if (sort_alpha) /* set to sort by price */
+        if (sort_alpha) /* set to sort by percent day change */
         {
             Preferences.Set("SortAlphaValue", false);
-            Preferences.Set("SortDisplay", "Sorted: Price");
+            Preferences.Set("SortDisplay", "Sorted: Percentage");
         }
         else /* set to sort alphabetically */
         {

@@ -240,7 +240,7 @@ public class StockRepository
             }
             else /* set sort of watchlist to be by stock price */
             {
-                watchlist = watchlist.OrderBy(stock => stock.ticker_price).Reverse().ToList();
+                watchlist = watchlist.OrderBy(stock => stock.ticker_percent_day_change).Reverse().ToList();
             }
 
             return watchlist;
