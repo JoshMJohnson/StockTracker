@@ -146,7 +146,7 @@ public partial class Watchlist : ContentPage
         if (sort_alpha) /* set to sort by percent day change */
         {
             Preferences.Set("SortAlphaValue", false);
-            Preferences.Set("SortDisplay", "Sorted: Percentage");
+            Preferences.Set("SortDisplay", "Sorted: Perc.");
         }
         else /* set to sort alphabetically */
         {

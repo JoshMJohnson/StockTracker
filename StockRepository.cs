@@ -176,6 +176,7 @@ public class StockRepository
                 string[] current_stock_data_array = current_request.Split("\"");
 
                 string current_stock_ticker;
+                string current_company_name;
                 string current_stock_price_change_string;
                 string current_stock_open_price_string;
                 string current_stock_percent_change_string;
@@ -183,6 +184,7 @@ public class StockRepository
                 if (watchlist.Count == 1)
                 {
                     current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
+                    current_company_name = current_stock_data_array[7]; /* get company name */
                     current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
                     current_stock_open_price_string = current_stock_data_array[29]; /* get stock price */
                     current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
@@ -190,6 +192,7 @@ public class StockRepository
                 else
                 {
                     current_stock_ticker = current_stock_data_array[1]; /* get ticker symbol */
+                    current_company_name = current_stock_data_array[9]; /* get company name */
                     current_stock_price_change_string = current_stock_data_array[55]; /* get stock price change */
                     current_stock_open_price_string = current_stock_data_array[31]; /* get stock price */
                     current_stock_percent_change_string = current_stock_data_array[59]; /* get stock percent change */
@@ -208,15 +211,20 @@ public class StockRepository
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
 
-                /* locate and update stock info */
-                Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);
-                updating_stock.ticker_price = current_stock_price;
-                updating_stock.ticker_dollar_day_change = current_stock_price_change_rounded;
-                updating_stock.ticker_percent_day_change = current_stock_percent_change;
-
                 /* update stock database - remove and add the stock being updated */
+                Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);
                 await conn.DeleteAsync(updating_stock);
-                await conn.InsertAsync(updating_stock);
+
+                Stock updated_stock = new Stock
+                {
+                    ticker_name = current_stock_ticker,
+                    company_name = current_company_name,
+                    ticker_price = current_stock_price,
+                    ticker_dollar_day_change = current_stock_price_change_rounded,
+                    ticker_percent_day_change = current_stock_percent_change
+                };
+
+                await conn.InsertAsync(updated_stock);
             }
         }
         catch (Exception ex)
