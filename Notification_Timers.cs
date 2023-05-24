@@ -135,10 +135,7 @@ public class Notification_Timers : Service
             }
 
             int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
-
-            /* set timer to elapse only once at the notification time */
-            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-
+                        
             /* timer 2 setup */
             DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
             DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
@@ -168,9 +165,6 @@ public class Notification_Timers : Service
 
             int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
 
-            /* set timer to elapse only once at the notification time */
-            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-
             /* timer 2 setup */
             DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
             DateTime notification_time_total2 = notification_time_hours2.AddMinutes(mins2);
@@ -182,9 +176,6 @@ public class Notification_Timers : Service
 
             int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
 
-            /* set timer to elapse only once at the notification time */
-            timer2.Change(ms_until_notification_time2, Timeout.Infinite);
-            
             /* timer 3 setup */
             DateTime notification_time_hours3 = DateTime.Today.AddHours(hours3);
             DateTime notification_time_total3 = notification_time_hours3.AddMinutes(mins3);
