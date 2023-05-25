@@ -213,18 +213,11 @@ public class StockRepository
 
                 /* update stock database - remove and add the stock being updated */
                 Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);
-                await conn.DeleteAsync(updating_stock);
+                updating_stock.ticker_price = current_stock_price;
+                updating_stock.ticker_dollar_day_change = current_stock_price_change_rounded;
+                updating_stock.ticker_percent_day_change = current_stock_percent_change;
 
-                Stock updated_stock = new Stock
-                {
-                    ticker_name = current_stock_ticker,
-                    company_name = current_company_name,
-                    ticker_price = current_stock_price,
-                    ticker_dollar_day_change = current_stock_price_change_rounded,
-                    ticker_percent_day_change = current_stock_percent_change
-                };
-
-                await conn.InsertAsync(updated_stock);
+                await conn.UpdateAsync(updating_stock);
             }
         }
         catch (Exception ex)

@@ -45,6 +45,8 @@ public class Notification_Timers : Service
 
     public void Start()
     {
+        Stop();
+
         Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
         startService.SetAction("START_SERVICE");
         MainActivity.ActivityCurrent.StartService(startService);
