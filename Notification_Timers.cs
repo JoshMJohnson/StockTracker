@@ -211,23 +211,12 @@ public class Notification_Timers : Service
 
             List<Stock> watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(true);
 
-            bool market_open = false;
-
-            for (int i = 0; i < watchlist_updated.Count; i++) /* loop through the watchlist */
-            {
-                if (watchlist[i].ticker_price != watchlist_updated[i].ticker_price) /* if ticker prices are the same in previous watchlist and updated watchlist; then stockmarket is closed and send no alert */
-                {
-                    market_open = true;
-                    break;
-                }
-            }
-
-            Gather_Threshold_Stocks();
-
-            if (market_open) /* if the stock market is open; send local push notification */
+            if (watchlist_updated[0].was_market_open) /* prepares notification only if the stock market is open */
             {
                 Gather_Threshold_Stocks();
             }
+
+            Gather_Threshold_Stocks();
         }
     }
 

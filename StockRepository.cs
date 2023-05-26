@@ -70,6 +70,7 @@ public class StockRepository
                 string current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
                 string current_stock_open_price_string = current_stock_data_array[29]; /* get stock price */
                 string current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
+                string market_open_string = current_stock_data_array[64]; /* if market open = true; else = false */
 
                 /* stock price dollar change round to two decimal points */
                 double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
@@ -84,13 +85,20 @@ public class StockRepository
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
 
+                bool market_open = true;
+                if (market_open_string.Equals(":false,"))
+                {
+                    market_open = false;
+                }
+                              
                 Stock stock = new Stock
                 {
                     ticker_name = current_stock_ticker,
                     company_name = current_company_name,
                     ticker_price = current_stock_price,
                     ticker_dollar_day_change = current_stock_price_change_rounded,
-                    ticker_percent_day_change = current_stock_percent_change
+                    ticker_percent_day_change = current_stock_percent_change,
+                    was_market_open = market_open
                 };
 
                 int result = await conn.InsertAsync(stock);
@@ -163,6 +171,8 @@ public class StockRepository
         response = response.Remove(0, 1);
         string[] request_array = response.Split("},");
 
+        Console.WriteLine($"******{response}******");
+
         /* update watchlist database with data from api */
         try
         {
@@ -178,24 +188,27 @@ public class StockRepository
                 string current_stock_ticker;
                 string current_company_name;
                 string current_stock_price_change_string;
-                string current_stock_open_price_string;
+                string current_stock_prev_close_price_string;
                 string current_stock_percent_change_string;
+                string market_open_string;
 
                 if (watchlist.Count == 1)
                 {
                     current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
                     current_company_name = current_stock_data_array[7]; /* get company name */
                     current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
-                    current_stock_open_price_string = current_stock_data_array[29]; /* get stock price */
+                    current_stock_prev_close_price_string = current_stock_data_array[49]; /* get stock price */
                     current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
+                    market_open_string = current_stock_data_array[64]; /* if market open = true; else = false */
                 }
                 else
                 {
                     current_stock_ticker = current_stock_data_array[1]; /* get ticker symbol */
                     current_company_name = current_stock_data_array[9]; /* get company name */
                     current_stock_price_change_string = current_stock_data_array[55]; /* get stock price change */
-                    current_stock_open_price_string = current_stock_data_array[31]; /* get stock price */
+                    current_stock_prev_close_price_string = current_stock_data_array[51]; /* get stock price */
                     current_stock_percent_change_string = current_stock_data_array[59]; /* get stock percent change */
+                    market_open_string = current_stock_data_array[66]; /* if market open = true; else = false */
                 }
 
                 /* stock price dollar change round to two decimal points */
@@ -203,7 +216,7 @@ public class StockRepository
                 double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
 
                 /* stock price round to two decimal points */
-                double current_stock_open_price = double.Parse(current_stock_open_price_string, System.Globalization.CultureInfo.InvariantCulture);
+                double current_stock_open_price = double.Parse(current_stock_prev_close_price_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price = current_stock_open_price + current_stock_price_change;
                 current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
 
@@ -211,10 +224,17 @@ public class StockRepository
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 current_stock_percent_change = Math.Truncate(current_stock_percent_change * 100) / 100;
 
+                bool market_open = true;
+                if (market_open_string.Equals(":false,"))
+                {
+                    market_open = false;
+                }
+
                 /* update stock database - remove and add the stock being updated */
                 Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);
 
-                await conn.DeleteAsync(updating_stock);
+                int r1 = await conn.DeleteAsync(updating_stock);
+                Console.WriteLine($"********************{updating_stock.ticker_name}******{updating_stock.ticker_price}****************");
 
                 Stock updated_stock = new Stock
                 {
@@ -222,10 +242,13 @@ public class StockRepository
                     company_name = current_company_name,
                     ticker_price = current_stock_price,
                     ticker_dollar_day_change = current_stock_price_change_rounded,
-                    ticker_percent_day_change = current_stock_percent_change
+                    ticker_percent_day_change = current_stock_percent_change,
+                    was_market_open = market_open
                 };
 
-                await conn.InsertAsync(updated_stock);
+                int r2 = await conn.InsertAsync(updated_stock);
+                Console.WriteLine($"********************{updated_stock.ticker_name}******{updated_stock.ticker_price}****************");
+                Console.WriteLine($"********************{updated_stock.ticker_name}******{current_stock_price}****************");
             }
         }
         catch (Exception ex)

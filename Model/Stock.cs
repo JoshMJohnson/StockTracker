@@ -17,4 +17,6 @@ public class Stock
     public double ticker_dollar_day_change { get; set; }
 
     public double ticker_percent_day_change { get; set; }
+
+    public bool was_market_open { get; set; }
 }
