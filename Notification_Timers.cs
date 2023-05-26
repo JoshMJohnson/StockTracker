@@ -65,6 +65,7 @@ public class Notification_Timers : Service
         NotificationChannel channel = new NotificationChannel("BackgroundService", "ServiceNotification", NotificationImportance.Max);
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
+
         Notification notification = new Notification.Builder(this, "BackgroundService")
            .SetSmallIcon(Resource.Drawable.man_on_graph_light)
            .SetOngoing(false)
@@ -220,6 +221,8 @@ public class Notification_Timers : Service
                     break;
                 }
             }
+
+            Gather_Threshold_Stocks();
 
             if (market_open) /* if the stock market is open; send local push notification */
             {
