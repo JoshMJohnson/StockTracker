@@ -90,7 +90,7 @@ public class StockRepository
                 {
                     market_open = false;
                 }
-                              
+
                 Stock stock = new Stock
                 {
                     ticker_name = current_stock_ticker,
@@ -216,8 +216,8 @@ public class StockRepository
                 double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
 
                 /* stock price round to two decimal points */
-                double current_stock_open_price = double.Parse(current_stock_prev_close_price_string, System.Globalization.CultureInfo.InvariantCulture);
-                double current_stock_price = current_stock_open_price + current_stock_price_change;
+                double current_stock_prev_closed_price = double.Parse(current_stock_prev_close_price_string, System.Globalization.CultureInfo.InvariantCulture);
+                double current_stock_price = current_stock_prev_closed_price + current_stock_price_change;
                 current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
 
                 /* percent change format to two decimal points */
