@@ -68,7 +68,7 @@ public class StockRepository
                 string current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
                 string current_company_name = current_stock_data_array[7]; /* get company name */
                 string current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
-                string current_stock_open_price_string = current_stock_data_array[29]; /* get stock price */
+                string current_stock_prev_close_price_string = current_stock_data_array[49]; /* get stock price */
                 string current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
                 string market_open_string = current_stock_data_array[64]; /* if market open = true; else = false */
 
@@ -77,8 +77,8 @@ public class StockRepository
                 double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
 
                 /* stock price round to two decimal points */
-                double current_stock_open_price = double.Parse(current_stock_open_price_string, System.Globalization.CultureInfo.InvariantCulture);
-                double current_stock_price = current_stock_open_price + current_stock_price_change;
+                double current_stock_prev_closed_price = double.Parse(current_stock_prev_close_price_string, System.Globalization.CultureInfo.InvariantCulture);
+                double current_stock_price = current_stock_prev_closed_price + current_stock_price_change;
                 current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
 
                 /* percent change format to two decimal points */
@@ -210,7 +210,7 @@ public class StockRepository
                     current_stock_percent_change_string = current_stock_data_array[59]; /* get stock percent change */
                     market_open_string = current_stock_data_array[66]; /* if market open = true; else = false */
                 }
-
+                                
                 /* stock price dollar change round to two decimal points */
                 double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
@@ -229,6 +229,9 @@ public class StockRepository
                 {
                     market_open = false;
                 }
+
+                Console.WriteLine($"**{current_stock_ticker}**{current_stock_prev_close_price_string}**{current_stock_price_change_string}**");
+                Console.WriteLine($"**{current_stock_ticker}**{current_stock_prev_closed_price}**{current_stock_price_change_rounded}**{current_stock_price}**");
 
                 /* update stock database - remove and add the stock being updated */
                 Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);

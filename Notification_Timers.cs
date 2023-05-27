@@ -215,6 +215,8 @@ public class Notification_Timers : Service
             {
                 Gather_Threshold_Stocks();
             }
+
+            Gather_Threshold_Stocks();
         }
     }
 
