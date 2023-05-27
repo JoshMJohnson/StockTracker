@@ -216,7 +216,7 @@ public class Notification_Timers : Service
                 Gather_Threshold_Stocks();
             }
 
-            Gather_Threshold_Stocks();
+            Gather_Threshold_Stocks(); // USED FOR TESTING; SENDS NOTIFICATIONS EVEN WHEN STOCK MARKET IS CLOSED
         }
     }
 

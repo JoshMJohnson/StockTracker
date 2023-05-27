@@ -79,7 +79,7 @@ public class StockRepository
                 /* stock price round to two decimal points */
                 double current_stock_prev_closed_price = double.Parse(current_stock_prev_close_price_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price = current_stock_prev_closed_price + current_stock_price_change;
-                current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
+                current_stock_price = Math.Truncate(current_stock_price * 100) / 100                               + 1000; //MOTIFIER FOR TESTING +100
 
                 /* percent change format to two decimal points */
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);
@@ -171,8 +171,6 @@ public class StockRepository
         response = response.Remove(0, 1);
         string[] request_array = response.Split("},");
 
-        Console.WriteLine($"******{response}******");
-
         /* update watchlist database with data from api */
         try
         {
@@ -230,14 +228,10 @@ public class StockRepository
                     market_open = false;
                 }
 
-                Console.WriteLine($"**{current_stock_ticker}**{current_stock_prev_close_price_string}**{current_stock_price_change_string}**");
-                Console.WriteLine($"**{current_stock_ticker}**{current_stock_prev_closed_price}**{current_stock_price_change_rounded}**{current_stock_price}**");
-
                 /* update stock database - remove and add the stock being updated */
                 Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);
 
-                int r1 = await conn.DeleteAsync(updating_stock);
-                Console.WriteLine($"********************{updating_stock.ticker_name}******{updating_stock.ticker_price}****************");
+                await conn.DeleteAsync(updating_stock);
 
                 Stock updated_stock = new Stock
                 {
@@ -249,9 +243,7 @@ public class StockRepository
                     was_market_open = market_open
                 };
 
-                int r2 = await conn.InsertAsync(updated_stock);
-                Console.WriteLine($"********************{updated_stock.ticker_name}******{updated_stock.ticker_price}****************");
-                Console.WriteLine($"********************{updated_stock.ticker_name}******{current_stock_price}****************");
+                await conn.InsertAsync(updated_stock);
             }
         }
         catch (Exception ex)
