@@ -273,13 +273,17 @@ public class Notification_Timers : Service
             /* fill lists for notification display */
             for (int i = 0; i < threshold_list.Count; i++)
             {
+                double temp_dollar_change = threshold_list[i].ticker_dollar_day_change;
+                double temp_percent_change = threshold_list[i].ticker_percent_day_change;
+                double temp_price = threshold_list[i].ticker_price;
+
                 if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
                 {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${threshold_list[i].ticker_dollar_day_change} ({threshold_list[i].ticker_percent_day_change}%)";
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.00}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
                     break;
                 }
 
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${threshold_list[i].ticker_dollar_day_change} ({threshold_list[i].ticker_percent_day_change}%)\n";
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.00}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
             var notification_alert = new NotificationRequest
@@ -300,16 +304,20 @@ public class Notification_Timers : Service
             /* fill lists for notification display */
             for (int i = 0; i < threshold_list.Count; i++)
             {
-                double abs_dollar_change = Math.Abs(threshold_list[i].ticker_dollar_day_change);
-                double abs_percent_change = Math.Abs(threshold_list[i].ticker_percent_day_change);
+                double temp_dollar_change = threshold_list[i].ticker_dollar_day_change;
+                double temp_percent_change = threshold_list[i].ticker_percent_day_change;
+                double temp_price = threshold_list[i].ticker_price;
+
+                double abs_dollar_change = Math.Abs(temp_dollar_change);
+                double abs_percent_change = Math.Abs(temp_percent_change);
 
                 if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
                 {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${abs_dollar_change} (-{abs_percent_change}%)";
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down ${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
                     break;
                 }
 
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${abs_dollar_change} (-{abs_percent_change}%)\n";
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down ${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
             var notification_alert = new NotificationRequest
