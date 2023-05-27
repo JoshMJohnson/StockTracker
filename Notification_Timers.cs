@@ -313,11 +313,11 @@ public class Notification_Timers : Service
 
                 if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
                 {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down ${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
                     break;
                 }
 
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down ${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
             var notification_alert = new NotificationRequest
