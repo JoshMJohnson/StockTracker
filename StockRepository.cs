@@ -79,7 +79,7 @@ public class StockRepository
                 /* stock price round to two decimal points */
                 double current_stock_prev_closed_price = double.Parse(current_stock_prev_close_price_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price = current_stock_prev_closed_price + current_stock_price_change;
-                current_stock_price = Math.Truncate(current_stock_price * 100) / 100                               + 1000; //MOTIFIER FOR TESTING +100
+                current_stock_price = Math.Truncate(current_stock_price * 100) / 100;
 
                 /* percent change format to two decimal points */
                 double current_stock_percent_change = double.Parse(current_stock_percent_change_string, System.Globalization.CultureInfo.InvariantCulture);

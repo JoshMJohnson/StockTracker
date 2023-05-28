@@ -33,6 +33,7 @@ public class Notification_Timers : Service
         if (intent.Action == "START_SERVICE")
         {
             RegisterNotification();//Proceed to notify
+            Create_Timers(); /* create timers from settings */
         }
         else if (intent.Action == "STOP_SERVICE")
         {
@@ -45,28 +46,25 @@ public class Notification_Timers : Service
 
     public void Start()
     {
-        Stop();
-
         Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
         startService.SetAction("START_SERVICE");
         MainActivity.ActivityCurrent.StartService(startService);
-        Create_Timers();
     }
 
     public void Stop()
     {
-        Intent stopIntent = new Intent(MainActivity.ActivityCurrent, this.Class);
+        Intent stopIntent = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
         stopIntent.SetAction("STOP_SERVICE");
         MainActivity.ActivityCurrent.StartService(stopIntent);
     }
 
     private void RegisterNotification()
     {
-        NotificationChannel channel = new NotificationChannel("BackgroundService", "ServiceNotification", NotificationImportance.Max);
+        NotificationChannel channel = new NotificationChannel("ForegroundService", "ServiceNotification", NotificationImportance.Max);
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
 
-        Notification notification = new Notification.Builder(this, "BackgroundService")
+        Notification notification = new Notification.Builder(this, "ForegroundService")
            .SetSmallIcon(Resource.Drawable.man_on_graph_light)
            .SetOngoing(false)
            .Build();
@@ -122,9 +120,9 @@ public class Notification_Timers : Service
             int ms_until_notification_time = (int) ((notification_time_total - current_time).TotalMilliseconds);
 
             /* set timer to elapse only once at the notification time */
-            timer1.Change(ms_until_notification_time, Timeout.Infinite);
-            timer2.Change(Timeout.Infinite, Timeout.Infinite);
-            timer3.Change(Timeout.Infinite, Timeout.Infinite);
+            timer1.Change(ms_until_notification_time, 86400000); /* 86,400,000 ms = 1 day */
+            timer2.Change(Timeout.Infinite, 86400000); /* 86,400,000 ms = 1 day */
+            timer3.Change(Timeout.Infinite, 86400000); /* 86,400,000 ms = 1 day */
         }
         else if (num_notifications == 1) /* else 2 timers set */
         {                                
@@ -149,18 +147,18 @@ public class Notification_Timers : Service
             }
 
             int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
-            
+
             /* set timer to elapse only once at the notification time */
-            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-            timer2.Change(ms_until_notification_time2, Timeout.Infinite);
-            timer3.Change(Timeout.Infinite, Timeout.Infinite);
+            timer1.Change(ms_until_notification_time1, 86400000); /* 86,400,000 ms = 1 day */
+            timer2.Change(ms_until_notification_time2, 86400000); /* 86,400,000 ms = 1 day */
+            timer3.Change(Timeout.Infinite, 86400000); /* 86,400,000 ms = 1 day */
         }
         else /* else 3 timers set */
         {
             /* timer 1 setup */
             DateTime notification_time_hours1 = DateTime.Today.AddHours(hours);
             DateTime notification_time_total1 = notification_time_hours1.AddMinutes(mins);
-            
+                     
             if (current_time > notification_time_total1) /* if already past notification time for that day */
             {
                 notification_time_total1 = notification_time_total1.AddDays(1.0);
@@ -191,9 +189,9 @@ public class Notification_Timers : Service
             int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
 
             /* set timer to elapse only once at the notification time */
-            timer1.Change(ms_until_notification_time1, Timeout.Infinite);
-            timer2.Change(ms_until_notification_time2, Timeout.Infinite);
-            timer3.Change(ms_until_notification_time3, Timeout.Infinite);
+            timer1.Change(ms_until_notification_time1, 86400000); /* 86,400,000 ms = 1 day */
+            timer2.Change(ms_until_notification_time2, 86400000); /* 86,400,000 ms = 1 day */
+            timer3.Change(ms_until_notification_time3, 86400000); /* 86,400,000 ms = 1 day */
         }       
     }
 
@@ -279,11 +277,11 @@ public class Notification_Timers : Service
 
                 if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
                 {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.00}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.##}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
                     break;
                 }
 
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.00}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.##}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
             var notification_alert = new NotificationRequest
@@ -313,11 +311,11 @@ public class Notification_Timers : Service
 
                 if (i == threshold_list.Count - 1) /* if last stock on the threshold list */
                 {
-                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
+                    notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.##}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})";
                     break;
                 }
 
-                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.00}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
+                notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.##}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
             var notification_alert = new NotificationRequest
