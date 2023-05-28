@@ -15,11 +15,15 @@ public class Notification_Timers : Service
     private Timer timer2;
     private Timer timer3;
 
+    private Intent timer_service;
+
     public Notification_Timers()
 	{
         timer1 = new Timer(Refresh); 
         timer2 = new Timer(Refresh);
         timer3 = new Timer(Refresh);
+
+        timer_service = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
     }
 
     public override IBinder OnBind(Intent intent)
@@ -46,16 +50,14 @@ public class Notification_Timers : Service
 
     public void Start()
     {
-        Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
-        startService.SetAction("START_SERVICE");
-        MainActivity.ActivityCurrent.StartService(startService);
+        timer_service.SetAction("START_SERVICE");
+        MainActivity.ActivityCurrent.StartService(timer_service);
     }
 
     public void Stop()
     {
-        Intent stopIntent = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
-        stopIntent.SetAction("STOP_SERVICE");
-        MainActivity.ActivityCurrent.StartService(stopIntent);
+        timer_service.SetAction("STOP_SERVICE");
+        MainActivity.ActivityCurrent.StartService(timer_service);
     }
 
     private void RegisterNotification()
