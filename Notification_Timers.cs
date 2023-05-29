@@ -125,11 +125,7 @@ public class Notification_Timers : Service
                 }
 
                 int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
-
-                Console.WriteLine($"*****current_time: {current_time}*****");
-                Console.WriteLine($"*****notification_time_total: {notification_time_total}*****");
-                Console.WriteLine($"*****ms_until_notification_time: {ms_until_notification_time}*****");
-
+                                
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time, 86400000); /* 86,400,000 ms = 1 day */
                 timer2.Change(Timeout.Infinite, 86400000);
