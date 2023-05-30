@@ -49,21 +49,24 @@ public class Notification_Timers : Service
         return StartCommandResult.NotSticky;
     }
 
+    /* start the foreground service */
     public void Start()
     {
         timer_service.SetAction("START_SERVICE");
         MainActivity.ActivityCurrent.StartService(timer_service);
     }
 
+    /* ends the foreground service */
     public void Stop()
     {
         timer_service.SetAction("STOP_SERVICE");
         MainActivity.ActivityCurrent.StartService(timer_service);
     }
 
+    /* creates notification for the foreground service */
     private void RegisterNotification()
     {
-        NotificationChannel channel = new NotificationChannel("ForegroundService", "ServiceNotification", NotificationImportance.Max);
+        NotificationChannel channel = new NotificationChannel("ForegroundService", "ServiceNotification", NotificationImportance.None);
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
 
@@ -72,7 +75,7 @@ public class Notification_Timers : Service
            .SetOngoing(false)
            .Build();
 
-        StartForeground(100, notification);
+        StartForeground(1, notification);
     }
 
     /* prepares timers */
@@ -118,18 +121,18 @@ public class Notification_Timers : Service
                 /* timer 1 setup */
                 DateTime notification_time_hours = DateTime.Today.AddHours(hours);
                 DateTime notification_time_total = notification_time_hours.AddMinutes(mins);
-
+                              
                 if (current_time > notification_time_total) /* if already past notification time for that day */
                 {
                     notification_time_total = notification_time_total.AddDays(1.0);
-                }
+                }                               
 
                 int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
-                                
+
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time, 86400000); /* 86,400,000 ms = 1 day */
                 timer2.Change(Timeout.Infinite, 86400000);
-                timer3.Change(Timeout.Infinite, 86400000);
+                timer3.Change(Timeout.Infinite, 86400000);                
             }
             else if (num_notifications == 1) /* else 2 timers set */
             {
@@ -215,7 +218,7 @@ public class Notification_Timers : Service
      * - this code is executed at notification alert times given within app settings
      */
     private async void Refresh(object state)
-    {       
+    {
         List<Stock> watchlist = await App.StockRepo.Get_Stock_Watchlist(true);
 
         if (watchlist.Count != 0) /* if watchlist is not empty */
@@ -301,11 +304,11 @@ public class Notification_Timers : Service
 
             var notification_alert = new NotificationRequest
             {
-                NotificationId = 1,
+                NotificationId = 2,
                 Title = "Bull Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 1
+                BadgeNumber = 2
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
@@ -335,11 +338,11 @@ public class Notification_Timers : Service
 
             var notification_alert = new NotificationRequest
             {
-                NotificationId = 2,
+                NotificationId = 3,
                 Title = "Bear Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 2
+                BadgeNumber = 3
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
