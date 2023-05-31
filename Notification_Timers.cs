@@ -11,11 +11,14 @@ namespace StockTracker;
 [Service]
 public class Notification_Timers : Service
 {
+    private int ms_in_a_day = 86400000; /* 86,400,000 ms = 1 day */
+
+    /* time of day timers */
     private Timer timer1;
     private Timer timer2;
     private Timer timer3;
 
-    private Intent timer_service;
+    private Intent timer_service; /* foreground service */
 
     public Notification_Timers()
 	{
@@ -36,13 +39,13 @@ public class Notification_Timers : Service
     {
         if (intent.Action == "START_SERVICE")
         {
-            RegisterNotification();//Proceed to notify
+            RegisterNotification();
             Create_Timers(); /* create timers from settings */
         }
         else if (intent.Action == "STOP_SERVICE")
         {
             Create_Timers(); /* turns off timers */
-            StopForeground(true);//Stop the service
+            StopForeground(true);
             StopSelfResult(startId);
         }
 
@@ -130,9 +133,9 @@ public class Notification_Timers : Service
                 int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time, 86400000); /* 86,400,000 ms = 1 day */
-                timer2.Change(Timeout.Infinite, 86400000);
-                timer3.Change(Timeout.Infinite, 86400000);                
+                timer1.Change(ms_until_notification_time, ms_in_a_day);
+                timer2.Change(Timeout.Infinite, Timeout.Infinite);
+                timer3.Change(Timeout.Infinite, Timeout.Infinite);                
             }
             else if (num_notifications == 1) /* else 2 timers set */
             {
@@ -159,9 +162,9 @@ public class Notification_Timers : Service
                 int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time1, 86400000); /* 86,400,000 ms = 1 day */
-                timer2.Change(ms_until_notification_time2, 86400000); /* 86,400,000 ms = 1 day */
-                timer3.Change(Timeout.Infinite, 86400000); 
+                timer1.Change(ms_until_notification_time1, ms_in_a_day);
+                timer2.Change(ms_until_notification_time2, ms_in_a_day);
+                timer3.Change(Timeout.Infinite, Timeout.Infinite); 
             }
             else /* else 3 timers set */
             {
@@ -199,9 +202,9 @@ public class Notification_Timers : Service
                 int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
-                timer1.Change(ms_until_notification_time1, 86400000); /* 86,400,000 ms = 1 day */
-                timer2.Change(ms_until_notification_time2, 86400000); /* 86,400,000 ms = 1 day */
-                timer3.Change(ms_until_notification_time3, 86400000); /* 86,400,000 ms = 1 day */
+                timer1.Change(ms_until_notification_time1, ms_in_a_day);
+                timer2.Change(ms_until_notification_time2, ms_in_a_day);
+                timer3.Change(ms_until_notification_time3, ms_in_a_day);
             }
         }
         else /* else notifications are toggled off */
