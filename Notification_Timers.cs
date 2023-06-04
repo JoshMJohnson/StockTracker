@@ -27,11 +27,14 @@ public class Notification_Timers : Service
         timer3 = new Timer(Refresh);
 
         timer_service = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
+
+        Preferences.Get("RunningService", false);
     }
 
     public override IBinder OnBind(Intent intent)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        return null;
     }
 
     [return: GeneratedEnum]
@@ -49,19 +52,27 @@ public class Notification_Timers : Service
             StopSelfResult(startId);
         }
 
-        return StartCommandResult.NotSticky;
+        return StartCommandResult.Sticky;
     }
 
     /* start the foreground service */
     public void Start()
     {
+        if (Preferences.Get("RunningService", false) == true) /* if foreground service is already running */
+        {
+            timer_service.SetAction("STOP_SERVICE");
+            MainActivity.ActivityCurrent.StartService(timer_service);
+        }
+
+        Preferences.Set("RunningService", true); /* saves the state of the foreground service to running */
         timer_service.SetAction("START_SERVICE");
-        MainActivity.ActivityCurrent.StartService(timer_service);
+        MainActivity.ActivityCurrent.StartService(timer_service);        
     }
 
     /* ends the foreground service */
     public void Stop()
     {
+        Preferences.Set("RunningService", false); /* saves the state of the foreground service to not running */
         timer_service.SetAction("STOP_SERVICE");
         MainActivity.ActivityCurrent.StartService(timer_service);
     }
@@ -69,13 +80,13 @@ public class Notification_Timers : Service
     /* creates notification for the foreground service */
     private void RegisterNotification()
     {
-        NotificationChannel channel = new NotificationChannel("ForegroundService", "ServiceNotification", NotificationImportance.None);
+        NotificationChannel channel = new NotificationChannel("ForegroundService", "ServiceNotification", NotificationImportance.Min);
         NotificationManager manager = (NotificationManager)MainActivity.ActivityCurrent.GetSystemService(Context.NotificationService);
         manager.CreateNotificationChannel(channel);
 
         Notification notification = new Notification.Builder(this, "ForegroundService")
            .SetSmallIcon(Resource.Drawable.man_on_graph_light)
-           .SetOngoing(false)
+           .SetOngoing(true)
            .Build();
 
         StartForeground(1, notification);
