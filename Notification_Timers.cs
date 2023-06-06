@@ -5,6 +5,7 @@ using Android.Runtime;
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.AndroidOption;
 using StockTracker.Model;
+using static Android.OS.PowerManager;
 
 namespace StockTracker;
 
@@ -19,6 +20,7 @@ public class Notification_Timers : Service
     private Timer timer3;
 
     private Intent timer_service; /* foreground service */
+    private WakeLock wakeLock; /* prevents app from entering 'doze' mode */
 
     public Notification_Timers()
 	{
@@ -33,7 +35,6 @@ public class Notification_Timers : Service
 
     public override IBinder OnBind(Intent intent)
     {
-        //throw new NotImplementedException();
         return null;
     }
 
@@ -44,12 +45,22 @@ public class Notification_Timers : Service
         {
             RegisterNotification();
             Create_Timers(); /* create timers from settings */
+
+            /* create partial wake lock */
+            PowerManager powerManager = (PowerManager)this.GetSystemService(Context.PowerService);
+            wakeLock = powerManager.NewWakeLock(WakeLockFlags.Partial, "Partial Wake Lock");
+            wakeLock.Acquire();
         }
         else if (intent.Action == "STOP_SERVICE")
         {
             Create_Timers(); /* turns off timers */
             StopForeground(true);
             StopSelfResult(startId);
+
+            if (wakeLock != null)
+            {
+                wakeLock.Release(); /* cancel wake lock */
+            }
         }
 
         return StartCommandResult.Sticky;
@@ -245,8 +256,6 @@ public class Notification_Timers : Service
             {
                 Gather_Threshold_Stocks();
             }
-
-            Gather_Threshold_Stocks(); // USED FOR TESTING; SENDS NOTIFICATIONS EVEN WHEN STOCK MARKET IS CLOSED
         }
     }
 
