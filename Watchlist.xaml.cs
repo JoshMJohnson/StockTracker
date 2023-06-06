@@ -55,7 +55,8 @@ public partial class Watchlist : ContentPage
         if (btn.Text == "Add") /* if add button was clicked on */
         {
             string stock = await DisplayPromptAsync("Add Stock", "Enter stock ticker", "Add", keyboard: Keyboard.Text, maxLength: 5);
-            
+            stock = stock.Trim(); /* removes leading and trailing whitespace */
+
             if (stock != null) /* if not cancelled add */
             {
                 if (stock.Length != 0)
@@ -81,10 +82,12 @@ public partial class Watchlist : ContentPage
                     }
                 }
             }
-        } else if (btn.Text == "Remove") /* else if remove button was clicked */
+        } 
+        else if (btn.Text == "Remove") /* else if remove button was clicked */
         {
             string stock = await DisplayPromptAsync("Remove Stock", "Enter stock ticker", "Remove", keyboard: Keyboard.Text, maxLength: 5);
-            
+            stock = stock.Trim(); /* removes leading and trailing whitespace */
+
             if (stock != null) /* if not cancelled remove */
             {
                 if (stock.Length != 0)

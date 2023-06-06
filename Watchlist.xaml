@@ -66,8 +66,7 @@
                         </SwipeView>                    
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
-        
+            </CollectionView>        
 
         <Button Text="Add"
                 FontAttributes="Bold"
