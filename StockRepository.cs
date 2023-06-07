@@ -150,60 +150,35 @@ public class StockRepository
 
             /* loop through watchlist database and retrieve all stock tickers */
             List<Stock> watchlist = await Get_Stock_Watchlist(sort_alpha);
-            List<string> ticker_list = new List<string>();
 
-            /* build list of stock tickers from watchlist */
+            /* connect to stock market through Twelve Data API and update watchlist database */
+            string api_key = "1a5736c710a640679295533e0c6a53ca"; /* account api key for Twelve Data API */
+
             for (int i = 0; i < watchlist.Count; i++)
             {
-                string current_ticker = watchlist[i].ticker_name;
-                ticker_list.Add(current_ticker);
-            }
+                if (i % 8 == 0 && i != 0) /* if reached api GET Request limit for a minute */
+                {
+                    Thread.Sleep(61000); /* delay 1 minute and 1 second */
+                }
 
-            /* call api to retrieve stock ticker data */
-            string ticker_api_call = string.Join(",", ticker_list);
-            ticker_api_call = ticker_api_call.TrimEnd(',');
+                /* call api to retrieve stock ticker data */
+                string download_url = $"https://api.twelvedata.com/quote?symbol={watchlist[i].ticker_name}&apikey={api_key}";
+                WebClient wc = new WebClient();
+                var response = wc.DownloadString(download_url);
+                response = response.Remove(0, 1);
+                string[] request_array = response.Split("},");
 
-            string api_key = "1a5736c710a640679295533e0c6a53ca";
-            string download_url = $"https://api.twelvedata.com/quote?symbol={ticker_api_call}&apikey={api_key}";
-
-            WebClient wc = new WebClient();
-            var response = wc.DownloadString(download_url);
-            response = response.Remove(0, 1);
-            string[] request_array = response.Split("},");
-
-            /* update database for each stock on watchlist */
-            for (int i = 0; i < watchlist.Count; i++)
-            {
                 /* transform api request to array of data */
-                string current_request = request_array[i];
+                string current_request = request_array[0];
                 string[] current_stock_data_array = current_request.Split("\"");
 
-                string current_stock_ticker;
-                string current_company_name;
-                string current_stock_price_change_string;
-                string current_stock_prev_close_price_string;
-                string current_stock_percent_change_string;
-                string market_open_string;
+                string current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
+                string current_company_name = current_stock_data_array[7]; /* get company name */
+                string current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
+                string current_stock_prev_close_price_string = current_stock_data_array[49]; /* get stock price */
+                string current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
+                string market_open_string = current_stock_data_array[64]; /* if market open = true; else = false */
 
-                if (watchlist.Count == 1)
-                {
-                    current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
-                    current_company_name = current_stock_data_array[7]; /* get company name */
-                    current_stock_price_change_string = current_stock_data_array[53]; /* get stock price change */
-                    current_stock_prev_close_price_string = current_stock_data_array[49]; /* get stock price */
-                    current_stock_percent_change_string = current_stock_data_array[57]; /* get stock percent change */
-                    market_open_string = current_stock_data_array[64]; /* if market open = true; else = false */
-                }
-                else
-                {
-                    current_stock_ticker = current_stock_data_array[1]; /* get ticker symbol */
-                    current_company_name = current_stock_data_array[9]; /* get company name */
-                    current_stock_price_change_string = current_stock_data_array[55]; /* get stock price change */
-                    current_stock_prev_close_price_string = current_stock_data_array[51]; /* get stock price */
-                    current_stock_percent_change_string = current_stock_data_array[59]; /* get stock percent change */
-                    market_open_string = current_stock_data_array[66]; /* if market open = true; else = false */
-                }
-                                
                 /* stock price dollar change round to two decimal points */
                 double current_stock_price_change = double.Parse(current_stock_price_change_string, System.Globalization.CultureInfo.InvariantCulture);
                 double current_stock_price_change_rounded = Math.Truncate(current_stock_price_change * 100) / 100;
