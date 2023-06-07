@@ -10,7 +10,6 @@ public class StockRepository
     public bool api_limit_reached;
     public bool stock_not_found;
 
-
     public string StatusMessage { get; set; }
 
 	private static SQLiteAsyncConnection conn;
@@ -44,7 +43,7 @@ public class StockRepository
             await Init_Database();
 
             /* call api to retrieve stock ticker data */
-            string api_key = "1a5736c710a640679295533e0c6a53ca";
+            string api_key = "1a5736c710a640679295533e0c6a53ca"; /* each user of the app should have a unique api key to stay under the GET Request limits */
             string download_url = $"https://api.twelvedata.com/quote?symbol={stock_ticker}&apikey={api_key}";
 
             WebClient wc = new WebClient();
@@ -119,9 +118,7 @@ public class StockRepository
         try
         {
             await Init_Database();
-
             Stock removing_stock = await conn.FindAsync<Stock>(stock_ticker);
-
             await conn.DeleteAsync(removing_stock);
         }
         catch (Exception ex)
@@ -136,7 +133,6 @@ public class StockRepository
         try
         {
             await Init_Database();
-
             await conn.DeleteAllAsync<Stock>();
         }
         catch (Exception ex)
@@ -148,33 +144,32 @@ public class StockRepository
     /* updates the watchlist data from the stock market */
     public async Task Update_Watchlist(bool sort_alpha)
     {
-        /* loop through watchlist database and retrieve all stock tickers */
-        List<Stock> watchlist = await Get_Stock_Watchlist(sort_alpha);
-        List<string> ticker_list = new List<string>();
-
-        /* build list of stock tickers from watchlist */
-        for (int i = 0; i < watchlist.Count; i++)
-        {
-            string current_ticker = watchlist[i].ticker_name;
-            ticker_list.Add(current_ticker);
-        }
-
-        /* call api to retrieve stock ticker data */
-        string ticker_api_call = string.Join(",", ticker_list);
-        ticker_api_call = ticker_api_call.TrimEnd(',');
-
-        string api_key = "1a5736c710a640679295533e0c6a53ca";
-        string download_url = $"https://api.twelvedata.com/quote?symbol={ticker_api_call}&apikey={api_key}";
-
-        WebClient wc = new WebClient();
-        var response = wc.DownloadString(download_url);
-        response = response.Remove(0, 1);
-        string[] request_array = response.Split("},");
-
-        /* update watchlist database with data from api */
         try
         {
             await Init_Database();
+
+            /* loop through watchlist database and retrieve all stock tickers */
+            List<Stock> watchlist = await Get_Stock_Watchlist(sort_alpha);
+            List<string> ticker_list = new List<string>();
+
+            /* build list of stock tickers from watchlist */
+            for (int i = 0; i < watchlist.Count; i++)
+            {
+                string current_ticker = watchlist[i].ticker_name;
+                ticker_list.Add(current_ticker);
+            }
+
+            /* call api to retrieve stock ticker data */
+            string ticker_api_call = string.Join(",", ticker_list);
+            ticker_api_call = ticker_api_call.TrimEnd(',');
+
+            string api_key = "1a5736c710a640679295533e0c6a53ca";
+            string download_url = $"https://api.twelvedata.com/quote?symbol={ticker_api_call}&apikey={api_key}";
+
+            WebClient wc = new WebClient();
+            var response = wc.DownloadString(download_url);
+            response = response.Remove(0, 1);
+            string[] request_array = response.Split("},");
 
             /* update database for each stock on watchlist */
             for (int i = 0; i < watchlist.Count; i++)
@@ -228,22 +223,14 @@ public class StockRepository
                     market_open = false;
                 }
 
-                /* update stock database - remove and add the stock being updated */
+                /* update stock database */
                 Stock updating_stock = await conn.FindAsync<Stock>(current_stock_ticker);
-
-                await conn.DeleteAsync(updating_stock);
-
-                Stock updated_stock = new Stock
-                {
-                    ticker_name = current_stock_ticker,
-                    company_name = current_company_name,
-                    ticker_price = current_stock_price,
-                    ticker_dollar_day_change = current_stock_price_change_rounded,
-                    ticker_percent_day_change = current_stock_percent_change,
-                    was_market_open = market_open
-                };
-
-                await conn.InsertAsync(updated_stock);
+                updating_stock.company_name = current_company_name;
+                updating_stock.ticker_price = current_stock_price;
+                updating_stock.ticker_dollar_day_change = current_stock_price_change_rounded;
+                updating_stock.ticker_percent_day_change = current_stock_percent_change;
+                updating_stock.was_market_open = market_open;
+                await conn.UpdateAsync(updating_stock);
             }
         }
         catch (Exception ex)
@@ -271,7 +258,8 @@ public class StockRepository
             }
 
             return watchlist;
-        } catch(Exception ex) 
+        } 
+        catch(Exception ex) 
         {
             StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
         }
