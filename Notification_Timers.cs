@@ -307,6 +307,8 @@ public class Notification_Timers : Service
     {
         if (is_positive_list) /* if list of positive stocks past threshold */
         {
+            threshold_list = threshold_list.OrderBy(stock => stock.ticker_percent_day_change).Reverse().ToList(); /* sorts list; most positive first */
+
             string notification_description = "";
 
             /* fill lists for notification display */
@@ -338,6 +340,8 @@ public class Notification_Timers : Service
         }
         else /* else list of negative stocks past threshold */
         {
+            threshold_list = threshold_list.OrderBy(stock => stock.ticker_percent_day_change).ToList(); /* sorts list; most negative first */
+
             string notification_description = "";
 
             /* fill lists for notification display */
