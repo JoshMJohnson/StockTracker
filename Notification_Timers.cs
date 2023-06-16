@@ -21,6 +21,7 @@ public class Notification_Timers : Service
 
     private Intent timer_service; /* foreground service */
     private WakeLock wakeLock; /* prevents app from entering 'doze' mode */
+    private WakeLock wakeLock2; /* prevents app from entering 'doze' mode */
 
     public Notification_Timers()
 	{
@@ -46,10 +47,12 @@ public class Notification_Timers : Service
             RegisterNotification();
             Create_Timers(); /* create timers from settings */
 
-            /* create partial wake lock */
-            PowerManager powerManager = (PowerManager)this.GetSystemService(Context.PowerService);
+            /* create wake locks */
+            PowerManager powerManager = (PowerManager) this.GetSystemService(Context.PowerService);
             wakeLock = powerManager.NewWakeLock(WakeLockFlags.Partial, "Partial Wake Lock");
+            wakeLock2 = powerManager.NewWakeLock(WakeLockFlags.Full, "Full Wake Lock");
             wakeLock.Acquire();
+            wakeLock2.Acquire();
         }
         else if (intent.Action == "STOP_SERVICE")
         {
@@ -59,7 +62,9 @@ public class Notification_Timers : Service
 
             if (wakeLock != null)
             {
-                wakeLock.Release(); /* cancel wake lock */
+                /* release wake locks */
+                wakeLock.Release();
+                wakeLock2.Release();
             }
         }
 
