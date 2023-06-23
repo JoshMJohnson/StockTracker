@@ -184,7 +184,7 @@ public partial class Watchlist : ContentPage
             vertical_layout_watchlist_empty.IsVisible = false;
         }
 
-        List<Stock>  watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
+        List<Stock> watchlist_updated = await App.StockRepo.Get_Stock_Watchlist(sort_alpha);
         watchlist_items_display.ItemsSource = watchlist_updated;
     }
 }

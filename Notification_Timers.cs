@@ -12,6 +12,7 @@ namespace StockTracker;
 [Service]
 public class Notification_Timers : Service
 {
+    private int notification_counter { get; set; }
     private int ms_in_a_day = 86400000; /* 86,400,000 ms = 1 day */
 
     /* time of day timers */
@@ -30,8 +31,6 @@ public class Notification_Timers : Service
         timer3 = new Timer(Refresh);
 
         timer_service = new Intent(MainActivity.ActivityCurrent, typeof(Notification_Timers));
-
-        Preferences.Get("RunningService", false);
     }
 
     public override IBinder OnBind(Intent intent)
@@ -157,7 +156,7 @@ public class Notification_Timers : Service
                     notification_time_total = notification_time_total.AddDays(1.0);
                 }                               
 
-                int ms_until_notification_time = (int)((notification_time_total - current_time).TotalMilliseconds);
+                int ms_until_notification_time = (int) ((notification_time_total - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time, ms_in_a_day);
@@ -175,7 +174,7 @@ public class Notification_Timers : Service
                     notification_time_total1 = notification_time_total1.AddDays(1.0);
                 }
 
-                int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
+                int ms_until_notification_time1 = (int) ((notification_time_total1 - current_time).TotalMilliseconds);
 
                 /* timer 2 setup */
                 DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
@@ -186,7 +185,7 @@ public class Notification_Timers : Service
                     notification_time_total2 = notification_time_total2.AddDays(1.0);
                 }
 
-                int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
+                int ms_until_notification_time2 = (int) ((notification_time_total2 - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time1, ms_in_a_day);
@@ -204,7 +203,7 @@ public class Notification_Timers : Service
                     notification_time_total1 = notification_time_total1.AddDays(1.0);
                 }
 
-                int ms_until_notification_time1 = (int)((notification_time_total1 - current_time).TotalMilliseconds);
+                int ms_until_notification_time1 = (int) ((notification_time_total1 - current_time).TotalMilliseconds);
 
                 /* timer 2 setup */
                 DateTime notification_time_hours2 = DateTime.Today.AddHours(hours2);
@@ -215,7 +214,7 @@ public class Notification_Timers : Service
                     notification_time_total2 = notification_time_total2.AddDays(1.0);
                 }
 
-                int ms_until_notification_time2 = (int)((notification_time_total2 - current_time).TotalMilliseconds);
+                int ms_until_notification_time2 = (int) ((notification_time_total2 - current_time).TotalMilliseconds);
 
                 /* timer 3 setup */
                 DateTime notification_time_hours3 = DateTime.Today.AddHours(hours3);
@@ -226,7 +225,7 @@ public class Notification_Timers : Service
                     notification_time_total3 = notification_time_total3.AddDays(1.0);
                 }
 
-                int ms_until_notification_time3 = (int)((notification_time_total3 - current_time).TotalMilliseconds);
+                int ms_until_notification_time3 = (int) ((notification_time_total3 - current_time).TotalMilliseconds);
 
                 /* set timer to elapse only once at the notification time */
                 timer1.Change(ms_until_notification_time1, ms_in_a_day);
@@ -332,16 +331,21 @@ public class Notification_Timers : Service
                 notification_description = $"{notification_description}{threshold_list[i].ticker_name} is up ${String.Format("{0:0.00}", temp_dollar_change)} ({String.Format("{0:0.##}", temp_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
+            notification_counter = Preferences.Get("NotificationID", 2);
+
             var notification_alert = new NotificationRequest
             {
-                NotificationId = 2,
+                NotificationId = notification_counter,
                 Title = "Bull Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 2
+                BadgeNumber = notification_counter
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
+
+            notification_counter++;
+            Preferences.Set("NotificationID", notification_counter);
         }
         else /* else list of negative stocks past threshold */
         {
@@ -368,16 +372,21 @@ public class Notification_Timers : Service
                 notification_description = $"{notification_description}{threshold_list[i].ticker_name} is down -${String.Format("{0:0.00}", abs_dollar_change)} (-{String.Format("{0:0.##}", abs_percent_change)}%) (${String.Format("{0:0.00}", temp_price)})\n";
             }
 
+            notification_counter = Preferences.Get("NotificationID", 2);
+
             var notification_alert = new NotificationRequest
             {
-                NotificationId = 3,
+                NotificationId = notification_counter,
                 Title = "Bear Stocks",
                 Subtitle = "Stock Threshold Alert",
                 Description = notification_description,
-                BadgeNumber = 3
+                BadgeNumber = notification_counter
             };
 
             LocalNotificationCenter.Current.Show(notification_alert);
+
+            notification_counter++;
+            Preferences.Set("NotificationID", notification_counter);
         }
     }
 }
