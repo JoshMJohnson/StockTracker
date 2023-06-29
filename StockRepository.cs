@@ -152,13 +152,13 @@ public class StockRepository
             List<Stock> watchlist = await Get_Stock_Watchlist(sort_alpha);
 
             /* connect to stock market through Twelve Data API and update watchlist database */
-            string api_key = "1a5736c710a640679295533e0c6a53ca"; /* account api key for Twelve Data API */
+            string api_key = "ef193f533d7c4521ab889fb23307a123"; /* account api key for Twelve Data API */
 
             for (int i = 0; i < watchlist.Count; i++)
             {
                 if (i % 8 == 0 && i != 0) /* if reached api GET Request limit for a minute */
                 {
-                    Thread.Sleep(61000); /* delay 1 minute and 1 second */
+                    await Task.Delay(61000); /* delay 1 minute and 1 second */
                 }
 
                 /* call api to retrieve stock ticker data */
@@ -171,6 +171,14 @@ public class StockRepository
                 /* transform api request to array of data */
                 string current_request = request_array[0];
                 string[] current_stock_data_array = current_request.Split("\"");
+                string api_error_check = current_stock_data_array[2];
+
+                if (api_error_check == ":400,") /* if stock symbol removed from stock market */
+                {
+                    Stock removing_stock = await conn.FindAsync<Stock>(watchlist[i].ticker_name);
+                    await conn.DeleteAsync(removing_stock);
+                    continue;
+                }
 
                 string current_stock_ticker = current_stock_data_array[3]; /* get ticker symbol */
                 string current_company_name = current_stock_data_array[7]; /* get company name */
