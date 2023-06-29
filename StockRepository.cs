@@ -144,6 +144,8 @@ public class StockRepository
     /* updates the watchlist data from the stock market */
     public async Task Update_Watchlist(bool sort_alpha)
     {
+        ArgumentNullException.ThrowIfNull(sort_alpha, nameof(sort_alpha));
+
         try
         {
             await Init_Database();
@@ -225,6 +227,8 @@ public class StockRepository
     /* returns a list of all the stocks within the database */
     public async Task<List<Stock>> Get_Stock_Watchlist(bool sort_alpha)
     {
+        ArgumentNullException.ThrowIfNull(sort_alpha, nameof(sort_alpha));
+
         try
         {
             await Init_Database();
