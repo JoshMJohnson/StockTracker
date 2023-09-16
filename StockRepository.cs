@@ -43,7 +43,7 @@ public class StockRepository
             await Init_Database();
 
             /* call api to retrieve stock ticker data */
-            string api_key = ""; /* TODO each user of the app should have a unique api key to stay under the GET Request limits */
+            string api_key = ""; /* TODO each user of the app should have a unique api key to stay under the GET Request limits from Twelve Data */
             string download_url = $"https://api.twelvedata.com/quote?symbol={stock_ticker}&apikey={api_key}";
 
             WebClient wc = new WebClient();
